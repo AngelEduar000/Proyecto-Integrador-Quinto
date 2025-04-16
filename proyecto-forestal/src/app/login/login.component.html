@@ -1,0 +1,35 @@
+<main class="login-container">
+    <h2>Iniciar Sesión</h2>
+  
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <!-- Campo de usuario -->
+      <div class="input-group">
+        <input type="text" formControlName="username" placeholder="Usuario" required>
+      </div>
+  
+      <!-- Campo de contraseña con ícono de ojo -->
+      <div class="input-group password-container">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+          placeholder="Contraseña"
+          id="password"
+          required
+        />
+        <span class="toggle-password" (click)="togglePassword()">
+          <img
+            [src]="showPassword ? '/imagenes/images/ojo_cerrado.ico' : '/imagenes/images/ojo_abierto.ico'"
+            id="eye-icon"
+            alt="Mostrar contraseña"
+          />
+        </span>
+      </div>
+  
+      <!-- Botón de login -->
+      <button type="submit">Ingresar</button>
+  
+      <!-- Mensaje de error -->
+      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+    </form>
+  </main>
+  

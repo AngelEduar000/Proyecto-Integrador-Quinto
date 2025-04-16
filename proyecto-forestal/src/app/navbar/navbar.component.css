@@ -1,0 +1,94 @@
+.navbar {
+    background: #2C3E50;
+    padding: 15px 20px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.logo {
+    font-size: 22px;
+    color: white;
+    font-weight: bold;
+}
+
+/* 📌 Estilos de los botones del Navbar */
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-links li {
+    display: inline-block;
+}
+
+/* ✅ Botones sin fondo, solo texto */
+.nav-links a, .user-btn {
+    color: white;
+    font-size: 16px;
+    padding: 8px 12px;
+    border-radius: 15px;
+    transition: 0.3s ease-in-out;
+}
+
+/* ✅ Efecto hover: recuadro redondeado */
+.nav-links a:hover, .user-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 8px 12px;
+}
+
+/* 📌 Menú desplegable del usuario */
+.user-menu {
+    position: relative;
+    display: none; /* Oculto por defecto */
+}
+
+.user-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* 📌 Menú desplegable */
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: 45px;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    min-width: 160px;
+}
+
+/* ✅ Botones del menú desplegable con el mismo estilo */
+.user-dropdown button {
+    background: none;
+    border: none;
+    width: 100%;
+    padding: 12px;
+    cursor: pointer;
+    text-align: left;
+    color: #2C3E50;
+    transition: background 0.3s ease-in-out;
+}
+
+.user-dropdown button:hover {
+    background: rgba(44, 62, 80, 0.1);
+    border-radius: 8px;
+}

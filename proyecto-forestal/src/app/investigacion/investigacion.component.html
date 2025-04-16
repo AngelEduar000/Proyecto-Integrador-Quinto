@@ -1,0 +1,35 @@
+<h1 class="titulo-pagina">Registro de Árboles en Investigación</h1>
+
+<form (ngSubmit)="guardarMuestra()" class="formulario">
+  <label>
+    Parcela:
+    <input type="text" [(ngModel)]="nuevaMuestra.parcela" name="parcela" required />
+  </label>
+
+  <label>
+    Subparcela:
+    <input type="text" [(ngModel)]="nuevaMuestra.subparcela" name="subparcela" required />
+  </label>
+
+  <label>
+    Ubicación en la subparcela:
+    <input type="text" [(ngModel)]="nuevaMuestra.ubicacion" name="ubicacion" required />
+  </label>
+
+  <label>
+    Nombre local (opcional):
+    <input type="text" [(ngModel)]="nuevaMuestra.nombreLocal" name="nombreLocal" />
+  </label>
+
+  <label>
+    Código de referencia de muestra:
+    <input type="text" [(ngModel)]="nuevaMuestra.codigoReferencia" name="codigoReferencia" required />
+  </label>
+
+  <label>
+    Imagen del árbol:
+    <input type="file" (change)="onImagenSeleccionada($event)" accept="image/*" />
+  </label>
+
+  <button type="submit">Guardar muestra</button>
+</form>

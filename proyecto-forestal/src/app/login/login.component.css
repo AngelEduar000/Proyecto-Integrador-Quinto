@@ -1,0 +1,110 @@
+:host {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    background: url('/imagenes/images/background.jpg') no-repeat center center;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  /* Contenedor del formulario */
+  .login-container {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    padding: 36px 30px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 360px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+  
+  /* Título */
+  .login-container h2 {
+    margin-bottom: 24px;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Input group */
+  .input-group {
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  /* Campos de entrada */
+  input {
+    width: 100%;
+    padding: 12px 42px 12px 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #222;
+    box-sizing: border-box;
+    transition: box-shadow 0.2s;
+  }
+  
+  input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #3b82f6;
+  }
+  
+  /* Contenedor de contraseña */
+  .password-container {
+    position: relative;
+  }
+  
+  /* Ícono de ojo */
+  .toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+  
+  .toggle-password img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+  
+  .toggle-password img:hover {
+    opacity: 1;
+  }
+  
+  /* Botón login */
+  button {
+    background-color: #1e3a8a;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: background 0.3s ease;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #3b82f6;
+  }
+  
+  /* Error */
+  .error-message {
+    color: #f87171;
+    font-size: 13px;
+    margin-top: 10px;
+  }
+  

@@ -1,0 +1,28 @@
+<nav class="navbar">
+    <div class="nav-container">
+      <a routerLink="/" class="logo">🌲 Inventario Forestal</a>
+  
+      <ul class="nav-links">
+        <li><a routerLink="/especies" routerLinkActive="active">Especies</a></li>
+        <li><a routerLink="/mapa" routerLinkActive="active">Mapa</a></li>
+        <li><a routerLink="/reportes" routerLinkActive="active">Reportes</a></li>
+        <li><a routerLink="/investigacion" routerLinkActive="active">Investigación</a></li>
+        <li><a routerLink="/laboratorio" routerLinkActive="active">Laboratorio</a></li>
+        <li><a routerLink="/ideam" routerLinkActive="active">IDEAM</a></li>
+  
+        <!-- 🔐 Login / usuario -->
+        <li id="login-nav">
+          <a routerLink="/login" routerLinkActive="active">Login</a>
+        </li>
+  
+        <!-- 📌 Menú desplegable del usuario -->
+        <li id="user-menu" class="user-menu" style="display:none;">
+          <button id="user-button" class="user-btn">Usuario ▼</button>
+          <div class="user-dropdown" style="display:none;">
+            <button (click)="logout()">Cerrar Sesión</button>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  

@@ -1,0 +1,46 @@
+:host {
+    display: block;
+    padding-top: 80px;
+    max-width: 800px;
+    margin: auto;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  .titulo-pagina {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #2a4d69;
+  }
+  
+  .panel {
+    background: #f9fdfb;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  
+  .panel label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .panel input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.4rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  button {
+    margin-top: 1rem;
+    background-color: #264653;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  

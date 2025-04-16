@@ -1,0 +1,45 @@
+<h1 class="titulo-dashboard">Dashboard de Reportes - Inventario Forestal Nacional</h1>
+
+<div class="dashboard">
+  <!-- Panel izquierdo: lista de reportes -->
+  <div class="panel-izquierdo">
+    <table class="tabla-reportes">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Fecha</th>
+          <th>Zona</th>
+          <th>Especies</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reporte of reportes">
+          <td>{{ reporte.titulo }}</td>
+          <td>{{ reporte.fecha }}</td>
+          <td>{{ reporte.zona }}</td>
+          <td>{{ reporte.especies }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Panel derecho: resumen -->
+  <div class="panel-derecho">
+    <div class="card-resumen">
+      <h3>Total de reportes</h3>
+      <p class="valor">{{ totalReportes }}</p>
+    </div>
+    <div class="card-resumen">
+      <h3>Especies identificadas</h3>
+      <p class="valor">{{ totalEspecies }}</p>
+    </div>
+    <div class="card-resumen">
+      <h3>Zonas exploradas</h3>
+      <ul class="zonas-lista">
+        <li *ngFor="let z of zonasResumen">
+          {{ z.nombre }}: {{ z.valor }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

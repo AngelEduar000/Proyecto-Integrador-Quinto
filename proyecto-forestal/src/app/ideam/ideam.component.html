@@ -1,0 +1,19 @@
+<h1 class="titulo-pagina">Gestión de Conglomerados - IDEAM</h1>
+
+<div class="panel">
+  <label>
+    Asignar líder de brigada:
+    <input type="text" [(ngModel)]="liderBrigada" placeholder="Nombre completo" />
+  </label>
+  <button (click)="asignarLider()">Asignar líder</button>
+
+  <hr />
+
+  <h3>Generar conglomerado</h3>
+  <button (click)="generarConglomerado()">Generar</button>
+
+  <ul *ngIf="conglomeradoGenerado.length > 0">
+    <li *ngFor="let item of conglomeradoGenerado">📌 {{ item }}</li>
+  </ul>
+</div>
+

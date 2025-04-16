@@ -1,0 +1,70 @@
+:host {
+  display: block;
+  padding: 80px 2rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Roboto, sans-serif;
+}
+
+.titulo-pagina {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #2a4d69;
+}
+
+.busqueda {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.busqueda input {
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 60%;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.busqueda button {
+  padding: 0.5rem 1rem;
+  background-color: #2a9d8f;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.card {
+  background: #f3fefc;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.card input,
+.card textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.card button {
+  margin-top: 1.5rem;
+  background-color: #1b676b;
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}

@@ -1,0 +1,83 @@
+/* 🌐 Asegura que el contenido no quede debajo del navbar */
+:host {
+  display: block;
+  padding-top: 80px; /* ajusta según la altura de tu navbar */
+  padding-left: 1rem;
+  padding-right: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: "Segoe UI", Roboto, sans-serif;
+  color: #333;
+  box-sizing: border-box;
+}
+
+/* 🏷️ Título */
+.titulo-pagina {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #2a4d69;
+}
+
+/* 🔍 Buscador y 🎯 Filtros */
+.buscador,
+.filtros {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.buscador input,
+.filtros select {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  min-width: 220px;
+}
+
+/* 🧾 Grid de especies */
+.especies-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  margin-top: 2rem;
+}
+
+/* 🪵 Tarjetas */
+.especie-card {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: center;
+}
+
+.especie-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.especie-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  object-fit: cover;
+}
+
+.especie-card h3 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  color: #1a3c4f;
+}
+
+/* 🌍 Lista de territorios */
+.territorio-list {
+  padding-left: 1.25rem;
+  text-align: left;
+}
