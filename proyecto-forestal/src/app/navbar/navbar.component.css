@@ -1,94 +1,213 @@
+body {
+  padding-top: 150px; /* Aumentado para acomodar el navbar más grande */
+  
+}
+
 .navbar {
-    background: #2C3E50;
-    padding: 15px 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+  background: transparent;
+  padding: 15px 40px; /* Aumentado el padding horizontal y vertical */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background-color: rgba(192, 218, 187, 0.7);
+  border-bottom: 1px solid rgba(139, 166, 144, 0.3);
+  height: 80px; /* Aumentado la altura */
+  box-sizing: border-box;
 }
 
 .nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px; /* Aumentado el ancho máximo */
+  margin: 0 auto;
+  height: 100%;
+  gap: 40px; /* Espacio entre logo y elementos de navegación */
 }
 
 .logo {
-    font-size: 22px;
-    color: white;
-    font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Aumentado espacio entre imagen y texto */
+  font-size: 1.5rem; /* Tamaño de fuente aumentado */
+  color: #2E5339;
+  font-weight: bold;
+  text-decoration: none;
+  margin-right: auto; /* Empuja el logo a la izquierda */
 }
 
-/* 📌 Estilos de los botones del Navbar */
+.logo img {
+  height: 50px; /* Imagen más grande */
+}
+
+/* Menú hamburguesa */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px; /* Padding aumentado */
+  z-index: 1001;
+}
+
+.hamburger span {
+  display: block;
+  width: 30px; /* Líneas más gruesas */
+  height: 3px;
+  background-color: #2E5339;
+  margin: 5px 0; /* Más espacio entre líneas */
+  transition: all 0.3s ease;
+}
+
+/* Menú de navegación */
 .nav-links {
-    display: flex;
-    gap: 20px;
-    align-items: center;
+  display: flex;
+  gap: 25px; /* Más espacio entre elementos */
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.nav-links li {
-    display: inline-block;
-}
-
-/* ✅ Botones sin fondo, solo texto */
 .nav-links a, .user-btn {
-    color: white;
-    font-size: 16px;
-    padding: 8px 12px;
-    border-radius: 15px;
-    transition: 0.3s ease-in-out;
+  color: #2E5339;
+  font-size: 1rem; /* Tamaño de fuente aumentado */
+  padding: 10px 15px; /* Padding aumentado */
+  border-radius: 15px;
+  transition: 0.3s ease;
+  text-decoration: none;
+  font-weight: 600; /* Texto un poco más grueso */
 }
 
-/* ✅ Efecto hover: recuadro redondeado */
 .nav-links a:hover, .user-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    padding: 8px 12px;
+  background: rgba(139, 166, 144, 0.2);
 }
 
-/* 📌 Menú desplegable del usuario */
+.login-item {
+  margin-left: auto;
+}
+
+/* Menú desplegable del usuario */
+/* Añade esto a tu navbar.component.css */
 .user-menu {
-    position: relative;
-    display: none; /* Oculto por defecto */
+  position: relative;
+  margin-left: auto; /* Esto empuja el menú de usuario a la derecha */
 }
 
 .user-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2E5339;
+  font-size: 0.9rem;
+  padding: 8px 12px;
+  border-radius: 15px;
+  transition: 0.3s ease;
+  font-weight: 500;
 }
 
-/* 📌 Menú desplegable */
+.user-btn:hover {
+  background: rgba(139, 166, 144, 0.2);
+}
+
 .user-dropdown {
-    display: none;
-    position: absolute;
-    top: 45px;
-    right: 0;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    min-width: 160px;
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background: rgba(221, 238, 214, 0.9);
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 160px;
+  border: 1px solid rgba(139, 166, 144, 0.2);
+  padding: 10px;
+  z-index: 1001;
 }
 
-/* ✅ Botones del menú desplegable con el mismo estilo */
+.user-menu:hover .user-dropdown {
+  display: block;
+}
+
 .user-dropdown button {
-    background: none;
-    border: none;
-    width: 100%;
-    padding: 12px;
-    cursor: pointer;
-    text-align: left;
-    color: #2C3E50;
-    transition: background 0.3s ease-in-out;
+  width: 100%;
+  text-align: left;
+  padding: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2E5339;
 }
 
 .user-dropdown button:hover {
-    background: rgba(44, 62, 80, 0.1);
-    border-radius: 8px;
+  background: rgba(139, 166, 144, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .hamburger {
+    display: block;
+  }
+  
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    height: 100vh;
+    background-color: rgba(192, 218, 187, 0.95);
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-top: 80px;
+    gap: 15px;
+    transition: right 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .nav-links.active {
+    right: 0;
+  }
+  
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+  
+  .nav-links a {
+    display: block;
+    padding: 12px;
+    font-size: 1rem;
+  }
+  
+  .login-item {
+    margin-left: 0;
+    margin-top: auto;
+    margin-bottom: 20px;
+  }
+  
+  .hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  
+  .hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+  }
+}
+
+@media (max-width: 576px) {
+  .nav-links {
+    width: 85%;
+  }
+  
+  .logo-text {
+    display: none;
+  }
 }

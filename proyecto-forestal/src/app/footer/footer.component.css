@@ -1,0 +1,112 @@
+/* Efecto Glassmorphism con Bootstrap */
+.footer-glass {
+  background: rgba(30, 65, 43, 0.85);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+/* Títulos  */
+.glass-title {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+  font-size: 1.6em; /* Reduce el tamaño del título (ajusta el valor según necesites) */
+  text-align: center; /* Centrar los títulos */
+}
+
+/* Efectos hover */
+.hover-effect {
+  transition: all 0.3s ease;
+}
+
+.hover-effect:hover {
+  transform: translateX(5px);
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  padding-left: 5px;
+}
+
+/* Ajuste para iconos */
+.fab {
+  width: 20px;
+  text-align: center;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+}
+
+/* Enlaces hover */
+.text-white-50:hover {
+  color: white !important;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+/* Estilos para los iconos de redes sociales */
+.social-icon {
+  width: 24px; /* Tamaño uniforme para todos los iconos */
+  height: 24px;
+  object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+/* Efecto hover para los iconos */
+.hover-effect:hover .social-icon {
+  transform: scale(1.1); /* Ligero aumento de tamaño */
+}
+
+/* Ajustes para el texto junto a los iconos */
+.hover-effect a {
+  gap: 12px; /* Espacio consistente entre icono y texto */
+}
+
+/* Mantener los estilos glassmorphism existentes */
+.footer-glass {
+  background: rgba(30, 65, 43, 0.85);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+
+
+
+/* Centrar las columnas principales */
+.footer-glass .row {
+  display: flex; /* Habilitar flexbox en la fila */
+  justify-content: center; /* Centrar horizontalmente las columnas */
+  flex-wrap: wrap; /* Permitir que las columnas se envuelvan en pantallas pequeñas */
+}
+
+/* Centrar el texto dentro de las columnas */
+.footer-glass .col-md-3 {
+  text-align: center;
+  display: flex; /* Habilitar flexbox en la columna */
+  flex-direction: column; /* Alinear los elementos verticalmente */
+  align-items: center; /* Centrar los elementos horizontalmente dentro de la columna */
+}
+
+
+
+
+
+
+
+/* Responsividad  */
+@media (max-width: 480px) {
+  .footer-glass {
+    background: rgba(30, 65, 43, 0.9);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
+
+  .ps-md-4 {
+    padding-left: 0 !important;
+  }
+
+  .footer-glass .col-md-3 {
+    width: 100%; /* Ocupar todo el ancho en pantallas pequeñas */
+  }
+}

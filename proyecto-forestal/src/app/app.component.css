@@ -15,4 +15,9 @@
     .boton:hover {
     background-color: #1b5dab;
     }
-    
+
+/* Ejemplo para un contenedor llamado 'main-content' */
+.main-content {
+    min-height: 100vh; /* Asegura que ocupe al menos la altura de la pantalla */
+    margin-top: 80px;
+  }
