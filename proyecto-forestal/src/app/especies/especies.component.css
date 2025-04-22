@@ -2,8 +2,9 @@
 :host {
   display: block;
   padding-top: 80px; /* ajusta según la altura de tu navbar */
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 2rem; /* Agregado margen inferior */
   max-width: 1200px;
   margin: 0 auto;
   font-family: "Segoe UI", Roboto, sans-serif;
@@ -17,6 +18,8 @@
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
   color: #2a4d69;
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
 /* 🔍 Buscador y 🎯 Filtros */
@@ -31,18 +34,25 @@
 
 .buscador input,
 .filtros select {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1.25rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 8px;
   min-width: 220px;
+  transition: border-color 0.3s ease;
+}
+
+.buscador input:focus,
+.filtros select:focus {
+  border-color: #5e8ab5;
+  outline: none;
 }
 
 /* 🧾 Grid de especies */
 .especies-grid {
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajustado para mejorar la distribución */
   margin-top: 2rem;
 }
 
@@ -53,31 +63,122 @@
   border-radius: 16px;
   padding: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .especie-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .especie-card img {
   width: 100%;
-  height: auto;
-  border-radius: 12px;
-  margin-bottom: 0.75rem;
+  height: 200px; /* Tamaño fijo para las imágenes */
   object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
 }
 
+/* Títulos de las tarjetas */
 .especie-card h3 {
   margin: 0.5rem 0;
   font-size: 1.2rem;
   color: #1a3c4f;
+  font-weight: 600;
 }
 
 /* 🌍 Lista de territorios */
 .territorio-list {
   padding-left: 1.25rem;
   text-align: left;
+}
+
+/* 🖥️ Responsividad: diseño para pantallas más pequeñas */
+
+/* Pantallas pequeñas: móviles */
+@media (max-width: 600px) {
+  :host {
+    padding-top: 60px; /* Reduce el espacio superior en móviles */
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .titulo-pagina {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .buscador input,
+  .filtros select {
+    min-width: 100%;
+    font-size: 0.9rem;
+  }
+
+  .especies-grid {
+    grid-template-columns: 1fr; /* Una columna en dispositivos móviles */
+    gap: 1rem;
+  }
+
+  .especie-card {
+    padding: 0.75rem;
+  }
+
+  .especie-card img {
+    max-width: 100%;
+    height: 200px;
+  }
+}
+
+/* Pantallas medianas: tabletas */
+@media (max-width: 768px) {
+  .titulo-pagina {
+    font-size: 2rem;
+  }
+
+  .buscador input,
+  .filtros select {
+    min-width: 45%;
+  }
+
+  .especies-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Acomoda las tarjetas en 2-3 columnas */
+  }
+
+  .especie-card {
+    padding: 1rem;
+  }
+
+  .especie-card img {
+    height: 180px;
+  }
+}
+
+/* Pantallas grandes: escritorios */
+@media (min-width: 1200px) {
+  :host {
+    max-width: 1200px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .titulo-pagina {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .especies-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Mantiene la cuadrícula adaptable */
+  }
+
+  .especie-card {
+    padding: 1.5rem;
+  }
+
+  .especie-card img {
+    height: 200px;
+  }
 }
