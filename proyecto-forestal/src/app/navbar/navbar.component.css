@@ -1,11 +1,10 @@
 body {
-  padding-top: 150px; /* Aumentado para acomodar el navbar más grande */
-  
+  padding-top: 150px;
 }
 
 .navbar {
   background: transparent;
-  padding: 15px 40px; /* Aumentado el padding horizontal y vertical */
+  padding: 15px 40px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
   position: fixed;
   width: 100%;
@@ -16,7 +15,7 @@ body {
   -webkit-backdrop-filter: blur(10px);
   background-color: rgba(192, 218, 187, 0.7);
   border-bottom: 1px solid rgba(139, 166, 144, 0.3);
-  height: 80px; /* Aumentado la altura */
+  height: 80px;
   box-sizing: border-box;
 }
 
@@ -24,25 +23,31 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1400px; /* Aumentado el ancho máximo */
+  max-width: 1400px;
   margin: 0 auto;
   height: 100%;
-  gap: 40px; /* Espacio entre logo y elementos de navegación */
+  gap: 40px;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 15px; /* Aumentado espacio entre imagen y texto */
-  font-size: 1.5rem; /* Tamaño de fuente aumentado */
+  gap: 15px;
+  font-size: 1.5rem;
   color: #2E5339;
   font-weight: bold;
   text-decoration: none;
-  margin-right: auto; /* Empuja el logo a la izquierda */
+  margin-right: auto;
 }
 
 .logo img {
-  height: 50px; /* Imagen más grande */
+  height: 50px;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  color: #2E5339;
+  font-weight: bold;
 }
 
 /* Menú hamburguesa */
@@ -51,40 +56,42 @@ body {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 8px; /* Padding aumentado */
+  padding: 8px;
   z-index: 1001;
 }
 
 .hamburger span {
   display: block;
-  width: 30px; /* Líneas más gruesas */
+  width: 30px;
   height: 3px;
   background-color: #2E5339;
-  margin: 5px 0; /* Más espacio entre líneas */
+  margin: 5px 0;
   transition: all 0.3s ease;
 }
 
 /* Menú de navegación */
 .nav-links {
   display: flex;
-  gap: 25px; /* Más espacio entre elementos */
+  gap: 25px;
   align-items: center;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.nav-links a, .user-btn {
+.nav-links a,
+.user-btn {
   color: #2E5339;
-  font-size: 1rem; /* Tamaño de fuente aumentado */
-  padding: 10px 15px; /* Padding aumentado */
+  font-size: 1rem;
+  padding: 10px 15px;
   border-radius: 15px;
   transition: 0.3s ease;
   text-decoration: none;
-  font-weight: 600; /* Texto un poco más grueso */
+  font-weight: 600;
 }
 
-.nav-links a:hover, .user-btn:hover {
+.nav-links a:hover,
+.user-btn:hover {
   background: rgba(139, 166, 144, 0.2);
 }
 
@@ -93,10 +100,9 @@ body {
 }
 
 /* Menú desplegable del usuario */
-/* Añade esto a tu navbar.component.css */
 .user-menu {
   position: relative;
-  margin-left: auto; /* Esto empuja el menú de usuario a la derecha */
+  margin-left: auto;
 }
 
 .user-btn {
@@ -152,7 +158,7 @@ body {
   .hamburger {
     display: block;
   }
-  
+
   .nav-links {
     position: fixed;
     top: 0;
@@ -167,36 +173,36 @@ body {
     transition: right 0.3s ease;
     z-index: 1000;
   }
-  
+
   .nav-links.active {
     right: 0;
   }
-  
+
   .nav-links li {
     width: 100%;
     text-align: center;
   }
-  
+
   .nav-links a {
     display: block;
     padding: 12px;
     font-size: 1rem;
   }
-  
+
   .login-item {
     margin-left: 0;
     margin-top: auto;
     margin-bottom: 20px;
   }
-  
+
   .hamburger.active span:nth-child(1) {
     transform: rotate(45deg) translate(5px, 5px);
   }
-  
+
   .hamburger.active span:nth-child(2) {
     opacity: 0;
   }
-  
+
   .hamburger.active span:nth-child(3) {
     transform: rotate(-45deg) translate(7px, -6px);
   }
@@ -206,8 +212,13 @@ body {
   .nav-links {
     width: 85%;
   }
-  
+
   .logo-text {
-    display: none;
+    font-size: 1rem;
+    white-space: nowrap;
+  }
+
+  .logo img {
+    height: 40px;
   }
 }
