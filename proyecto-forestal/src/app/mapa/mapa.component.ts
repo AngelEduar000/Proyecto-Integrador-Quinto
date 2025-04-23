@@ -1,5 +1,6 @@
 import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-mapa',
@@ -10,138 +11,53 @@ import { isPlatformBrowser, CommonModule } from '@angular/common';
 })
 export class MapaComponent implements AfterViewInit {
 
-  // Información de los conglomerados dentro de Colombia
-  conglomerados = [
-    {
-      nombre: 'Zona Andina',
-      lat: 4.65, // Bogotá, Cundinamarca
-      lon: -74.05,
-      radio: 3.2,
-      ubicacion: 'Bogotá, Cundinamarca',
-      acceso: 'Media',
-      especies: [
-        'Quercus humboldtii',
-        'Cedrela odorata',
-        'Tabebuia rosea'
-      ]
-    },
-    {
-      nombre: 'Zona Caribe',
-      lat: 10.5, // Cartagena, Bolívar
-      lon: -75.5,
-      radio: 2.5,
-      ubicacion: 'Cartagena, Bolívar',
-      acceso: 'Alta',
-      especies: [
-        'Mangifera indica',
-        'Cocos nucifera',
-        'Theobroma cacao'
-      ]
-    },
-    {
-      nombre: 'Zona Amazonas',
-      lat: -3.5, // Leticia, Amazonas
-      lon: -69.5,
-      radio: 5.0,
-      ubicacion: 'Leticia, Amazonas',
-      acceso: 'Baja',
-      especies: [
-        'Carapa guianensis',
-        'Cedrela odorata',
-        'Ficus gomelleira'
-      ]
-    },
-    {
-      nombre: 'Zona Pacífica',
-      lat: 3.9, // Buenaventura, Valle del Cauca
-      lon: -77.05,
-      radio: 4.0,
-      ubicacion: 'Buenaventura, Valle del Cauca',
-      acceso: 'Baja',
-      especies: [
-        'Balsa',
-        'Ficus insipida',
-        'Guatteria'
-      ]
-    },
-    {
-      nombre: 'Zona Orinoquía',
-      lat: 4.15, // Villavicencio, Meta
-      lon: -73.65,
-      radio: 3.5,
-      ubicacion: 'Villavicencio, Meta',
-      acceso: 'Media',
-      especies: [
-        'Mauritia flexuosa',
-        'Erythrina fusca',
-        'Piper angustifolium'
-      ]
-    },
-    {
-      nombre: 'Zona Llanos',
-      lat: 5.25, // Yopal, Casanare
-      lon: -72.39,
-      radio: 3.0,
-      ubicacion: 'Yopal, Casanare',
-      acceso: 'Media',
-      especies: [
-        'Bertholletia excelsa',
-        'Vochysia guatemalensis',
-        'Astrocaryum chambira'
-      ]
-    },
-    {
-      nombre: 'Zona Eje Cafetero',
-      lat: 4.54, // Armenia, Quindío
-      lon: -75.68,
-      radio: 3.0,
-      ubicacion: 'Armenia, Quindío',
-      acceso: 'Alta',
-      especies: [
-        'Coffea arabica',
-        'Pinus patula',
-        'Quercus humboldtii'
-      ]
-    },
-    {
-      nombre: 'Zona Santanderes',
-      lat: 7.12, // Bucaramanga, Santander
-      lon: -73.12,
-      radio: 3.5,
-      ubicacion: 'Bucaramanga, Santander',
-      acceso: 'Alta',
-      especies: [
-        'Cedrela odorata',
-        'Swietenia macrophylla',
-        'Laurelia sempervirens'
-      ]
-    }
-  ];
+  conglomerados: any[] = [];
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    private dataService: DataService
+  ) {}
 
   async ngAfterViewInit(): Promise<void> {
     if (isPlatformBrowser(this.platformId)) {
-      const L = await import('leaflet'); // ✅ carga solo JS, no CSS
+      const L = await import('leaflet');
+      console.log('✅ Leaflet cargado');
 
-      const map = L.map('map').setView([4.5709, -74.2973], 6); // Vista inicial centrada en Colombia
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map);
-
-      // Añadir todos los marcadores del array de conglomerados
-      this.conglomerados.forEach(conglomerado => {
-        const marker = L.marker([conglomerado.lat, conglomerado.lon]).addTo(map);
-        marker.bindPopup(conglomerado.nombre);
-
-        marker.on('click', () => this.mostrarInfo(conglomerado));
+      this.dataService.getConglomerados().subscribe({
+        next: (data) => {
+          console.log('✅ Datos de conglomerados cargados:', data);
+          this.conglomerados = data;
+          this.inicializarMapa(L);
+        },
+        error: (err) => {
+          console.error('❌ Error al cargar JSON:', err);
+        }
       });
     }
   }
 
-  // Mostrar la información del conglomerado seleccionado
-  mostrarInfo(conglomerado: any) {
+  inicializarMapa(L: any): void {
+    const map = L.map('map').setView([4.5709, -74.2973], 6);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    this.conglomerados.forEach(conglomerado => {
+      const latlng = conglomerado.coordenadas ?? [conglomerado.lat, conglomerado.lon];
+
+      if (!latlng || latlng.length !== 2) {
+        console.warn('⚠️ Coordenadas inválidas para:', conglomerado);
+        return;
+      }
+
+      const marker = L.marker(latlng).addTo(map);
+      marker.bindPopup(conglomerado.nombre);
+      marker.on('click', () => this.mostrarInfo(conglomerado));
+    });
+  }
+
+  mostrarInfo(conglomerado: any): void {
     const zona = document.getElementById('zona-nombre');
     const radio = document.getElementById('zona-radio');
     const ubicacion = document.getElementById('zona-ubicacion');
@@ -153,7 +69,9 @@ export class MapaComponent implements AfterViewInit {
       radio.textContent = conglomerado.radio.toString();
       ubicacion.textContent = conglomerado.ubicacion;
       acceso.textContent = conglomerado.acceso;
-      lista.innerHTML = conglomerado.especies.map((especie: string) => `<li>${especie}</li>`).join('');
+      lista.innerHTML = conglomerado.especies
+        .map((especie: string) => `<li>${especie}</li>`)
+        .join('');
     }
   }
 }

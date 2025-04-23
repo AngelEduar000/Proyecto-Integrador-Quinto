@@ -1,124 +1,92 @@
 [
   {
     "id": 1,
-    "nombre": "Zona Andina",
-    "ubicacion": "Bogotá, Cundinamarca",
-    "radio": 3.2,
-    "especies": [
-      "Quercus humboldtii",
-      "Cedrela odorata",
-      "Tabebuia rosea"
-    ],
+    "nombre": "Reserva Natural Nukak",
+    "ubicacion": "San José del Guaviare, Guaviare",
+    "radio": 6.0,
+    "especies": ["Eschweilera coriacea", "Tetrorchidium rubrivenium"],
     "acceso": "Media",
-    "coordenadas": [4.65, -74.05]
+    "coordenadas": [2.5667, -72.6333]
   },
   {
     "id": 2,
-    "nombre": "Zona Amazónica",
-    "ubicacion": "Leticia, Amazonas",
-    "radio": 5.8,
-    "especies": [
-      "Pipile cujubi",
-      "Cayenne de bronce",
-      "Lupinus speciosus"
-    ],
-    "acceso": "Difícil",
-    "coordenadas": [3.75, -69.25]
+    "nombre": "Zona Andina Central",
+    "ubicacion": "Ibagué, Tolima",
+    "radio": 4.8,
+    "especies": ["Juglans neotropica", "Alnus acuminata"],
+    "acceso": "Fácil",
+    "coordenadas": [4.4389, -75.2322]
   },
   {
     "id": 3,
-    "nombre": "Reserva Natural El Dorado",
-    "ubicacion": "Sierra Nevada de Santa Marta, Magdalena",
-    "radio": 7.1,
-    "especies": [
-      "Megaloceros giganteus",
-      "Corythomantis greeningi"
-    ],
+    "nombre": "Bosques de Niebla",
+    "ubicacion": "San Vicente de Chucurí, Santander",
+    "radio": 5.5,
+    "especies": ["Quercus humboldtii", "Magnolia polyhypsophylla"],
     "acceso": "Difícil",
-    "coordenadas": [10.54, -74.2]
+    "coordenadas": [6.8833, -73.4167]
   },
   {
     "id": 4,
-    "nombre": "Conglomerado de Guaviare",
-    "ubicacion": "San José del Guaviare",
-    "radio": 4.3,
-    "especies": [
-      "Atelopus sp.",
-      "Giant river otter"
-    ],
-    "acceso": "Fácil",
-    "coordenadas": [3.58, -73.65]
+    "nombre": "Zona Páramo de Sumapaz",
+    "ubicacion": "Bogotá, Distrito Capital",
+    "radio": 6.7,
+    "especies": ["Espeletia grandiflora", "Hypericum baccharioides"],
+    "acceso": "Media",
+    "coordenadas": [4.3300, -74.2000]
   },
   {
     "id": 5,
-    "nombre": "Bosque de la Esperanza",
-    "ubicacion": "Chocó",
-    "radio": 2.5,
-    "especies": [
-      "Sunglow gecko",
-      "Green poison arrow frog"
-    ],
-    "acceso": "Media",
-    "coordenadas": [6.3, -77.4]
+    "nombre": "Reserva El Tuparro",
+    "ubicacion": "Puerto Carreño, Vichada",
+    "radio": 7.0,
+    "especies": ["Mauritia flexuosa", "Brosimum utile"],
+    "acceso": "Difícil",
+    "coordenadas": [5.8667, -67.0000]
   },
   {
     "id": 6,
-    "nombre": "Reserva de la Cordillera Oriental",
-    "ubicacion": "Boyacá",
-    "radio": 6.0,
-    "especies": [
-      "Sumauma tree",
-      "Colombian rainbow boa"
-    ],
-    "acceso": "Difícil",
-    "coordenadas": [5.7, -73.0]
+    "nombre": "Zona Serranía de la Macarena",
+    "ubicacion": "La Macarena, Meta",
+    "radio": 5.0,
+    "especies": ["Brownea ariza", "Byrsonima crassifolia"],
+    "acceso": "Media",
+    "coordenadas": [2.1833, -73.7833]
   },
   {
     "id": 7,
-    "nombre": "Selva de la Amazonía",
-    "ubicacion": "Puerto Inírida",
-    "radio": 8.0,
-    "especies": [
-      "Harpy eagle",
-      "Amazonian poison frog"
-    ],
-    "acceso": "Media",
-    "coordenadas": [3.0, -69.0]
+    "nombre": "Bosques del Pacífico",
+    "ubicacion": "Bahía Solano, Chocó",
+    "radio": 6.2,
+    "especies": ["Virola sebifera", "Symphonia globulifera"],
+    "acceso": "Difícil",
+    "coordenadas": [6.2333, -77.4000]
   },
   {
     "id": 8,
-    "nombre": "Parque Nacional Los Nevados",
-    "ubicacion": "Manizales, Caldas",
-    "radio": 4.5,
-    "especies": [
-      "Mammal species X",
-      "Llama de montaña"
-    ],
-    "acceso": "Fácil",
-    "coordenadas": [5.0, -75.3]
+    "nombre": "Zona Llanos Orientales",
+    "ubicacion": "Yopal, Casanare",
+    "radio": 4.6,
+    "especies": ["Attalea butyracea", "Tabebuia rosea"],
+    "acceso": "Media",
+    "coordenadas": [5.3333, -72.4000]
   },
   {
     "id": 9,
-    "nombre": "Conglomerado de los Llanos",
-    "ubicacion": "Villavicencio, Meta",
-    "radio": 10.0,
-    "especies": [
-      "Red howler monkey",
-      "Capybara"
-    ],
+    "nombre": "Ciénaga Grande de Santa Marta",
+    "ubicacion": "Sitionuevo, Magdalena",
+    "radio": 3.8,
+    "especies": ["Avicennia germinans", "Laguncularia racemosa"],
     "acceso": "Fácil",
-    "coordenadas": [4.5, -73.6]
+    "coordenadas": [10.8167, -74.2667]
   },
   {
     "id": 10,
-    "nombre": "Bosque Seco Tropical",
-    "ubicacion": "La Guajira",
-    "radio": 5.4,
-    "especies": [
-      "Euphorbia spp.",
-      "Tropical horned lizard"
-    ],
-    "acceso": "Difícil",
-    "coordenadas": [11.0, -72.0]
+    "nombre": "Zona Montes de María",
+    "ubicacion": "El Carmen de Bolívar, Bolívar",
+    "radio": 5.9,
+    "especies": ["Cedrela odorata", "Guazuma ulmifolia"],
+    "acceso": "Media",
+    "coordenadas": [9.7167, -75.1333]
   }
 ]
