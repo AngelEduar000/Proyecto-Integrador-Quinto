@@ -1,237 +1,296 @@
-/* 📌 Estilos específicos para la Página de Inicio (index.html) */
 
-/* 📌 Contenedor principal de la página */
-.main-content {
-    padding: 50px 5%;
-    text-align: center;
+/* Estilos básicos del cuerpo (ajusta según sea necesario) */
+body {
+  margin: 0;
+  font-family: sans-serif; /* Fuente de ejemplo */
+  line-height: 1.6;
+  color: #333; /* Color de texto de ejemplo */
+  background-color: #c0ccdf; /* Asegura que el fondo del cuerpo sea blanco */
 }
 
-/* 📌 Sección de Introducción */
+/* Imágenes Responsivas - Regla General
+   Asegura que las imágenes se reduzcan proporcionalmente y no excedan el ancho del contenedor.
+   'display: block;' previene espacio extra debajo de imágenes en línea.
+   IMPORTANTE: Recuerda agregar los atributos width/height a las etiquetas <img> en HTML
+               para prevenir el desplazamiento acumulado de diseño (CLS). */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  
+}
+
+/* Contenedor principal del contenido de la página - Ajustado al 90% de ancho */
+.main-content {
+  width: 90%; /* Ocupa el 90% del ancho de la ventana */
+  margin: 0 auto; /* Centra el contenido horizontalmente */
+  padding: 20px; /* Relleno dentro del contenedor */
+}
+
+/* ==========================================================================
+   Secciones de Diseño (Usando Grid y Flexbox - Mobile First)
+   ========================================================================== */
+
+/* --- Sección de Introducción --- */
 .intro {
-    margin-bottom: 40px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Asegura que el título y el párrafo sean elementos de bloque para apilarse */
+.intro h2,
+.intro p {
+  display: block;
+  margin-bottom: 15px; /* Añade espacio entre el texto y la imagen */
 }
 
 .intro h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-    color: #333;
+    font-size: 2.8rem; /* Aumenta el tamaño del título */
+    margin-bottom: 20px; /* Ajusta el espacio debajo del título */
 }
 
 .intro p {
-    font-size: 1.1rem;
-    color: #666;
-    margin-bottom: 20px;
+    font-size: 1.3rem; /* Aumenta el tamaño del texto */
+    margin-bottom: 15px; /* Ajusta el espacio debajo del párrafo */
 }
 
-/* 📌 Imagen en la sección de introducción */
 .intro-img {
-    width: 100%;
-    max-width: 100%;  /* El ancho se ajusta al 100% */
-    height: auto;
-    border-radius: 10px;
-    margin-top: 20px;
+  max-width: 80%; /* Limita ligeramente el tamaño de la imagen de introducción */
+  margin: 20px auto; /* Mantiene margen para espaciado */
+  border-radius: 8px; /* Estilo opcional */
 }
 
-/* 📌 Botones de navegación */
+/* --- Sección de Botones --- */
 .buttons {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 30px;
-    flex-wrap: wrap; /* Permite que los botones se ajusten en pantallas pequeñas */
+  display: flex;
+  flex-wrap: wrap; /* Permite que los botones se envuelvan en pantallas más pequeñas */
+  justify-content: center; /* Centra los botones */
+  gap: 30px; /* Espacio entre los botones */
+  margin-bottom: 40px;
 }
 
-.buttons .btn {
-    background-color: #28a745;
-    color: white;
-    text-decoration: none;
-    font-size: 1.1rem;
-    padding: 15px 30px;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
+.btn {
+  display: inline-block;
+  padding: 15px 26px;
+  font-size: 1.8rem;  /* Tamaño de fuente aumentado */
+  background-color: #28a745; /* Cambiado a verde */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  text-align: center;
 }
 
-.buttons .btn:hover {
-    background-color: #218838;
+.btn:hover {
+  background-color: #218838; /* Verde más oscuro al pasar el mouse */
 }
 
-/* 📌 Sección de Información */
+/* --- Sección de Información --- */
 .info {
-    margin-top: 50px;
-    text-align: center;
+  margin-bottom: 30px;
 }
 
 .info h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2.8rem; /* Aumenta el tamaño del título */
 }
 
-.info p {
-    font-size: 1.1rem;
-    margin-bottom: 30px;
-    color: #666;
+.info > p { /* Apunta al párrafo directamente debajo de .info */
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.3rem; /* Aumenta el tamaño del texto */
+  max-width: 1200px; /* Mantiene un ancho máximo para mejor lectura */
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* 📌 Diseño en cuadrícula para las cajas de información */
+/* Cuadrícula de Información - Mobile First (Una sola columna) */
 .info-grid {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin-top: 30px;
+  display: grid;
+  gap: 15px; /* Espacio entre las cajas de información */
+  justify-items: center;
+  /* Por defecto, los elementos de la cuadrícula se apilan en una sola columna */
 }
 
 .info-box {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 300px;
-    text-align: center;
-    margin-bottom: 30px;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #f9f9f9; /* Fondo claro para las cajas */
+  max-width: 90%;
 }
 
 .info-box h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-}
-
-.info-box p {
-    color: #555;
-    margin-bottom: 20px;
+  margin-top: 0;
+  color: #0056b3; /* Color del encabezado de ejemplo - ajustar si es necesario */
 }
 
 .info-img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 10px;
+  max-width: 60%; /* Tamaño reducido de las imágenes de información */
+  height: auto;
+  margin: 15px auto 0 auto; /* Centra la imagen más pequeña */
+  border-radius: 8px;
 }
 
-/* Estilo para el carrusel */
+/* ==========================================================================
+   Carrusel de Imágenes Infinito
+   ========================================================================== */
+
 .carousel {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto;
-    overflow: hidden;
-    position: relative;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 100%; /* Asegura que el carrusel no se desborde de su contenedor (.main-content) */
+  overflow: hidden; /* Crucial: Oculta las partes del contenedor de imágenes fuera del área visible */
+  position: relative; /* Necesario si se usa posicionamiento absoluto dentro, aunque preferimos usar flex aquí */
+  margin-bottom: 30px;
+  /* Opcional: Añadir una máscara de gradiente para bordes más suaves */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
 
-/* Contenedor que se desplaza */
 .image-container {
-    display: flex;
-    width: 100%;
-    animation: scroll 40s linear infinite;
-    gap: 20px;
+  display: flex; /* Coloca las imágenes y el grupo duplicado en una sola fila */
+  width: 200%; /* Ancho doble para acomodar el contenido original + duplicado */
+  /* Propiedades de animación */
+  animation: scrollLeft 40s linear infinite; /* Ajusta la duración (40s) según sea necesario */
+  will-change: transform; /* Indicación para la optimización del navegador */
 }
 
-.carousel:hover .image-container {
-    animation-play-state: paused;
+/* Define la animación de desplazamiento */
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0); /* Empieza desde el principio */
+  }
+  100% {
+    /* Mueve a la izquierda exactamente el ancho del contenido original (50% del total de 200%) */
+    transform: translateX(-50%);
+  }
 }
 
-/* Estilo de las imágenes */
+/* Pausar la animación al pasar el mouse */
+.carousel:hover .image-container { /* Selector corregido */
+  animation-play-state: paused;
+}
+
+/* Estilo de las imágenes individuales dentro del carrusel */
 .image-container img {
-    width: 100%;
-    max-width: 300px; /* Imágenes responsivas */
-    height: auto; /* La altura se ajusta proporcionalmente */
-    object-fit: cover;
-    border-radius: 6px;
-    transition: transform 0.3s ease;
+  /* El ancho base ahora se establece en las consultas de medios */
+  height: auto; /* DEBE ser auto para que el aspecto de la imagen dependa del ancho */
+  aspect-ratio: 1 / 1.1; /* Fuerza que la altura sea el 110% del ancho (ancho/altura = 1/1.1) */
+  object-fit: cover; /* Cubre el área, mantiene la relación de aspecto, recorta si es necesario */
+  flex-shrink: 0; /* Evita que las imágenes se encojan en el contenedor flex */
+  /* El margen derecho base ahora se establece en las consultas de medios */
+  border-radius: 4px; /* Estilo opcional */
 }
 
-/* Efecto al pasar el ratón sobre las imágenes */
-.image-container img:hover {
-    transform: scale(1.05);
+/* El grupo duplicado (asegúrate de estructurarlo correctamente en HTML con aria-hidden) */
+.image-group-duplicate {
+  display: flex; /* Asegura que las imágenes dentro del grupo duplicado también sean elementos flex */
 }
 
-/* Animación para el desplazamiento infinito */
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(calc(-300px * 6 + 20px * 5)); /* Desplazamiento considerando el margen */
-    }
+/* Respetar la preferencia del usuario por movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .image-container {
+    animation-play-state: paused; /* Pausa la animación si el usuario prefiere movimiento reducido */
+    /* Alternativa: animation: none; para eliminarla completamente */
+  }
 }
 
-/* Media Queries para pantallas más pequeñas */
+/* ==========================================================================
+   Consultas de Medios para la Respuesta (Ajustes para Móviles y Tabletas)
+   ========================================================================== */
 
-/* Tablet (max-width: 768px) */
-@media (max-width: 768px) {
-    .intro h2 {
-        font-size: 2rem;
-    }
+/* Pantallas pequeñas (máximo 767px) - Ajuste para el tamaño del carrusel y las imágenes */
+@media (max-width: 767px) {
+  .main-content {
+    width: 95%; /* Usar 95% de ancho en pantallas más pequeñas */
+  }
 
-    .intro p {
-        font-size: 1rem;
-    }
+  .intro h2 {
+    font-size: 1.6rem;  /* Reduce el tamaño del título en móviles */
+  }
 
-    .buttons .btn {
-        padding: 12px 20px;
-    }
+  .intro p {
+    font-size: 1rem;  /* Reduce el tamaño del texto en móviles */
+  }
 
-    .info-grid {
-        gap: 20px;
-    }
+  .intro-img {
+    max-width: 95%;  /* Aumenta el tamaño de la imagen a 95% en móviles */
+  }
 
-    .info-box {
-        width: 100%;
-        max-width: 250px; /* Ajuste del tamaño de las cajas */
-    }
+  .buttons {
+    gap: 6px;  /* Reduce el espacio entre los botones solo en dispositivos móviles */
+  }
 
-    .image-container img {
-        width: 90%; /* Imágenes más pequeñas en tabletas */
-        max-width: 220px;
-    }
+  .btn {
+    padding: 8px 8px;  /* Reduce el padding solo en móviles */
+    font-size: 0.9rem;  /* Reduce el tamaño de la fuente solo en móviles */
+  }
 
-    @keyframes scroll {
-        0% {
-            transform: translateX(0);
-        }
-        100% {
-            transform: translateX(calc(-220px * 6 + 20px * 5));
-        }
-    }
+  .info h2 {
+    font-size: 1.6rem;  /* Reduce el tamaño del título en móviles */
+  }
+
+  .info p {
+    font-size: 1rem;  /* Reduce el tamaño del texto en móviles */
+  }
+
+  /* Carrusel: Imágenes más grandes en móviles */
+  .image-container img {
+    width: 180px; /* NUEVO TAMAÑO: Ancho más grande para móvil */
+    margin-right: 15px; /* NUEVO TAMAÑO: Ajustar espacio entre imágenes */
+  }
 }
 
-/* Móviles pequeños (max-width: 480px) */
-@media (max-width: 480px) {
-    .intro h2 {
-        font-size: 1.8rem;
-    }
+/* Pantallas de tabletas (mínimo 768px) - Ajuste para las imágenes y el espacio entre ellas */
+@media (min-width: 768px) {
+  .info-grid {
+    /* Cambiar a dos columnas */
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    .intro p {
-        font-size: 0.9rem;
-    }
+  .buttons {
+    flex-wrap: nowrap; /* Prevenir el ajuste de los botones en pantallas más grandes */
+  }
 
-    .buttons .btn {
-        padding: 10px 18px;
-    }
+  .btn {
+    padding: 10px 20px;  /* Padding ajustado para tablet */
+    font-size: 1.2rem;  /* Tamaño de fuente ajustado para tablet */
+  }
 
-    .info-grid {
-        gap: 10px;
-    }
+  .info h2 {
+    font-size: 2rem;  /* Reduce el tamaño del título en móviles */
+  }
 
-    .info-box {
-        width: 100%;
-        max-width: 220px;
-    }
+  .info p {
+    font-size: 1.2rem;  /* Reduce el tamaño del texto en móviles */
+  }
 
-    .image-container img {
-        width: 80%; /* Imágenes más pequeñas en móviles */
-        max-width: 160px;
-    }
+  .intro-img {
+    max-width: 95%;  /* Aumenta el tamaño de la imagen a 95% en tablet */
+  }
 
-    @keyframes scroll {
-        0% {
-            transform: translateX(0);
-        }
-        100% {
-            transform: translateX(calc(-160px * 6 + 10px * 5));
-        }
-    }
+  /* Carrusel: Ajustar el tamaño de las imágenes para tabletas */
+  .image-container img {
+    width: 250px; /* NUEVO TAMAÑO: Un tamaño intermedio más grande para tabletas */
+    margin-right: 20px; /* NUEVO TAMAÑO: Aumentar el espacio entre las imágenes */
+  }
+}
+
+/* Pantallas de escritorio grandes (mínimo 1024px) - Ajuste para pantallas grandes */
+@media (min-width: 1024px) {
+  /* Carrusel: Imágenes más grandes para escritorio */
+  .image-container img {
+    width: 300px; /* NUEVO TAMAÑO: Tamaño más grande para escritorio */
+    margin-right: 20px; /* NUEVO TAMAÑO: Espacio entre las imágenes */
+  }
+
+  .btn {
+    padding: 18px 28px;  /* Padding ajustado para escritorio */
+    font-size: 1.5rem;  /* Tamaño de fuente ajustado para escritorio */
+  }
+
+  .intro-img {
+    max-width: 80%;  /* Tamaño de imagen de intro para escritorio */
+  }
 }
