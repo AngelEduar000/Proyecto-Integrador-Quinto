@@ -5,8 +5,10 @@ body {
   font-family: sans-serif; /* Fuente de ejemplo */
   line-height: 1.6;
   color: #333; /* Color de texto de ejemplo */
-  background-color: #c0ccdf; /* Asegura que el fondo del cuerpo sea blanco */
+  background-color: #ccd4e0; /* Asegura que el fondo del cuerpo sea blanco */
 }
+
+
 
 /* Imágenes Responsivas - Regla General
    Asegura que las imágenes se reduzcan proporcionalmente y no excedan el ancho del contenedor.
