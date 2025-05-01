@@ -1,0 +1,7 @@
+<div class="carousel-container">
+  <button class="arrow left" (click)="prevImage()">&#10094;</button>
+
+  <img [src]="imagenes[currentIndex]" [alt]="imagenes[currentIndex]" class="carousel-image">
+
+  <button class="arrow right" (click)="nextImage()">&#10095;</button>
+</div>

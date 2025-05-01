@@ -1,6 +1,7 @@
 import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { DataService } from '../services/data.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-mapa',
@@ -23,7 +24,7 @@ export class MapaComponent implements AfterViewInit {
       const L = await import('leaflet');
       console.log('✅ Leaflet cargado');
 
-      this.dataService.getConglomerados().subscribe({
+      this.dataService.getConglomerados().pipe(take(1)).subscribe({
         next: (data) => {
           console.log('✅ Datos de conglomerados cargados:', data);
           this.conglomerados = data;
@@ -38,11 +39,11 @@ export class MapaComponent implements AfterViewInit {
 
   inicializarMapa(L: any): void {
     const map = L.map('map').setView([4.5709, -74.2973], 6);
-  
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
-  
+
     // 👇 Agrega configuración de ícono personalizado para evitar el 404
     const customIcon = L.icon({
       iconUrl: 'assets/leaflet/marker-icon.png',
@@ -52,15 +53,15 @@ export class MapaComponent implements AfterViewInit {
       popupAnchor: [1, -34],
       shadowSize: [41, 41]
     });
-  
+
     this.conglomerados.forEach(conglomerado => {
       const latlng = conglomerado.coordenadas ?? [conglomerado.lat, conglomerado.lon];
-  
+
       if (!latlng || latlng.length !== 2) {
         console.warn('⚠️ Coordenadas inválidas para:', conglomerado);
         return;
       }
-  
+
       // 👇 Usa el ícono personalizado
       const marker = L.marker(latlng, { icon: customIcon }).addTo(map);
       marker.bindPopup(conglomerado.nombre);

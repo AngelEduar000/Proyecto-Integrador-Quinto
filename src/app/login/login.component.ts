@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         const user = users.find(u => u.username === username && u.password === password);
 
         if (user) {
-          localStorage.setItem('loggedUser', JSON.stringify({ username: user.username, role: user.role }));
+          // localStorage.setItem('loggedUser', JSON.stringify({ username: user.username, role: user.role }));
           this.router.navigate(['/']); // Redirigir al inicio
         } else {
           this.errorMessage = 'Usuario o contraseña incorrectos.';
