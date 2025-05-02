@@ -1,36 +1,114 @@
+* {
+  box-sizing: border-box;
+}
+
 .carousel-container {
   position: relative;
-  width: 100vw;
-  max-width: 600px;
+  width: 100%;
+  max-width: 1200px;
   margin: auto;
   text-align: center;
   overflow: hidden;
+  padding: 0 1rem;
 }
 
+/* Imagen principal */
 .carousel-image {
   width: 100%;
   height: auto;
-  border-radius: 10px;
+  border-radius: 16px;
   transition: transform 0.5s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
+/* Flechas */
 .arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0, 0.5);
   border: none;
-  padding: 10px;
+  padding: 14px 18px;
   color: white;
-  font-size: 24px;
+  font-size: 32px;
   cursor: pointer;
   z-index: 1000;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.arrow:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .left {
-  left: 10px;
+  left: 20px;
 }
 
 .right {
-  right: 10px;
+  right: 20px;
+}
+
+/* === MEDIA QUERIES === */
+
+@media (max-width: 1024px) {
+  .carousel-container {
+    max-width: 90%;
+  }
+
+  .arrow {
+    font-size: 28px;
+    padding: 12px 16px;
+  }
+
+  .left {
+    left: 16px;
+  }
+
+  .right {
+    right: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carousel-container {
+    max-width: 100%;
+    padding: 0 0.5rem;
+  }
+
+  .arrow {
+    font-size: 24px;
+    padding: 10px 12px;
+  }
+
+  .left {
+    left: 12px;
+  }
+
+  .right {
+    right: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-container {
+    padding: 0;
+  }
+
+  .carousel-image {
+    border-radius: 8px;
+  }
+
+  .arrow {
+    font-size: 20px;
+    padding: 8px 10px;
+  }
+
+  .left {
+    left: 8px;
+  }
+
+  .right {
+    right: 8px;
+  }
 }

@@ -15,8 +15,6 @@ export class CarruselComponent implements OnInit, OnDestroy{
     '/imagenes/carrucel 3.png',
     '/imagenes/carrucel 4.png',
     '/imagenes/carrucel 5.png',
-    '/imagenes/carrucel 6.png',
-    '/imagenes/carrucel 7.png',
   ]
 
   currentIndex = 0;
