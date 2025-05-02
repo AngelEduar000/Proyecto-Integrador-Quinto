@@ -26,10 +26,6 @@ export class MapaComponent implements AfterViewInit {
 
       this.dataService.getConglomerados().pipe(take(1)).subscribe({
         next: (data) => {
-          if (!Array.isArray(data)) {
-            console.error('❌ El valor recibido no es un arreglo:', data);
-            return;
-          }
           console.log('✅ Datos de conglomerados cargados:', data);
           this.conglomerados = data;
           this.inicializarMapa(L);
@@ -48,6 +44,7 @@ export class MapaComponent implements AfterViewInit {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
 
+    // 👇 Agrega configuración de ícono personalizado para evitar el 404
     const customIcon = L.icon({
       iconUrl: 'assets/leaflet/marker-icon.png',
       shadowUrl: 'assets/leaflet/marker-shadow.png',
@@ -65,6 +62,7 @@ export class MapaComponent implements AfterViewInit {
         return;
       }
 
+      // 👇 Usa el ícono personalizado
       const marker = L.marker(latlng, { icon: customIcon }).addTo(map);
       marker.bindPopup(conglomerado.nombre);
       marker.on('click', () => this.mostrarInfo(conglomerado));
@@ -80,13 +78,12 @@ export class MapaComponent implements AfterViewInit {
 
     if (zona && radio && ubicacion && acceso && lista) {
       zona.textContent = conglomerado.nombre;
-      radio.textContent = conglomerado.radio?.toString() ?? 'N/A';
-      ubicacion.textContent = conglomerado.ubicacion ?? 'N/A';
-      acceso.textContent = conglomerado.acceso ?? 'N/A';
-
-      lista.innerHTML = Array.isArray(conglomerado.especies)
-        ? conglomerado.especies.map((especie: string) => `<li>${especie}</li>`).join('')
-        : '<li>No hay especies registradas</li>';
+      radio.textContent = conglomerado.radio.toString();
+      ubicacion.textContent = conglomerado.ubicacion;
+      acceso.textContent = conglomerado.acceso;
+      lista.innerHTML = conglomerado.especies
+        .map((especie: string) => `<li>${especie}</li>`)
+        .join('');
     }
   }
 }
