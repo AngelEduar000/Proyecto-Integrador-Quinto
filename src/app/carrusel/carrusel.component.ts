@@ -12,11 +12,11 @@ export class CarruselComponent implements OnInit, OnDestroy{
   imagenes: string[] = [
     '/imagenes/carrucel 1.png',
     '/imagenes/carrucel 2.png',
-    '/imagenes/carrucel 1.png',
-    '/imagenes/carrucel 1.png',
-    '/imagenes/carrucel 1.png',
-    '/imagenes/carrucel 1.png',
-    '/imagenes/carrucel 1.png',
+    '/imagenes/carrucel 3.png',
+    '/imagenes/carrucel 4.png',
+    '/imagenes/carrucel 5.png',
+    '/imagenes/carrucel 6.png',
+    '/imagenes/carrucel 7.png',
   ]
 
   currentIndex = 0;
