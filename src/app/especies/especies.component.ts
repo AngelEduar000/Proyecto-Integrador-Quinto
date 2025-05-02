@@ -20,21 +20,21 @@ export class EspeciesComponent {
       nombre_cientifico: 'Tabebuia chrysantha',
       usos_medicinales: 'Tratamiento de fiebres y dolores.',
       territorios: ['Amazonas', 'Chocó'],
-      imagen: '/imagenes/guayacan.jpg'
+      imagen: 'guayacan.jpg'
     },
     {
       nombre_comun: 'Ceiba',
       nombre_cientifico: 'Ceiba pentandra',
       usos_medicinales: 'Usada como analgésico.',
       territorios: ['Caribe', 'Pacífico'],
-      imagen: '/imagenes/ceiba.jpg'
+      imagen: 'ceiba.jpg'
     },
     {
       nombre_comun: 'Sangre de Drago',
       nombre_cientifico: 'Croton lechleri',
       usos_medicinales: 'Antiinflamatorio natural y cicatrizante.',
       territorios: ['Amazonas'],
-      imagen: '/imagenes/sangre-de-drago.jpg'
+      imagen: 'sangre-de-drago.jpg'
     },
     // Nuevas especies agregadas
     {
@@ -42,35 +42,35 @@ export class EspeciesComponent {
       nombre_cientifico: 'Ceroxylon quindiuense',
       usos_medicinales: 'El jugo de la cocora se utiliza para el tratamiento de enfermedades respiratorias.',
       territorios: ['Eje Cafetero'],
-      imagen: '/imagenes/cocora.jpg'
+      imagen: 'cocora.jpg'
     },
     {
       nombre_comun: 'Chuchuhuasi',
       nombre_cientifico: 'Maytenus krukovii',
       usos_medicinales: 'Se utiliza como tónico energético y para aliviar dolores musculares.',
       territorios: ['Amazonas', 'Orinoquía'],
-      imagen: '/imagenes/chuchuhuasi.jpg'
+      imagen: 'chuchuhuasi.jpg'
     },
     {
       nombre_comun: 'Cedro',
       nombre_cientifico: 'Cedrela odorata',
       usos_medicinales: 'Uso en medicina tradicional para dolores de estómago y fiebre.',
       territorios: ['Pacífico', 'Amazonas'],
-      imagen: '/imagenes/cedro.jpg'
+      imagen: 'cedro.jpg'
     },
     {
       nombre_comun: 'Balsa',
       nombre_cientifico: 'Ochroma pyramidale',
       usos_medicinales: 'Se utiliza en la medicina tradicional para tratar heridas y quemaduras.',
       territorios: ['Pacífico'],
-      imagen: '/imagenes/balsa.jpg'
+      imagen: 'balsa.jpg'
     },
     {
       nombre_comun: 'Gualanday',
       nombre_cientifico: 'Tocoyena formosa',
       usos_medicinales: 'Se utiliza para tratar el dolor de cabeza y resfriados.',
       territorios: ['Amazonas', 'Orinoquía'],
-      imagen: '/imagenes/gualanday.jpg'
+      imagen: 'gualanday.jpg'
     }
   ];
 
