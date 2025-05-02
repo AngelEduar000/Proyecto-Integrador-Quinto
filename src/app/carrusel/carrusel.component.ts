@@ -10,13 +10,13 @@ import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core
 export class CarruselComponent implements OnInit, OnDestroy{
 
   imagenes: string[] = [
-    '/imagenes/balsa.jpg',
-    '/imagenes/cedro.jpg',
-    '/imagenes/ceiba.jpg',
-    '/imagenes/chuchuhuasi.jpg',
-    '/imagenes/forest.jpg',
-    '/imagenes/gualanday.jpg',
-    '/imagenes/guayacan.jpg',
+    '/imagenes/carrucel 1.png',
+    '/imagenes/carrucel 2.png',
+    '/imagenes/carrucel 1.png',
+    '/imagenes/carrucel 1.png',
+    '/imagenes/carrucel 1.png',
+    '/imagenes/carrucel 1.png',
+    '/imagenes/carrucel 1.png',
   ]
 
   currentIndex = 0;
