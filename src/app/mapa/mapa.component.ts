@@ -30,7 +30,7 @@ export class MapaComponent implements AfterViewInit {
           next: (data) => {
             console.log('✅ Datos de conglomerados cargados:', data);
             this.conglomerados = data;
-            this.initMap(); // Inicializar el mapa
+            this.initMap(); // Inicializar el mapa después de cargar la API
           },
           error: (err) => {
             console.error('Error al cargar los datos', err);
@@ -42,33 +42,35 @@ export class MapaComponent implements AfterViewInit {
     }
   }
 
-  // Función para cargar el script de Google Maps
+  // Función para cargar el script de Google Maps de manera dinámica
   loadGoogleMapsScript(): Promise<void> {
     return new Promise((resolve, reject) => {
-      // Comprobar si el script ya está cargado
       if (typeof google === 'undefined') {
         const script = document.createElement('script');
-        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD2A5gNXoB8-TYjCQJF7o9oEa3_B_EufKk&callback=initMap';
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD2A5gNXoB8-TYjCQJF7o9oEa3_B_EufKk'; // No usar callback=initMap
         script.async = true;
         script.defer = true;
-        script.onload = () => resolve();
+        script.onload = () => {
+          resolve();
+          this.initMap();  // Llamar a initMap una vez que se cargue el script
+        };
         script.onerror = () => reject('No se pudo cargar el script de Google Maps');
         document.head.appendChild(script);
       } else {
         resolve(); // Si Google ya está cargado, resolver la promesa
+        this.initMap();
       }
     });
   }
 
   // Función para inicializar el mapa
   initMap(): void {
-    // Asegurarnos de que las coordenadas son números antes de usarlas
     const map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-      zoom: 10,
-      center: { lat: 4.60971, lng: -74.08175 },  // Coordenadas de ejemplo (Bogotá, puedes cambiar estas)
+      zoom: 5.5,
+      center: { lat: 4.60971, lng: -74.08175 },  // Coordenadas de ejemplo (Bogotá)
     });
 
-    // Añadir los marcadores
+    // Añadir los marcadores usando las coordenadas de los conglomerados
     this.conglomerados.forEach(conglomerado => {
       const lat = parseFloat(conglomerado.coordenadas[0]);  // Accedemos al valor de latitud
       const lng = parseFloat(conglomerado.coordenadas[1]);  // Accedemos al valor de longitud
