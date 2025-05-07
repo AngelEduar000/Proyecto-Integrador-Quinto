@@ -57,8 +57,7 @@ export class MapaComponent implements AfterViewInit {
     this.conglomerados.forEach(conglomerado => {
       const latlng = conglomerado.coordenadas ?? [conglomerado.lat, conglomerado.lon];
 
-      // Verificación para asegurarse de que las coordenadas sean válidas
-      if (!latlng || latlng.length !== 2 || isNaN(latlng[0]) || isNaN(latlng[1])) {
+      if (!latlng || latlng.length !== 2) {
         console.warn('⚠️ Coordenadas inválidas para:', conglomerado);
         return;
       }
@@ -82,16 +81,9 @@ export class MapaComponent implements AfterViewInit {
       radio.textContent = conglomerado.radio.toString();
       ubicacion.textContent = conglomerado.ubicacion;
       acceso.textContent = conglomerado.acceso;
-
-      // Verificar si 'especies' es un arreglo antes de usar .map()
-      if (Array.isArray(conglomerado.especies)) {
-        lista.innerHTML = conglomerado.especies
-          .map((especie: string) => `<li>${especie}</li>`)
-          .join('');
-      } else {
-        console.warn('⚠️ "especies" no es un arreglo en:', conglomerado);
-        lista.innerHTML = '';
-      }
+      lista.innerHTML = conglomerado.especies
+        .map((especie: string) => `<li>${especie}</li>`)
+        .join('');
     }
   }
 }
