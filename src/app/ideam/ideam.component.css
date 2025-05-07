@@ -1,0 +1,38 @@
+@media (max-width: 768px) {
+    .responsive-table thead {
+      display: none;
+    }
+  
+    .responsive-table, 
+    .responsive-table tbody, 
+    .responsive-table tr, 
+    .responsive-table td {
+      display: block;
+      width: 100%;
+    }
+  
+    .responsive-table tr {
+      margin-bottom: 1rem;
+      border: 1px solid #dee2e6;
+      border-radius: 0.25rem;
+      background-color: #f8f9fa;
+      padding: 10px;
+    }
+  
+    .responsive-table td {
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+    }
+  
+    .responsive-table td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 10px;
+      width: 45%;
+      white-space: nowrap;
+      text-align: left;
+      font-weight: bold;
+    }
+  }
+  
