@@ -13,6 +13,7 @@ import { InvestigacionComponent } from './investigacion/investigacion.component'
 import { LaboratorioComponent } from './laboratorio/laboratorio.component';
 import { IdeamComponent } from './ideam/ideam.component';
 import { AgregarConglomeradoComponent } from './add-edit-conglomerados/add-edit-conglomerados.component';
+import {AddEditBrigadistasComponent} from './add-edit-brigadistas/add-edit-brigadistas.component';
 
 
 
@@ -26,7 +27,9 @@ export const routes: Routes = [
     { path: 'investigacion', component: InvestigacionComponent },
     { path: `laboratorio`, component: LaboratorioComponent },
     { path: `ideam`, component: IdeamComponent },
-    { path: 'add', component: AgregarConglomeradoComponent } 
+    { path: 'add', component: AgregarConglomeradoComponent },
+    { path: 'add2', component: AddEditBrigadistasComponent }
+
 ];
 
 @NgModule({

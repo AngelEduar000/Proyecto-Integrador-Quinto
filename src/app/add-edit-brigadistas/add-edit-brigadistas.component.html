@@ -1,0 +1,38 @@
+<div class="row form-container">
+    <div class="col-lg-4 offset-lg-4">
+      <div class="card bg-light mb-3" style="max-width: 5000rem;">
+        <div class="card-header text-center">Agregar Brigadista</div>
+        <div class="card-body">
+          <form [formGroup]="brigadistaForm" (ngSubmit)="onSubmit()">
+  
+            <input type="text" formControlName="nombre" class="form-control mt-4" placeholder="Ingrese el nombre" />
+  
+            <input type="email" formControlName="correo" class="form-control mt-4" placeholder="Ingrese el correo" />
+  
+            <input type="text" formControlName="direccion" class="form-control mt-4" placeholder="Ingrese la dirección" />
+  
+            <input type="text" formControlName="telefono" class="form-control mt-4" placeholder="Ingrese el teléfono" />
+
+            
+            <label for="rol" class="mt-4">Rol</label>
+            <select id="rol" formControlName="rol" class="form-control">
+              <option value="">Seleccione un rol</option>
+              <option value="Investigador">Investigador</option>
+              <option value="CoInvestigador">CoInvestigador</option>
+            </select>
+            
+  
+            <div class="row mt-4 text-center">
+              <div class="col-lg-6">
+                <a routerLink="/ideam" class="btn btn-secondary w-100">Volver</a>
+              </div>
+              <div class="col-lg-6">
+                <button type="submit" class="btn btn-success w-100">Aceptar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
