@@ -1,18 +1,105 @@
-<h1 class="titulo-pagina">Gestión de Conglomerados - IDEAM</h1>
+<div class="container mt-4">
+  <h1 class="titulo-pagina text-center mb-4">Gestión de Conglomerados y Brigadistas - IDEAM</h1>.
 
-<div class="panel">
-  <label>
-    Asignar líder de brigada:
-    <input type="text" [(ngModel)]="liderBrigada" placeholder="Nombre completo" />
-  </label>
-  <button (click)="asignarLider()">Asignar líder</button>
+   <!-- Sección: Listado de Conglomerados -->
+   <div class="card bg-secondary mb-4" style="max-width: 100%;">
+    <div class="card-header text-white d-flex justify-content-between align-items-center">
+      <span>Listado de Conglomerados</span>
+      <button class="btn btn-light btn-sm" [routerLink]="['/add']">Agregar Conglomerado</button>
+    </div>
+    <div class="card-body bg-light">
+      <table class="table table-hover table-bordered mb-0">
+        <thead class="table-secondary">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Identificador</th>
+            <th scope="col">Fecha Creación</th>
+            <th scope="col">Fecha Establecimiento</th>
+            <th scope="col">Región</th>
+            <th scope="col">Municipio</th>
+            <th scope="col">Coordenadas</th>
+            <th colspan="2" scope="col" class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of conglomerados" class="table-success">
+            <th scope="row">{{ item.id }}</th>
+            <td>{{ item.Identificador }}</td>
+            <td>{{ item.FechaCreacion | date:'shortDate' }}</td>
+            <td>{{ item.FechaEstablecimiento | date:'shortDate' }}</td>
+            <td>{{ item.Region }}</td>
+            <td>{{ item.Municipio }}</td>
+            <td>{{ item.coordenadas }}</td>
+            <td class="text-center">
+              <button [routerLink]="['/edit', item.id]" type="button" class="btn btn-warning btn-sm">Editar</button>
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-  <hr />
 
-  <h3>Generar conglomerado</h3>
-  <button (click)="generarConglomerado()">Generar</button>
 
-  <ul *ngIf="conglomeradoGenerado.length > 0">
-    <li *ngFor="let item of conglomeradoGenerado">📌 {{ item }}</li>
-  </ul>
+
+  <!-- Sección: Crear Nueva Brigada -->
+  <div class="card bg-secondary mb-4" style="max-width: 100%;">
+    <div class="card-header text-white">Crear Nueva Brigada</div>
+    <div class="card-body bg-light">
+      <form [formGroup]="brigadaForm" (ngSubmit)="onSubmit()">
+        <div class="mb-2">
+          <label for="nombreBrigada" class="form-label">Nombre de la Brigada</label>
+          <input type="text" class="form-control" id="nombreBrigada" formControlName="nombreBrigada" placeholder="Ej: Brigada Alfa">
+          <div *ngIf="brigadaForm.get('nombreBrigada')?.invalid && (brigadaForm.get('nombreBrigada')?.dirty || brigadaForm.get('nombreBrigada')?.touched)" class="text-danger mt-1">
+            <small *ngIf="brigadaForm.get('nombreBrigada')?.errors?.['required']">El nombre de la brigada es requerido.</small>
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label for="fechaVisita" class="form-label">Fecha de Visita</label>
+          <input type="date" class="form-control" id="fechaVisita" formControlName="fechaVisita">
+          <div *ngIf="brigadaForm.get('fechaVisita')?.invalid && (brigadaForm.get('fechaVisita')?.dirty || brigadaForm.get('fechaVisita')?.touched)" class="text-danger mt-1">
+            <small *ngIf="brigadaForm.get('fechaVisita')?.errors?.['required']">La fecha de visita es requerida.</small>
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label for="jefeBrigada" class="form-label">Jefe de Brigada</label>
+          <select class="form-select" id="jefeBrigada" formControlName="jefeBrigada">
+            <option value="" disabled selected>Seleccione un Jefe</option>
+          </select>
+          <div *ngIf="brigadaForm.get('jefeBrigada')?.invalid && (brigadaForm.get('jefeBrigada')?.dirty || brigadaForm.get('jefeBrigada')?.touched)" class="text-danger mt-1">
+            <small *ngIf="brigadaForm.get('jefeBrigada')?.errors?.['required']">Debe seleccionar un jefe de brigada.</small>
+          </div>
+        </div>
+
+        <div class="mb-2">
+          <label for="investigador" class="form-label">Investigador</label>
+          <select class="form-select" id="investigador" formControlName="investigador">
+            <option value="" disabled selected>Seleccione un Investigador</option>
+          </select>
+          <div *ngIf="brigadaForm.get('investigador')?.invalid && (brigadaForm.get('investigador')?.dirty || brigadaForm.get('investigador')?.touched)" class="text-danger mt-1">
+            <small *ngIf="brigadaForm.get('investigador')?.errors?.['required']">Debe seleccionar un investigador.</small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="CoInvestigador" class="form-label">CoInvestigador</label>
+          <select class="form-select" id="CoInvestigador" formControlName="CoInvestigador">
+            <option value="" disabled selected>Seleccione un CoInvestigador</option>
+          </select>
+          <div *ngIf="brigadaForm.get('CoInvestigador')?.invalid && (brigadaForm.get('CoInvestigador')?.dirty || brigadaForm.get('CoInvestigador')?.touched)" class="text-danger mt-1">
+            <small *ngIf="brigadaForm.get('CoInvestigador')?.errors?.['required']">Debe seleccionar un CoInvestigador.</small>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary" [disabled]="brigadaForm.invalid">Crear Brigada</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

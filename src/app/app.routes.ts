@@ -12,6 +12,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { InvestigacionComponent } from './investigacion/investigacion.component';
 import { LaboratorioComponent } from './laboratorio/laboratorio.component';
 import { IdeamComponent } from './ideam/ideam.component';
+import { AgregarConglomeradoComponent } from './add-edit-conglomerados/add-edit-conglomerados.component';
+
 
 
 export const routes: Routes = [
@@ -23,7 +25,8 @@ export const routes: Routes = [
     { path: `navbar`, component: NavbarComponent },
     { path: 'investigacion', component: InvestigacionComponent },
     { path: `laboratorio`, component: LaboratorioComponent },
-    { path: `ideam`, component: IdeamComponent }
+    { path: `ideam`, component: IdeamComponent },
+    { path: 'add', component: AgregarConglomeradoComponent } 
 ];
 
 @NgModule({
