@@ -64,7 +64,7 @@ export class MapaComponent implements AfterViewInit {
   initMap(): void {
     // Asegurarnos de que las coordenadas son números antes de usarlas
     const map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
-      zoom: 10,
+      zoom: 5.5,
       center: { lat: 4.60971, lng: -74.08175 },  // Coordenadas de ejemplo (Bogotá, puedes cambiar estas)
     });
 
