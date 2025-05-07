@@ -1,47 +1,48 @@
 <div class="container mt-4">
   <h1 class="titulo-pagina text-center mb-4">Gestión de Conglomerados y Brigadistas - IDEAM</h1>.
 
-  <!-- Sección: Listado de Conglomerados -->
+<!-- Sección: Listado de Conglomerados -->
 <div class="card bg-secondary mb-4" style="max-width: 100%;">
   <div class="card-header text-white d-flex justify-content-between align-items-center">
     <span>Listado de Conglomerados</span>
     <button class="btn btn-light btn-sm" [routerLink]="['/add']">Agregar Conglomerado</button>
   </div>
   <div class="card-body bg-light">
-    <table class="table table-hover table-bordered mb-0 responsive-table">
-      <thead class="table-secondary">
-        <tr>
-          <th scope="col">Id</th>
-          <th scope="col">Identificador</th>
-          <th scope="col">Fecha Creación</th>
-          <th scope="col">Fecha Establecimiento</th>
-          <th scope="col">Región</th>
-          <th scope="col">Municipio</th>
-          <th scope="col">Coordenadas</th>
-          <th colspan="2" scope="col" class="text-center">Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of conglomerados" class="table-success">
-          <td data-label="Id">{{ item.id }}</td>
-          <td data-label="Identificador">{{ item.Identificador }}</td>
-          <td data-label="Fecha Creación">{{ item.FechaCreacion | date:'shortDate' }}</td>
-          <td data-label="Fecha Establecimiento">{{ item.FechaEstablecimiento | date:'shortDate' }}</td>
-          <td data-label="Región">{{ item.Region }}</td>
-          <td data-label="Municipio">{{ item.Municipio }}</td>
-          <td data-label="Coordenadas">{{ item.coordenadas }}</td>
-          <td data-label="Editar" class="text-center">
-            <button [routerLink]="['/edit', item.id]" type="button" class="btn btn-warning btn-sm">Editar</button>
-          </td>
-          <td data-label="Eliminar" class="text-center">
-            <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered mb-0 responsive-table">
+        <thead class="table-secondary">
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Identificador</th>
+            <th scope="col">Fecha Creación</th>
+            <th scope="col">Fecha Establecimiento</th>
+            <th scope="col">Región</th>
+            <th scope="col">Municipio</th>
+            <th scope="col">Coordenadas</th>
+            <th colspan="2" scope="col" class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of conglomerados" class="table-success">
+            <td>{{ item.id }}</td>
+            <td>{{ item.Identificador }}</td>
+            <td>{{ item.FechaCreacion | date:'shortDate' }}</td>
+            <td>{{ item.FechaEstablecimiento | date:'shortDate' }}</td>
+            <td>{{ item.Region }}</td>
+            <td>{{ item.Municipio }}</td>
+            <td>{{ item.coordenadas }}</td>
+            <td class="text-center">
+              <button [routerLink]="['/edit', item.id]" type="button" class="btn btn-warning btn-sm">Editar</button>
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
-
 
 
   <!-- Sección: Crear Nueva Brigada -->
