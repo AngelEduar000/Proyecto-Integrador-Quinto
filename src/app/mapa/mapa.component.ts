@@ -3,6 +3,8 @@ import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { DataService } from '../services/data.service';
 import { take } from 'rxjs';
 
+declare var google: any; // Declarar google para evitar el error de "google is not defined"
+
 @Component({
   selector: 'app-mapa',
   standalone: true,
@@ -19,71 +21,82 @@ export class MapaComponent implements AfterViewInit {
     private dataService: DataService
   ) {}
 
-  async ngAfterViewInit(): Promise<void> {
+  ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
-      const L = await import('leaflet');
-      console.log('✅ Leaflet cargado');
-
-      this.dataService.getConglomerados().pipe(take(1)).subscribe({
-        next: (data) => {
-          console.log('✅ Datos de conglomerados cargados:', data);
-          this.conglomerados = data;
-          this.inicializarMapa(L);
-        },
-        error: (err) => {
-          console.error('❌ Error al cargar JSON:', err);
-        }
+      // Cargar el script de Google Maps dinámicamente
+      this.loadGoogleMapsScript().then(() => {
+        // Después de cargar el script, cargar los datos
+        this.dataService.getConglomerados().pipe(take(1)).subscribe({
+          next: (data) => {
+            console.log('✅ Datos de conglomerados cargados:', data);
+            this.conglomerados = data;
+            this.initMap(); // Inicializar el mapa
+          },
+          error: (err) => {
+            console.error('Error al cargar los datos', err);
+          }
+        });
+      }).catch((error) => {
+        console.error('Error al cargar la API de Google Maps:', error);
       });
     }
   }
 
-  inicializarMapa(L: any): void {
-    const map = L.map('map').setView([4.5709, -74.2973], 6);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-
-    // 👇 Agrega configuración de ícono personalizado para evitar el 404
-    const customIcon = L.icon({
-      iconUrl: 'assets/leaflet/marker-icon.png',
-      shadowUrl: 'assets/leaflet/marker-shadow.png',
-      iconSize: [25, 41],
-      iconAnchor: [12, 41],
-      popupAnchor: [1, -34],
-      shadowSize: [41, 41]
-    });
-
-    this.conglomerados.forEach(conglomerado => {
-      const latlng = conglomerado.coordenadas ?? [conglomerado.lat, conglomerado.lon];
-
-      if (!latlng || latlng.length !== 2) {
-        console.warn('⚠️ Coordenadas inválidas para:', conglomerado);
-        return;
+  // Función para cargar el script de Google Maps
+  loadGoogleMapsScript(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      // Comprobar si el script ya está cargado
+      if (typeof google === 'undefined') {
+        const script = document.createElement('script');
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD2A5gNXoB8-TYjCQJF7o9oEa3_B_EufKk&callback=initMap';
+        script.async = true;
+        script.defer = true;
+        script.onload = () => resolve();
+        script.onerror = () => reject('No se pudo cargar el script de Google Maps');
+        document.head.appendChild(script);
+      } else {
+        resolve(); // Si Google ya está cargado, resolver la promesa
       }
-
-      // 👇 Usa el ícono personalizado
-      const marker = L.marker(latlng, { icon: customIcon }).addTo(map);
-      marker.bindPopup(conglomerado.nombre);
-      marker.on('click', () => this.mostrarInfo(conglomerado));
     });
   }
 
-  mostrarInfo(conglomerado: any): void {
-    const zona = document.getElementById('zona-nombre');
-    const radio = document.getElementById('zona-radio');
-    const ubicacion = document.getElementById('zona-ubicacion');
-    const acceso = document.getElementById('zona-acceso');
-    const lista = document.getElementById('especies-lista');
+  // Función para inicializar el mapa
+  initMap(): void {
+    // Asegurarnos de que las coordenadas son números antes de usarlas
+    const map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+      zoom: 5.5,
+      center: { lat: 4.60971, lng: -74.08175 },  // Coordenadas de ejemplo (Bogotá, puedes cambiar estas)
+    });
 
-    if (zona && radio && ubicacion && acceso && lista) {
-      zona.textContent = conglomerado.nombre;
-      radio.textContent = conglomerado.radio.toString();
-      ubicacion.textContent = conglomerado.ubicacion;
-      acceso.textContent = conglomerado.acceso;
-      lista.innerHTML = conglomerado.especies
-        .map((especie: string) => `<li>${especie}</li>`)
-        .join('');
-    }
+    // Añadir los marcadores
+    this.conglomerados.forEach(conglomerado => {
+      const lat = parseFloat(conglomerado.coordenadas[0]);  // Accedemos al valor de latitud
+      const lng = parseFloat(conglomerado.coordenadas[1]);  // Accedemos al valor de longitud
+
+      // Comprobar si las coordenadas son válidas
+      if (!isNaN(lat) && !isNaN(lng)) {
+        const marker = new google.maps.Marker({
+          position: { lat: lat, lng: lng },
+          map: map,
+          title: conglomerado.nombre
+        });
+
+        // Información adicional al hacer clic en el marcador
+        const infoWindow = new google.maps.InfoWindow({
+          content: `
+            <h3>${conglomerado.nombre}</h3>
+            <p>Ubicación: ${conglomerado.ubicacion}</p>
+            <p>Especies encontradas: ${conglomerado.especies.join(', ')}</p>
+            <p>Dificultad de acceso: ${conglomerado.acceso}</p>
+          `
+        });
+
+        marker.addListener("click", () => {
+          infoWindow.open(map, marker);
+        });
+      } else {
+        console.warn(`Coordenadas no válidas para el conglomerado ${conglomerado.nombre}`);
+      }
+    });
   }
 }
