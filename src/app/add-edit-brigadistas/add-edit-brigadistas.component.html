@@ -1,38 +1,63 @@
 <div class="row form-container">
-    <div class="col-lg-4 offset-lg-4">
-      <div class="card bg-light mb-3" style="max-width: 5000rem;">
-        <div class="card-header text-center">Agregar Brigadista</div>
-        <div class="card-body">
-          <form [formGroup]="brigadistaForm" (ngSubmit)="onSubmit()">
-  
-            <input type="text" formControlName="nombre" class="form-control mt-4" placeholder="Ingrese el nombre" />
-  
-            <input type="email" formControlName="correo" class="form-control mt-4" placeholder="Ingrese el correo" />
-  
-            <input type="text" formControlName="direccion" class="form-control mt-4" placeholder="Ingrese la dirección" />
-  
-            <input type="text" formControlName="telefono" class="form-control mt-4" placeholder="Ingrese el teléfono" />
-
-            
-            <label for="rol" class="mt-4">Rol</label>
+  <div class="col-lg-4 offset-lg-4">
+    <div class="card bg-light mb-3">
+      <div class="card-header text-center">Agregar Brigadista</div>
+      <div class="card-body">
+        <form [formGroup]="brigadistaForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" formControlName="nombre" class="form-control" placeholder="Ingrese el nombre" />
+            <small class="text-danger" *ngIf="brigadistaForm.get('nombre')?.invalid && brigadistaForm.get('nombre')?.touched">
+              Nombre es requerido
+            </small>
+          </div>
+          
+          <div class="form-group">
+            <label>Correo</label>
+            <input type="email" formControlName="correo" class="form-control" placeholder="Ingrese el correo" />
+            <small class="text-danger" *ngIf="brigadistaForm.get('correo')?.invalid && brigadistaForm.get('correo')?.touched">
+              Ingrese un correo válido
+            </small>
+          </div>
+          
+          <div class="form-group">
+            <label>Dirección</label>
+            <input type="text" formControlName="direccion" class="form-control" placeholder="Ingrese la dirección" />
+            <small class="text-danger" *ngIf="brigadistaForm.get('direccion')?.invalid && brigadistaForm.get('direccion')?.touched">
+              Ingrese una direccion válido
+            </small>
+          </div>
+          
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input type="tel" formControlName="telefono" class="form-control" placeholder="Ingrese el teléfono" />
+            <small class="text-danger" *ngIf="brigadistaForm.get('telefono')?.invalid && brigadistaForm.get('telefono')?.touched">
+              Ingrese un telefono válido
+            </small>
+          </div>
+          
+          <div class="form-group">
+            <label for="rol">Rol</label>
             <select id="rol" formControlName="rol" class="form-control">
               <option value="">Seleccione un rol</option>
               <option value="Investigador">Investigador</option>
               <option value="CoInvestigador">CoInvestigador</option>
             </select>
-            
-  
-            <div class="row mt-4 text-center">
-              <div class="col-lg-6">
-                <a routerLink="/ideam" class="btn btn-secondary w-100">Volver</a>
-              </div>
-              <div class="col-lg-6">
-                <button type="submit" class="btn btn-success w-100">Aceptar</button>
-              </div>
+            <small class="text-danger" *ngIf="brigadistaForm.get('rol')?.invalid && brigadistaForm.get('rol')?.touched">
+              Seleccione un rol
+            </small>
+          </div>
+          
+          <div class="row mt-4 text-center">
+            <div class="col-lg-6">
+              <a routerLink="/ideam" class="btn btn-secondary w-100">Volver</a>
             </div>
-          </form>
-        </div>
+            <div class="col-lg-6">
+              <button type="submit" [disabled]="brigadistaForm.invalid" class="btn btn-success w-100">Aceptar</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
-  
+</div>

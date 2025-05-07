@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddEditConglomeradosComponent } from './add-edit-conglomerados.component';
+import { AgregarConglomeradoComponent } from './add-edit-conglomerados.component';
 
 describe('AddEditConglomeradosComponent', () => {
-  let component: AddEditConglomeradosComponent;
-  let fixture: ComponentFixture<AddEditConglomeradosComponent>;
+  let component: AgregarConglomeradoComponent;
+  let fixture: ComponentFixture<AgregarConglomeradoComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AddEditConglomeradosComponent]
+      imports: [AgregarConglomeradoComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(AddEditConglomeradosComponent);
+    fixture = TestBed.createComponent(AgregarConglomeradoComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

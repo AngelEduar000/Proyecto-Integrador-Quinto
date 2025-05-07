@@ -1,32 +1,69 @@
 <div class="row form-container">
-    <div class="col-lg-4 offset-lg-4">
-      <div class="card bg-light mb-3" style="max-width: 5000rem;">
-        <div class="card-header text-center">Agregar Conglomerado</div>
-        <div class="card-body">
-          <form>
-            <input type="text" class="form-control" placeholder="Ingrese el identificador" />
-            <input type="text" class="form-control mt-4" placeholder="Ingrese la Fecha de creación" />
-            <input type="text" class="form-control mt-4" placeholder="Ingrese la Región" />
-            <input type="text" class="form-control mt-4" placeholder="Ingrese el Municipio" />
-  
-            <label class="mt-4">Latitud</label>
-            <input type="text" class="form-control" placeholder="Ingrese la Latitud" />
-  
-            <div class="form-group mt-4">
-              <label>Longitud</label>
-              <input type="text" class="form-control" placeholder="Ingrese la Longitud" />
+  <div class="col-lg-4 offset-lg-4">
+    <div class="card bg-light mb-3">
+      <div class="card-header text-center">Agregar Conglomerado</div>
+      <div class="card-body">
+        <form [formGroup]="conglomeradoForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="identificador">Identificador</label>
+            <input id="identificador" type="text" formControlName="identificador" class="form-control" placeholder="Ingrese el identificador" />
+            <small class="text-danger" *ngIf="conglomeradoForm.get('identificador')?.invalid && conglomeradoForm.get('identificador')?.touched">
+              Identificador es requerido
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="fechaCreacion">Fecha de creación</label>
+            <input id="fechaCreacion" type="date" formControlName="fechaCreacion" class="form-control" />
+            <small class="text-danger" *ngIf="conglomeradoForm.get('fechaCreacion')?.invalid && conglomeradoForm.get('fechaCreacion')?.touched">
+              Fecha es requerida
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="region">Región</label>
+            <input id="region" type="text" formControlName="region" class="form-control" placeholder="Ingrese la Región" />
+            <small class="text-danger" *ngIf="conglomeradoForm.get('region')?.invalid && conglomeradoForm.get('region')?.touched">
+              Región es requerida
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="municipio">Municipio</label>
+            <input id="municipio" type="text" formControlName="municipio" class="form-control" placeholder="Ingrese el Municipio" />
+            <small class="text-danger" *ngIf="conglomeradoForm.get('municipio')?.invalid && conglomeradoForm.get('municipio')?.touched">
+              Municipio es requerido
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="latitud">Latitud</label>
+            <input id="latitud" type="number" formControlName="latitud" class="form-control" placeholder="Ingrese la Latitud" />
+            <small class="text-danger" *ngIf="conglomeradoForm.get('latitud')?.touched && conglomeradoForm.get('latitud')?.invalid">
+              <span *ngIf="conglomeradoForm.get('latitud')?.errors?.['required']">Latitud es requerida</span>
+              <span *ngIf="conglomeradoForm.get('latitud')?.errors?.['pattern']">Debe ser un número válido</span>
+            </small>
+          </div>
+
+          <div class="form-group">
+            <label for="longitud">Longitud</label>
+            <input id="longitud" type="number" formControlName="longitud" class="form-control" placeholder="Ingrese la Longitud" />
+            <small class="text-danger" *ngIf="conglomeradoForm.get('longitud')?.touched && conglomeradoForm.get('longitud')?.invalid">
+              <span *ngIf="conglomeradoForm.get('longitud')?.errors?.['required']">Longitud es requerida</span>
+              <span *ngIf="conglomeradoForm.get('longitud')?.errors?.['pattern']">Debe ser un número válido</span>
+            </small>
+          </div>
+
+          <div class="row mt-4 text-center">
+            <div class="col-lg-6">
+              <a routerLink="/ideam" class="btn btn-secondary w-100">Volver</a>
             </div>
-  
-            <div class="row mt-4 text-center">
-              <div class="col-lg-6">
-                <a href="/ideam" class="btn btn-secondary w-100">Volver</a>
-              </div>
-              <div class="col-lg-6">
-                <button type="submit" class="btn btn-success w-100">Aceptar</button>
-              </div>
+            <div class="col-lg-6">
+              <button type="submit" [disabled]="conglomeradoForm.invalid" class="btn btn-success w-100">Aceptar</button>
             </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
+</div>

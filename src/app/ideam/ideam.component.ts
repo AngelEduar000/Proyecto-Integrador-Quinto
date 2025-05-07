@@ -76,12 +76,25 @@ export class IdeamComponent implements OnInit {
       CoInvestigador: [[]]
     });
   }
-
+//LOGICA DE ALERTA 
   onSubmit(): void {
     if (this.brigadaForm.valid) {
-      console.log('Formulario enviado:', this.brigadaForm.value);
+      const nuevaBrigada = this.brigadaForm.value;
+  
+      // Aquí iría tu lógica para guardar la brigada, por ejemplo:
+      console.log('Brigada registrada:', nuevaBrigada);
+  
+      // Mostrar alerta de éxito
+      alert('Brigada registrada correctamente');
+  
+      // Opcional: resetear el formulario
+      this.brigadaForm.reset();
     } else {
-      console.log('Formulario inválido');
+      // Marcar todos los campos como tocados para mostrar errores
+      this.brigadaForm.markAllAsTouched();
+  
+      // Mostrar alerta de error
+      alert('Formulario inválido. Por favor, corrija los errores.');
     }
   }
 }

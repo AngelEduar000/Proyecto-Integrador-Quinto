@@ -6,7 +6,12 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-add-edit-brigadistas',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule 
+  ],
   templateUrl: './add-edit-brigadistas.component.html',
   styleUrls: ['./add-edit-brigadistas.component.css']
 })
@@ -18,7 +23,6 @@ export class AddEditBrigadistasComponent implements OnInit {
 
   ngOnInit(): void {
     this.brigadistaForm = this.fb.group({
-      id_usuario: ['', Validators.required],
       nombre: ['', Validators.required],
       correo: ['', [Validators.required, Validators.email]],
       direccion: ['', Validators.required],
@@ -26,15 +30,24 @@ export class AddEditBrigadistasComponent implements OnInit {
       rol: ['', Validators.required]
     });
   }
-
+//LOGICA ALERTA
   onSubmit(): void {
     if (this.brigadistaForm.valid) {
-      console.log('Formulario enviado:', this.brigadistaForm.value);
-      // Aquí podrías llamar a un servicio para guardar los datos, por ejemplo:
-      // this.brigadistaService.save(this.brigadistaForm.value).subscribe(...)
+      const nuevoBrigadista = this.brigadistaForm.value;
+  
+      // Aquí iría tu lógica para enviar los datos al backend o servicio
+      console.log('Brigadista registrado:', nuevoBrigadista);
+  
+      // Mostrar alerta de éxito
+      alert('Brigadista registrado correctamente');
+  
+      // Resetear formulario si deseas
+      this.brigadistaForm.reset();
     } else {
-      console.log('Formulario inválido');
+      this.brigadistaForm.markAllAsTouched();
+      alert('Formulario inválido. Por favor, corrija los errores.');
     }
   }
+  
 
 }
