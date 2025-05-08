@@ -47,7 +47,7 @@ export class MapaComponent implements AfterViewInit {
     return new Promise((resolve, reject) => {
       if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
         const script = document.createElement('script');
-        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD2A5gNXoB8-TYjCQJF7o9oEa3_B_EufKk&callback'; // ❌ Quita el &callback=initMap
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD2A5gNXoB8-TYjCQJF7o9oEa3_B_EufKk&callback';
         script.async = true;
         script.defer = true;
         script.onload = () => resolve();
