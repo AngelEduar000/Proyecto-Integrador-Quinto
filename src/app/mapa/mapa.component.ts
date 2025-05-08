@@ -45,58 +45,59 @@ export class MapaComponent implements AfterViewInit {
   // Función para cargar el script de Google Maps
   loadGoogleMapsScript(): Promise<void> {
     return new Promise((resolve, reject) => {
-      // Comprobar si el script ya está cargado
-      if (typeof google === 'undefined') {
+      if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
         const script = document.createElement('script');
-        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD2A5gNXoB8-TYjCQJF7o9oEa3_B_EufKk&callback=initMap';
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD2A5gNXoB8-TYjCQJF7o9oEa3_B_EufKk&callback'; // ❌ Quita el &callback=initMap
         script.async = true;
         script.defer = true;
         script.onload = () => resolve();
         script.onerror = () => reject('No se pudo cargar el script de Google Maps');
         document.head.appendChild(script);
       } else {
-        resolve(); // Si Google ya está cargado, resolver la promesa
+        resolve(); // Ya está cargado
       }
     });
   }
+
 
   // Función para inicializar el mapa
   initMap(): void {
-    // Asegurarnos de que las coordenadas son números antes de usarlas
     const map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
       zoom: 5.5,
-      center: { lat: 4.60971, lng: -74.08175 },  // Coordenadas de ejemplo (Bogotá, puedes cambiar estas)
+      center: { lat: 4.60971, lng: -74.08175 } // Bogotá como punto central
     });
 
-    // Añadir los marcadores
-    this.conglomerados.forEach(conglomerado => {
-      const lat = parseFloat(conglomerado.coordenadas[0]);  // Accedemos al valor de latitud
-      const lng = parseFloat(conglomerado.coordenadas[1]);  // Accedemos al valor de longitud
+    this.conglomerados.forEach((conglomerado) => {
+      const [latStr, lngStr] = conglomerado.coordenadas;
+      const lat = parseFloat(latStr);
+      const lng = parseFloat(lngStr);
 
-      // Comprobar si las coordenadas son válidas
-      if (!isNaN(lat) && !isNaN(lng)) {
-        const marker = new google.maps.Marker({
-          position: { lat: lat, lng: lng },
-          map: map,
-          title: conglomerado.nombre
-        });
-
-        // Información adicional al hacer clic en el marcador
-        const infoWindow = new google.maps.InfoWindow({
-          content: `
-            <h3>${conglomerado.nombre}</h3>
-            <p>Ubicación: ${conglomerado.ubicacion}</p>
-            <p>Especies encontradas: ${conglomerado.especies.join(', ')}</p>
-            <p>Dificultad de acceso: ${conglomerado.acceso}</p>
-          `
-        });
-
-        marker.addListener("click", () => {
-          infoWindow.open(map, marker);
-        });
-      } else {
-        console.warn(`Coordenadas no válidas para el conglomerado ${conglomerado.nombre}`);
+      if (isNaN(lat) || isNaN(lng)) {
+        console.warn(`❗ Coordenadas inválidas para el conglomerado: ${conglomerado.nombre}`);
+        return;
       }
+
+      const marker = new google.maps.Marker({
+        position: { lat, lng },
+        map,
+        title: conglomerado.nombre
+      });
+
+      const infoWindow = new google.maps.InfoWindow({
+        content: `
+          <div>
+            <h3>${conglomerado.nombre}</h3>
+            <p><strong>Ubicación:</strong> ${conglomerado.ubicacion}</p>
+            <p><strong>Especies encontradas:</strong> ${conglomerado.especies.join(', ')}</p>
+            <p><strong>Dificultad de acceso:</strong> ${conglomerado.acceso}</p>
+          </div>
+        `
+      });
+
+      marker.addListener("click", () => {
+        infoWindow.open(map, marker);
+      });
     });
   }
+
 }
