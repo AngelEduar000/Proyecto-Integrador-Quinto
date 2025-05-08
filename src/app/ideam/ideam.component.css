@@ -1,30 +1,4 @@
-@media (max-width: 768px) {
-    .responsive-table thead {
-      display: none;
-    }
-
-  
-    .responsive-table tr {
-      margin-bottom: 1rem;
-      border: 1px solid #dee2e6;
-      border-radius: 0.25rem;
-      background-color: #f8f9fa;
-      padding: 10px;
-    }
-  
-  
-    .responsive-table td::before {
-      content: attr(data-label);
-      position: absolute;
-      left: 10px;
-      width: 45%;
-      white-space: nowrap;
-      text-align: left;
-      font-weight: bold;
-    }
-  }
-
-  /* Opcional: mejora visual en móviles */
+/* Opcional: mejora visual en móviles */
   @media (max-width: 768px) {
     .table-responsive {
       border: 1px solid #dee2e6;
@@ -36,4 +10,3 @@
       white-space: nowrap;
     }
   }
-    

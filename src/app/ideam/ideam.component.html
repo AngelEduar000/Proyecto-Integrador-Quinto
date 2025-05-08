@@ -44,62 +44,121 @@
   </div>
 </div>
 
-
-  <!-- Sección: Crear Nueva Brigada -->
-  <div class="card bg-secondary mb-4" style="max-width: 100%;">
-    <div class="card-header text-white">Crear Nueva Brigada</div>
-    <div class="card-body bg-light">
-      <form [formGroup]="brigadaForm" (ngSubmit)="onSubmit()">
-        <div class="mb-2">
-          <label for="nombreBrigada" class="form-label">Nombre de la Brigada</label>
-          <input type="text" class="form-control" id="nombreBrigada" formControlName="nombreBrigada" placeholder="Ej: Brigada Alfa">
-          <div *ngIf="brigadaForm.get('nombreBrigada')?.invalid && (brigadaForm.get('nombreBrigada')?.dirty || brigadaForm.get('nombreBrigada')?.touched)" class="text-danger mt-1">
-            <small *ngIf="brigadaForm.get('nombreBrigada')?.errors?.['required']">El nombre de la brigada es requerido.</small>
-          </div>
-        </div>
-
-        <div class="mb-2">
-          <label for="fechaVisita" class="form-label">Fecha de Visita</label>
-          <input type="date" class="form-control" id="fechaVisita" formControlName="fechaVisita">
-          <div *ngIf="brigadaForm.get('fechaVisita')?.invalid && (brigadaForm.get('fechaVisita')?.dirty || brigadaForm.get('fechaVisita')?.touched)" class="text-danger mt-1">
-            <small *ngIf="brigadaForm.get('fechaVisita')?.errors?.['required']">La fecha de visita es requerida.</small>
-          </div>
-        </div>
-
-        <div class="mb-2">
-          <label for="jefeBrigada" class="form-label">Jefe de Brigada</label>
-          <select class="form-select" id="jefeBrigada" formControlName="jefeBrigada">
-            <option value="" disabled selected>Seleccione un Jefe</option>
-          </select>
-          <div *ngIf="brigadaForm.get('jefeBrigada')?.invalid && (brigadaForm.get('jefeBrigada')?.dirty || brigadaForm.get('jefeBrigada')?.touched)" class="text-danger mt-1">
-            <small *ngIf="brigadaForm.get('jefeBrigada')?.errors?.['required']">Debe seleccionar un jefe de brigada.</small>
-          </div>
-        </div>
-
-        <div class="mb-2">
-          <label for="investigador" class="form-label">Investigador</label>
-          <select class="form-select" id="investigador" formControlName="investigador">
-            <option value="" disabled selected>Seleccione un Investigador</option>
-          </select>
-          <div *ngIf="brigadaForm.get('investigador')?.invalid && (brigadaForm.get('investigador')?.dirty || brigadaForm.get('investigador')?.touched)" class="text-danger mt-1">
-            <small *ngIf="brigadaForm.get('investigador')?.errors?.['required']">Debe seleccionar un investigador.</small>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label for="CoInvestigador" class="form-label">CoInvestigador</label>
-          <select class="form-select" id="CoInvestigador" formControlName="CoInvestigador">
-            <option value="" disabled selected>Seleccione un CoInvestigador</option>
-          </select>
-          <div *ngIf="brigadaForm.get('CoInvestigador')?.invalid && (brigadaForm.get('CoInvestigador')?.dirty || brigadaForm.get('CoInvestigador')?.touched)" class="text-danger mt-1">
-            <small *ngIf="brigadaForm.get('CoInvestigador')?.errors?.['required']">Debe seleccionar un CoInvestigador.</small>
-          </div>
-        </div>
-
-        <div class="d-flex justify-content-end">
-          <button type="submit" class="btn btn-primary" [disabled]="brigadaForm.invalid">Crear Brigada</button>
-        </div>
-      </form>
+<!-- Sección: Listado de Brigadistas -->
+<div class="card bg-secondary mb-4" style="max-width: 100%;">
+  <div class="card-header text-white d-flex justify-content-between align-items-center">
+    <span>Listado de Brigadistas</span>
+    <button class="btn btn-light btn-sm" [routerLink]="['/add2']">Agregar Brigadista</button>
+  </div>
+  <div class="card-body bg-light">
+    <div class="table-responsive">
+      <table class="table table-hover table-bordered mb-0 responsive-table">
+        <thead class="table-secondary">
+          <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Rol</th>
+            <th colspan="2" class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let brigadista of brigadistas" class="table-success">
+            <td>{{ brigadista.id_usuario }}</td>
+            <td>{{ brigadista.nombre }}</td>
+            <td>{{ brigadista.correo }}</td>
+            <td>{{ brigadista.direccion }}</td>
+            <td>{{ brigadista.telefono }}</td>
+            <td>{{ brigadista.rol }}</td>
+            <td class="text-center">
+              <button [routerLink]="['/brigadistas/edit', brigadista.id_usuario]" type="button" class="btn btn-warning btn-sm">Editar</button>
+            </td>
+            <td class="text-center">
+              <button type="button" class="btn btn-danger btn-sm">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</div>
+
+
+
+<!-- Sección: Crear Nueva Brigada -->
+<div class="card bg-secondary mb-4" style="max-width: 100%;">
+  <div class="card-header text-white">Crear Nueva Brigada</div>
+  <div class="card-body bg-light">
+    <form [formGroup]="brigadaForm" (ngSubmit)="onSubmit()">
+      <!-- Nombre de la Brigada -->
+      <div class="mb-2">
+        <label for="nombreBrigada" class="form-label">Nombre de la Brigada</label>
+        <input type="text" class="form-control" id="nombreBrigada" formControlName="nombreBrigada" placeholder="Ej: Brigada Alfa">
+        <div *ngIf="brigadaForm.get('nombreBrigada')?.invalid && (brigadaForm.get('nombreBrigada')?.dirty || brigadaForm.get('nombreBrigada')?.touched)" class="text-danger mt-1">
+          <small *ngIf="brigadaForm.get('nombreBrigada')?.errors?.['required']">El nombre de la brigada es requerido.</small>
+        </div>
+      </div>
+
+      <!-- Fecha de Visita -->
+      <div class="mb-2">
+        <label for="fechaVisita" class="form-label">Fecha de Visita</label>
+        <input type="date" class="form-control" id="fechaVisita" formControlName="fechaVisita">
+        <div *ngIf="brigadaForm.get('fechaVisita')?.invalid && (brigadaForm.get('fechaVisita')?.dirty || brigadaForm.get('fechaVisita')?.touched)" class="text-danger mt-1">
+          <small *ngIf="brigadaForm.get('fechaVisita')?.errors?.['required']">La fecha de visita es requerida.</small>
+        </div>
+      </div>
+
+      <!-- Jefe de Brigada -->
+      <div class="mb-2">
+        <label for="jefeBrigada" class="form-label">Jefe de Brigada</label>
+        <select class="form-select" id="jefeBrigada" formControlName="jefeBrigada">
+          <option value="" disabled selected>Seleccione un Jefe</option>
+          <option *ngFor="let investigador of investigadores" [value]="investigador.id_usuario">
+            {{ investigador.nombre }}
+          </option>
+        </select>
+        <div *ngIf="brigadaForm.get('jefeBrigada')?.invalid && (brigadaForm.get('jefeBrigada')?.dirty || brigadaForm.get('jefeBrigada')?.touched)" class="text-danger mt-1">
+          <small *ngIf="brigadaForm.get('jefeBrigada')?.errors?.['required']">Debe seleccionar un jefe de brigada.</small>
+        </div>
+      </div>
+
+      <!-- Investigador -->
+      <div class="mb-2">
+        <label for="investigador" class="form-label">Investigador</label>
+        <select class="form-select" id="investigador" formControlName="investigador">
+          <option value="" disabled selected>Seleccione un Investigador</option>
+          <option *ngFor="let investigador of investigadores" [value]="investigador.id_usuario">
+            {{ investigador.nombre }}
+          </option>
+        </select>
+        <div *ngIf="brigadaForm.get('investigador')?.invalid && (brigadaForm.get('investigador')?.dirty || brigadaForm.get('investigador')?.touched)" class="text-danger mt-1">
+          <small *ngIf="brigadaForm.get('investigador')?.errors?.['required']">Debe seleccionar un investigador.</small>
+        </div>
+      </div>
+
+      <!-- CoInvestigador -->
+      <div class="mb-3">
+        <label for="CoInvestigador" class="form-label">CoInvestigador</label>
+        <select class="form-select" id="CoInvestigador" formControlName="CoInvestigador">
+          <option value="" disabled selected>Seleccione un CoInvestigador</option>
+          <option *ngFor="let co of coinvestigadores" [value]="co.id_usuario">
+            {{ co.nombre }}
+          </option>
+        </select>
+        <div *ngIf="brigadaForm.get('CoInvestigador')?.invalid && (brigadaForm.get('CoInvestigador')?.dirty || brigadaForm.get('CoInvestigador')?.touched)" class="text-danger mt-1">
+          <small *ngIf="brigadaForm.get('CoInvestigador')?.errors?.['required']">Debe seleccionar un CoInvestigador.</small>
+        </div>
+      </div>
+
+      <!-- Botón -->
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary" [disabled]="brigadaForm.invalid">Crear Brigada</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 </div>
