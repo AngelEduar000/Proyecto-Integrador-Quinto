@@ -15,6 +15,8 @@ declare var google: any; // Declarar google para evitar el error de "google is n
 export class MapaComponent implements AfterViewInit {
 
   conglomerados: any[] = [];
+  map: any;
+  circle: any;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -59,10 +61,9 @@ export class MapaComponent implements AfterViewInit {
     });
   }
 
-
   // Función para inicializar el mapa
   initMap(): void {
-    const map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+    this.map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
       zoom: 5.5,
       center: { lat: 4.60971, lng: -74.08175 } // Bogotá como punto central
     });
@@ -79,25 +80,57 @@ export class MapaComponent implements AfterViewInit {
 
       const marker = new google.maps.Marker({
         position: { lat, lng },
-        map,
+        map: this.map,
         title: conglomerado.nombre
       });
 
-      const infoWindow = new google.maps.InfoWindow({
-        content: `
-          <div>
-            <h3>${conglomerado.nombre}</h3>
-            <p><strong>Ubicación:</strong> ${conglomerado.ubicacion}</p>
-            <p><strong>Especies encontradas:</strong> ${conglomerado.especies.join(', ')}</p>
-            <p><strong>Dificultad de acceso:</strong> ${conglomerado.acceso}</p>
-          </div>
-        `
-      });
-
+      // Añadir listener de clic para actualizar el panel de información y hacer zoom
       marker.addListener("click", () => {
-        infoWindow.open(map, marker);
+        this.updateInfoPanel(conglomerado);
+        this.zoomToConglomerado(marker, conglomerado);
       });
     });
   }
 
+  // Función para actualizar el panel de información
+  updateInfoPanel(conglomerado: any): void {
+    document.getElementById('zona-nombre')!.innerText = conglomerado.nombre;
+    document.getElementById('zona-radio')!.innerText = conglomerado.radio || '-';
+    document.getElementById('zona-ubicacion')!.innerText = conglomerado.ubicacion || '-';
+    
+    const especiesLista = document.getElementById('especies-lista')!;
+    especiesLista.innerHTML = ''; // Limpiar lista existente
+    conglomerado.especies.forEach((especie: string) => {
+      const li = document.createElement('li');
+      li.innerText = especie;
+      especiesLista.appendChild(li);
+    });
+    
+    document.getElementById('zona-acceso')!.innerText = conglomerado.acceso || '-';
+  }
+
+  // Función para hacer zoom al conglomerado y mostrar el círculo del radio
+  zoomToConglomerado(marker: any, conglomerado: any): void {
+    // Primero, hacer zoom en el marcador
+    this.map.setCenter(marker.getPosition());
+    this.map.setZoom(12); // Ajusta el nivel de zoom a lo que desees
+
+    // Si ya existe un círculo, lo elimina
+    if (this.circle) {
+      this.circle.setMap(null);
+    }
+
+    // Crear un círculo alrededor del conglomerado con el radio especificado
+    const radio = conglomerado.radio || 0; // Radio en kilómetros
+    this.circle = new google.maps.Circle({
+      map: this.map,
+      center: marker.getPosition(),
+      radius: radio * 1000, // Convertir el radio a metros
+      fillColor: '#FF0000',
+      fillOpacity: 0.35,
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.8,
+      strokeWeight: 2
+    });
+  }
 }

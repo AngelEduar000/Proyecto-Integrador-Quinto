@@ -1,67 +1,74 @@
 /* Contenedor general del componente */
 .map-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px 20px;
-    min-height: 100vh;
-    background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
-    box-sizing: border-box;
-    margin-top: 60px;
-  }
-  
-  /* Título */
-  .map-container h1 {
-    font-size: 28px;
-    color: #2c3e50;
-    margin-bottom: 20px;
-    font-weight: bold;
-  }
-  
-  /* Mapa Leaflet */
-  #map {
-    width: 100%;
-    max-width: 1000px;
-    height: 500px;
-    border-radius: 12px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-    margin-bottom: 30px;
-    z-index: 0;
-  }
-  
-  /* Panel de información */
-  #info-panel {
-    background: rgba(255, 255, 255, 0.97);
-    border-radius: 12px;
-    padding: 24px 28px;
-    width: 100%;
-    max-width: 1000px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-  }
-  
-  #info-panel h2 {
-    font-size: 20px;
-    margin-bottom: 16px;
-    color: #34495e;
-  }
-  
-  #info-panel p,
-  #info-panel ul {
-    margin: 6px 0;
-    font-size: 15px;
-    color: #555;
-  }
-  
-  #info-panel strong {
-    color: #2c3e50;
-  }
-  
-  #info-panel ul {
-    padding-left: 20px;
-  }
-  
-  #info-panel li {
-    margin-bottom: 4px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 20px;
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
+  box-sizing: border-box;
+  margin-top: 60px;
+}
+
+/* Título */
+.map-container h1 {
+  font-size: 28px;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Mapa */
+#map {
+  width: 100%;
+  max-width: 1000px;
+  height: 500px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  margin-bottom: 30px;
+  z-index: 0;
+}
+
+/* Panel de información */
+#info-panel {
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 12px;
+  padding: 24px 28px;
+  width: 100%;
+  max-width: 1000px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+#info-panel h2 {
+  font-size: 20px;
+  margin-bottom: 16px;
+  color: #34495e;
+}
+
+#info-panel p,
+#info-panel ul {
+  margin: 6px 0;
+  font-size: 15px;
+  color: #555;
+}
+
+#info-panel strong {
+  color: #2c3e50;
+}
+
+#info-panel ul {
+  padding-left: 20px;
+}
+
+#info-panel li {
+  margin-bottom: 4px;
+}
+
+/* Estilos para el círculo en el mapa */
+#map .google-map-circle {
+  border: 1px solid #FF0000;
+  border-radius: 50%;
+  opacity: 0.35;
+  background-color: #FF0000;
+}
