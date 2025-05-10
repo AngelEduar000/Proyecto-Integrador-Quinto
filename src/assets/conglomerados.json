@@ -1,92 +1,93 @@
 [
   {
-    "id": 1,
-    "nombre": "Reserva Natural Nukak",
-    "ubicacion": "San José del Guaviare, Guaviare",
-    "radio": 6.0,
-    "especies": ["Eschweilera coriacea", "Tetrorchidium rubrivenium"],
-    "acceso": "Media",
-    "coordenadas": [2.5667, -72.6333]
+    "id_conglomerado": 1,
+    "identificador": "Reserva Natural Nukak",
+    "fecha_creacion": "1995-06-15",
+    "region": "Amazonas",
+    "municipio": "San José del Guaviare",
+    "coordenadas": [2.5667, -72.6333],
+    "especies": ["Eschweilera coriacea", "Tetrorchidium rubrivenium"]
   },
   {
-    "id": 2,
-    "nombre": "Zona Andina Central",
-    "ubicacion": "Ibagué, Tolima",
-    "radio": 4.8,
-    "especies": ["Juglans neotropica", "Alnus acuminata"],
-    "acceso": "Fácil",
-    "coordenadas": [4.4389, -75.2322]
+    "id_conglomerado": 2,
+    "identificador": "Bosque de la Sierra Nevada",
+    "fecha_creacion": "2001-09-25",
+    "region": "Caribe",
+    "municipio": "Santa Marta",
+    "coordenadas": [10.6797, -74.1164],
+    "especies": ["Pinus caribaea", "Carya ovata"]
   },
   {
-    "id": 3,
-    "nombre": "Bosques de Niebla",
-    "ubicacion": "San Vicente de Chucurí, Santander",
-    "radio": 5.5,
-    "especies": ["Quercus humboldtii", "Magnolia polyhypsophylla"],
-    "acceso": "Difícil",
-    "coordenadas": [6.8833, -73.4167]
+    "id_conglomerado": 3,
+    "identificador": "Zona Andina Central",
+    "fecha_creacion": "2005-03-12",
+    "region": "Eje Cafetero",
+    "municipio": "Armenia",
+    "coordenadas": [4.5372, -75.6817],
+    "especies": ["Juglans neotropica", "Alnus acuminata"]
   },
   {
-    "id": 4,
-    "nombre": "Zona Páramo de Sumapaz",
-    "ubicacion": "Bogotá, Distrito Capital",
-    "radio": 6.7,
-    "especies": ["Espeletia grandiflora", "Hypericum baccharioides"],
-    "acceso": "Media",
-    "coordenadas": [4.3300, -74.2000]
+    "id_conglomerado": 4,
+    "identificador": "Bosques de Niebla",
+    "fecha_creacion": "1999-07-22",
+    "region": "Pacífico",
+    "municipio": "Buenaventura",
+    "coordenadas": [3.8777, -77.0336],
+    "especies": ["Quercus humboldtii", "Magnolia polyhypsophylla"]
   },
   {
-    "id": 5,
-    "nombre": "Reserva El Tuparro",
-    "ubicacion": "Puerto Carreño, Vichada",
-    "radio": 7.0,
-    "especies": ["Mauritia flexuosa", "Brosimum utile"],
-    "acceso": "Difícil",
-    "coordenadas": [5.8667, -67.0000]
+    "id_conglomerado": 5,
+    "identificador": "Reserva Natural Vaupés",
+    "fecha_creacion": "2013-07-30",
+    "region": "Orinoquía",
+    "municipio": "Mitú",
+    "coordenadas": [1.3700, -70.2400],
+    "especies": ["Mauritia flexuosa", "Ficus insipida"]
   },
   {
-    "id": 6,
-    "nombre": "Zona Serranía de la Macarena",
-    "ubicacion": "La Macarena, Meta",
-    "radio": 5.0,
-    "especies": ["Brownea ariza", "Byrsonima crassifolia"],
-    "acceso": "Media",
-    "coordenadas": [2.1833, -73.7833]
+    "id_conglomerado": 6,
+    "identificador": "Bosques de la Sierra de Perijá",
+    "fecha_creacion": "2010-08-10",
+    "region": "Sierra Nevada de Santa Marta",
+    "municipio": "Valledupar",
+    "coordenadas": [10.3948, -73.2444],
+    "especies": ["Corymbia citriodora", "Eucalyptus tereticornis"]
   },
   {
-    "id": 7,
-    "nombre": "Bosques del Pacífico",
-    "ubicacion": "Bahía Solano, Chocó",
-    "radio": 6.2,
-    "especies": ["Virola sebifera", "Symphonia globulifera"],
-    "acceso": "Difícil",
-    "coordenadas": [6.2333, -77.4000]
+    "id_conglomerado": 7,
+    "identificador": "Reserva Natural Los Ocarros",
+    "fecha_creacion": "2012-03-15",
+    "region": "Amazonas",
+    "municipio": "Leticia",
+    "coordenadas": [4.209, -69.940],
+    "especies": ["Ficus insipida", "Mauritia flexuosa"]
   },
   {
-    "id": 8,
-    "nombre": "Zona Llanos Orientales",
-    "ubicacion": "Yopal, Casanare",
-    "radio": 4.6,
-    "especies": ["Attalea butyracea", "Tabebuia rosea"],
-    "acceso": "Media",
-    "coordenadas": [5.3333, -72.4000]
+    "id_conglomerado": 8,
+    "identificador": "Páramo de Sumapaz",
+    "fecha_creacion": "2000-07-15",
+    "region": "Andina",
+    "municipio": "Bogotá",
+    "coordenadas": [4.3300, -74.2000],
+    "especies": ["Espeletia grandiflora", "Hypericum baccharioides"]
   },
   {
-    "id": 9,
-    "nombre": "Ciénaga Grande de Santa Marta",
-    "ubicacion": "Sitionuevo, Magdalena",
-    "radio": 3.8,
-    "especies": ["Avicennia germinans", "Laguncularia racemosa"],
-    "acceso": "Fácil",
-    "coordenadas": [10.8167, -74.2667]
+    "id_conglomerado": 9,
+    "identificador": "Bosque de Chocó",
+    "fecha_creacion": "2015-06-22",
+    "region": "Pacífico",
+    "municipio": "Quibdó",
+    "coordenadas": [5.6943, -76.6456],
+    "especies": ["Chusquea scandens", "Calophyllum brasiliense"]
   },
   {
-    "id": 10,
-    "nombre": "Zona Montes de María",
-    "ubicacion": "El Carmen de Bolívar, Bolívar",
-    "radio": 5.9,
-    "especies": ["Cedrela odorata", "Guazuma ulmifolia"],
-    "acceso": "Media",
-    "coordenadas": [9.7167, -75.1333]
+    "id_conglomerado": 10,
+    "identificador": "Bosques de la Sierra de La Macarena",
+    "fecha_creacion": "2006-02-20",
+    "region": "Orinoquía",
+    "municipio": "La Macarena",
+    "coordenadas": [3.7546, -73.4787],
+    "especies": ["Mauritia flexuosa", "Vochysia acaulis"]
   }
 ]
+

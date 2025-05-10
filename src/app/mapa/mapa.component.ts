@@ -15,6 +15,11 @@ declare var google: any; // Declarar google para evitar el error de "google is n
 export class MapaComponent implements AfterViewInit {
 
   conglomerados: any[] = [];
+  map: any;
+  circle: any;
+
+  // Radio general de 80 metros para todos los conglomerados
+  radioGeneral = 80; // Radio en metros
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -59,10 +64,9 @@ export class MapaComponent implements AfterViewInit {
     });
   }
 
-
   // Función para inicializar el mapa
   initMap(): void {
-    const map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
+    this.map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
       zoom: 5.5,
       center: { lat: 4.60971, lng: -74.08175 } // Bogotá como punto central
     });
@@ -73,31 +77,86 @@ export class MapaComponent implements AfterViewInit {
       const lng = parseFloat(lngStr);
 
       if (isNaN(lat) || isNaN(lng)) {
-        console.warn(`❗ Coordenadas inválidas para el conglomerado: ${conglomerado.nombre}`);
+        console.warn(`❗ Coordenadas inválidas para el conglomerado: ${conglomerado.identificador}`);
         return;
       }
 
       const marker = new google.maps.Marker({
         position: { lat, lng },
-        map,
-        title: conglomerado.nombre
+        map: this.map,
+        title: conglomerado.identificador,
+        animation: google.maps.Animation.DROP  // Añadir animación al marcador (cae desde arriba)
       });
 
-      const infoWindow = new google.maps.InfoWindow({
-        content: `
-          <div>
-            <h3>${conglomerado.nombre}</h3>
-            <p><strong>Ubicación:</strong> ${conglomerado.ubicacion}</p>
-            <p><strong>Especies encontradas:</strong> ${conglomerado.especies.join(', ')}</p>
-            <p><strong>Dificultad de acceso:</strong> ${conglomerado.acceso}</p>
-          </div>
-        `
-      });
-
+      // Añadir listener de clic para actualizar el panel de información y hacer zoom
       marker.addListener("click", () => {
-        infoWindow.open(map, marker);
+        this.updateInfoPanel(conglomerado);
+        this.zoomToConglomerado(marker, conglomerado);
       });
     });
   }
 
+  // Función para actualizar el panel de información
+  updateInfoPanel(conglomerado: any): void {
+    console.log('Municipio:', conglomerado.municipio);  // Para verificar si se recibe correctamente el municipio
+    console.log('Fecha de Creación:', conglomerado.fecha_creacion);  // Verifica si la fecha está presente
+    
+    // Actualizar los datos en el panel
+    document.getElementById('zona-nombre')!.innerText = conglomerado.identificador;
+    document.getElementById('zona-radio')!.innerText = `${this.radioGeneral} m`; // Mostrar el radio general
+    document.getElementById('zona-region')!.innerText = conglomerado.region || '-';  // Mostrar la región
+    document.getElementById('zona-municipio')!.innerText = conglomerado.municipio || '-';  // Mostrar el municipio
+    document.getElementById('zona-fecha-creacion')!.innerText = conglomerado.fecha_creacion || '-';  // Mostrar la fecha de creación
+    
+    const especiesLista = document.getElementById('especies-lista')!;
+    especiesLista.innerHTML = ''; // Limpiar lista existente
+    conglomerado.especies.forEach((especie: string) => {
+      const li = document.createElement('li');
+      li.innerText = especie;
+      especiesLista.appendChild(li);
+    });
+  }
+
+  // Función para hacer zoom al conglomerado y mostrar el círculo del radio con animación gradual
+  zoomToConglomerado(marker: any, conglomerado: any): void {
+    // Primero, hacer zoom en el marcador
+    this.map.setCenter(marker.getPosition());
+
+    // Inicializar el nivel de zoom
+    let startZoom = this.map.getZoom();  // Cambiar const a let para permitir la modificación
+    const targetZoom = 16;  // Ajusta el nivel de zoom más alto al valor deseado
+    const zoomStep = 1;  // Define el incremento del zoom
+    const intervalTime = 90;  // Intervalo en milisegundos entre los aumentos de zoom
+
+    // Animación gradual para aumentar el zoom
+    const zoomInterval = setInterval(() => {
+      if (startZoom < targetZoom) {
+        this.map.setZoom(startZoom + zoomStep);  // Aumenta el zoom
+        startZoom++;
+      } else {
+        clearInterval(zoomInterval);  // Detener el zoom cuando alcanza el nivel objetivo
+      }
+    }, intervalTime);
+
+    // Si ya existe un círculo, lo elimina
+    if (this.circle) {
+      this.circle.setMap(null);
+    }
+
+    // Crear un círculo alrededor del conglomerado con el radio especificado
+    const radio = this.radioGeneral; // Usamos el radio general de 80 metros
+    this.circle = new google.maps.Circle({
+      map: this.map,
+      center: marker.getPosition(),
+      radius: radio, // Radio en metros
+      fillColor: '#FF0000',
+      fillOpacity: 0.35,
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.8,
+      strokeWeight: 2
+    });
+
+    // Desplazamiento suave hacia el marcador
+    this.map.panTo(marker.getPosition());  // Animación suave para mover el centro del mapa
+  }
 }
