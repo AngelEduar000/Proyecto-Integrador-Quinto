@@ -18,6 +18,9 @@ export class MapaComponent implements AfterViewInit {
   map: any;
   circle: any;
 
+  // Radio general de 80 metros para todos los conglomerados
+  radioGeneral = 80; // Radio en metros
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     private dataService: DataService
@@ -74,14 +77,15 @@ export class MapaComponent implements AfterViewInit {
       const lng = parseFloat(lngStr);
 
       if (isNaN(lat) || isNaN(lng)) {
-        console.warn(`❗ Coordenadas inválidas para el conglomerado: ${conglomerado.nombre}`);
+        console.warn(`❗ Coordenadas inválidas para el conglomerado: ${conglomerado.identificador}`);
         return;
       }
 
       const marker = new google.maps.Marker({
         position: { lat, lng },
         map: this.map,
-        title: conglomerado.nombre
+        title: conglomerado.identificador,
+        animation: google.maps.Animation.DROP  // Añadir animación al marcador (cae desde arriba)
       });
 
       // Añadir listener de clic para actualizar el panel de información y hacer zoom
@@ -94,9 +98,15 @@ export class MapaComponent implements AfterViewInit {
 
   // Función para actualizar el panel de información
   updateInfoPanel(conglomerado: any): void {
-    document.getElementById('zona-nombre')!.innerText = conglomerado.nombre;
-    document.getElementById('zona-radio')!.innerText = conglomerado.radio || '-';
-    document.getElementById('zona-ubicacion')!.innerText = conglomerado.ubicacion || '-';
+    console.log('Municipio:', conglomerado.municipio);  // Para verificar si se recibe correctamente el municipio
+    console.log('Fecha de Creación:', conglomerado.fecha_creacion);  // Verifica si la fecha está presente
+    
+    // Actualizar los datos en el panel
+    document.getElementById('zona-nombre')!.innerText = conglomerado.identificador;
+    document.getElementById('zona-radio')!.innerText = `${this.radioGeneral} m`; // Mostrar el radio general
+    document.getElementById('zona-region')!.innerText = conglomerado.region || '-';  // Mostrar la región
+    document.getElementById('zona-municipio')!.innerText = conglomerado.municipio || '-';  // Mostrar el municipio
+    document.getElementById('zona-fecha-creacion')!.innerText = conglomerado.fecha_creacion || '-';  // Mostrar la fecha de creación
     
     const especiesLista = document.getElementById('especies-lista')!;
     especiesLista.innerHTML = ''; // Limpiar lista existente
@@ -105,15 +115,28 @@ export class MapaComponent implements AfterViewInit {
       li.innerText = especie;
       especiesLista.appendChild(li);
     });
-    
-    document.getElementById('zona-acceso')!.innerText = conglomerado.acceso || '-';
   }
 
-  // Función para hacer zoom al conglomerado y mostrar el círculo del radio
+  // Función para hacer zoom al conglomerado y mostrar el círculo del radio con animación gradual
   zoomToConglomerado(marker: any, conglomerado: any): void {
     // Primero, hacer zoom en el marcador
     this.map.setCenter(marker.getPosition());
-    this.map.setZoom(12); // Ajusta el nivel de zoom a lo que desees
+
+    // Inicializar el nivel de zoom
+    let startZoom = this.map.getZoom();  // Cambiar const a let para permitir la modificación
+    const targetZoom = 16;  // Ajusta el nivel de zoom más alto al valor deseado
+    const zoomStep = 1;  // Define el incremento del zoom
+    const intervalTime = 90;  // Intervalo en milisegundos entre los aumentos de zoom
+
+    // Animación gradual para aumentar el zoom
+    const zoomInterval = setInterval(() => {
+      if (startZoom < targetZoom) {
+        this.map.setZoom(startZoom + zoomStep);  // Aumenta el zoom
+        startZoom++;
+      } else {
+        clearInterval(zoomInterval);  // Detener el zoom cuando alcanza el nivel objetivo
+      }
+    }, intervalTime);
 
     // Si ya existe un círculo, lo elimina
     if (this.circle) {
@@ -121,16 +144,19 @@ export class MapaComponent implements AfterViewInit {
     }
 
     // Crear un círculo alrededor del conglomerado con el radio especificado
-    const radio = conglomerado.radio || 0; // Radio en kilómetros
+    const radio = this.radioGeneral; // Usamos el radio general de 80 metros
     this.circle = new google.maps.Circle({
       map: this.map,
       center: marker.getPosition(),
-      radius: radio * 1000, // Convertir el radio a metros
+      radius: radio, // Radio en metros
       fillColor: '#FF0000',
       fillOpacity: 0.35,
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
       strokeWeight: 2
     });
+
+    // Desplazamiento suave hacia el marcador
+    this.map.panTo(marker.getPosition());  // Animación suave para mover el centro del mapa
   }
 }
