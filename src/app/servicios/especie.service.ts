@@ -1,0 +1,23 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+export interface Especie {
+  nombre_comun: string;
+  nombre_cientifico: string;
+  familia: string;
+  uso: string;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class EspecieService {
+  private apiUrl = 'http://localhost:3000/api/mostrar_especie';
+
+  constructor(private http: HttpClient) {}
+
+  obtenerEspecies(): Observable<Especie[]> {
+    return this.http.get<Especie[]>(this.apiUrl);
+  }
+}
