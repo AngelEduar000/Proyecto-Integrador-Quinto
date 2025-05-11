@@ -13,7 +13,7 @@ export interface Especie {
   providedIn: 'root'
 })
 export class EspecieService {
-  private apiUrl = 'http://localhost:3000/api/mostrar_especie';
+  private apiUrl = 'https://proyecto-integrador-quinto-backend-production.up.railway.app/api/mostrar_especie';
 
   constructor(private http: HttpClient) {}
 
