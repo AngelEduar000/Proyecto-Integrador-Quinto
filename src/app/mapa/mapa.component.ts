@@ -160,3 +160,5 @@ export class MapaComponent implements AfterViewInit {
     this.map.panTo(marker.getPosition());  // Animación suave para mover el centro del mapa
   }
 }
+
+
