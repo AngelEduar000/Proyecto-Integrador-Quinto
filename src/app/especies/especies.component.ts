@@ -13,7 +13,7 @@ import { EspecieService, Especie } from '../servicios/especie.service';
 export class EspeciesComponent implements OnInit {
   busqueda: string = '';
   filtroUso: string = '';
-  filtroTerritorio: string = ''; // aunque no lo uses, lo puedes dejar
+  filtroRegion: string = ''; // aunque no lo uses, lo puedes dejar
 
   especies: Especie[] = [];
   private especieService = inject(EspecieService);

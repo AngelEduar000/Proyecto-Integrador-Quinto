@@ -22,8 +22,8 @@
   </label>
 
   <label>
-    Territorio:
-    <select [(ngModel)]="filtroTerritorio">
+    Region:
+    <select [(ngModel)]="filtroRegion">
       <option value="">Todos</option>
       <!-- <option *ngFor="let t of territoriosDisponibles" [value]="t">{{ t }}</option> -->
     </select>
@@ -37,9 +37,9 @@
       <img [src]="imagenEspecie(especie.nombre_comun)" [alt]="especie.nombre_comun" />
       <h3>{{ especie.nombre_comun }} ({{ especie.nombre_cientifico }})</h3>
       <p><strong>Usos Medicinales:</strong> {{ especie.uso }}</p>
-      <p><strong>Territorios:</strong></p>
+      <p><strong>Region:</strong></p>
       <ul class="territorio-list">
-        <!-- <li *ngFor="let t of especie.territorios">{{ t }}</li> -->
+        <li *ngFor="let t of especie.region">{{ especie.region }}</li>
       </ul>
     </div>
   }
