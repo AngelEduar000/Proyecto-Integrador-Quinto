@@ -68,7 +68,8 @@ export class MapaComponent implements AfterViewInit {
   initMap(): void {
     this.map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
       zoom: 5.5,
-      center: { lat: 4.60971, lng: -74.08175 } // Bogotá como punto central
+      center: { lat: 4.60971, lng: -74.08175 }, // Bogotá como punto central
+      mapTypeId: google.maps.MapTypeId.HYBRID  // Establece el modo híbrido (satélite con etiquetas)
     });
 
     this.conglomerados.forEach((conglomerado) => {
@@ -123,18 +124,18 @@ export class MapaComponent implements AfterViewInit {
     this.map.setCenter(marker.getPosition());
 
     // Inicializar el nivel de zoom
-    let startZoom = this.map.getZoom();  // Cambiar const a let para permitir la modificación
+    let startZoom = this.map.getZoom();
     const targetZoom = 16;  // Ajusta el nivel de zoom más alto al valor deseado
-    const zoomStep = 1;  // Define el incremento del zoom
-    const intervalTime = 90;  // Intervalo en milisegundos entre los aumentos de zoom
+    const zoomStep = 0.2;  // Incremento más pequeño para hacer el zoom más suave
+    const intervalTime = 50;  // Intervalo más largo para hacer la animación más suave
 
-    // Animación gradual para aumentar el zoom
+    // Animación gradual para aumentar el zoom usando setInterval
     const zoomInterval = setInterval(() => {
       if (startZoom < targetZoom) {
-        this.map.setZoom(startZoom + zoomStep);  // Aumenta el zoom
-        startZoom++;
+        this.map.setZoom(startZoom);
+        startZoom += zoomStep;
       } else {
-        clearInterval(zoomInterval);  // Detener el zoom cuando alcanza el nivel objetivo
+        clearInterval(zoomInterval); // Detener el intervalo cuando se alcanza el zoom objetivo
       }
     }, intervalTime);
 

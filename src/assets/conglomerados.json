@@ -88,6 +88,15 @@
     "municipio": "La Macarena",
     "coordenadas": [3.7546, -73.4787],
     "especies": ["Mauritia flexuosa", "Vochysia acaulis"]
+  },
+  {
+    "id_conglomerado": 11,
+    "identificador": "Bosques de la Sierra de La Macarena",
+    "fecha_creacion": "2006-02-20",
+    "region": "Orinoquía",
+    "municipio": "La Macarena",
+    "coordenadas": [3.7546, -78.4787],
+    "especies": ["Mauritia flexuosa", "Vochysia acaulis"]
   }
 ]
 
