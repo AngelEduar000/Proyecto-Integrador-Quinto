@@ -25,7 +25,7 @@
     Region:
     <select [(ngModel)]="filtroRegion">
       <option value="">Todos</option>
-      <!-- <option *ngFor="let t of territoriosDisponibles" [value]="t">{{ t }}</option> -->
+      <option *ngFor="let t of regionesDisponibles" [value]="t">{{ t }}</option>
     </select>
   </label>
 </div>

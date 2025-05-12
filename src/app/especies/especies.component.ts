@@ -28,19 +28,26 @@ export class EspeciesComponent implements OnInit {
     return [...new Set(this.especies.map(e => e.uso))];
   }
 
+  get regionesDisponibles() {
+  return [...new Set(this.especies.map(e => e.region?.trim()))];
+}
+
+
   especiesFiltradas() {
-    const texto = this.busqueda.toLowerCase();
+  const texto = this.busqueda.toLowerCase();
 
-    return this.especies.filter(especie => {
-      const coincideTexto =
-        especie.nombre_comun.toLowerCase().includes(texto) ||
-        especie.uso.toLowerCase().includes(texto);
+  return this.especies.filter(especie => {
+    const coincideTexto =
+      especie.nombre_comun.toLowerCase().includes(texto) ||
+      especie.uso.toLowerCase().includes(texto);
 
-      const coincideUso = !this.filtroUso || especie.uso === this.filtroUso;
+    const coincideUso = !this.filtroUso || especie.uso === this.filtroUso;
 
-      return coincideTexto && coincideUso;
-    });
-  }
+    const coincideRegion = !this.filtroRegion || especie.region === this.filtroRegion;
+
+    return coincideTexto && coincideUso && coincideRegion;
+  });
+}
 
   imagenEspecie(nombre: string): string {
     return this.especieService.obtenerImagen(nombre);
