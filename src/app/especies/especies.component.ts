@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EspecieService, Especie } from '../servicios/especie.service';
@@ -16,8 +16,7 @@ export class EspeciesComponent implements OnInit {
   filtroTerritorio: string = ''; // aunque no lo uses, lo puedes dejar
 
   especies: Especie[] = [];
-
-  constructor(private especieService: EspecieService) {}
+  private especieService = inject(EspecieService);
 
   ngOnInit(): void {
     this.especieService.obtenerEspecies().subscribe(data => {
@@ -41,5 +40,9 @@ export class EspeciesComponent implements OnInit {
 
       return coincideTexto && coincideUso;
     });
+  }
+
+  imagenEspecie(nombre: string): string {
+    return this.especieService.obtenerImagen(nombre);
   }
 }

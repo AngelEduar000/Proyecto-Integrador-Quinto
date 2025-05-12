@@ -13,11 +13,15 @@ export interface Especie {
   providedIn: 'root'
 })
 export class EspecieService {
-  private apiUrl = 'https://proyecto-integrador-quinto-backend-production.up.railway.app/api/mostrar_especie';
+  private apiUrl = 'https://proyecto-integrador-quinto-backend-production.up.railway.app/api';
 
   constructor(private http: HttpClient) {}
 
   obtenerEspecies(): Observable<Especie[]> {
-    return this.http.get<Especie[]>(this.apiUrl);
+    return this.http.get<Especie[]>(`${this.apiUrl}/mostrar_especie`);
+  }
+
+  obtenerImagen( nombre: string ): string {
+    return `${this.apiUrl}/imagen_especie/${nombre}`;
   }
 }
