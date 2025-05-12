@@ -25,7 +25,7 @@
     Region:
     <select [(ngModel)]="filtroRegion">
       <option value="">Todos</option>
-      <option *ngFor="let t of regionesDisponibles" [value]="t">{{ t }}</option>
+      <option *ngFor="let region of regionesDisponibles" [value]="region">{{ region }}</option>
     </select>
   </label>
 </div>
@@ -37,7 +37,7 @@
       <img [src]="imagenEspecie(especie.nombre_comun)" [alt]="especie.nombre_comun" />
       <h3>{{ especie.nombre_comun }} ({{ especie.nombre_cientifico }})</h3>
       <p><strong>Usos Medicinales:</strong> {{ especie.uso }}</p>
-      <p><strong>Region:</strong> {{ especie.region }}</p>
+      <p><strong>Region:</strong> {{ especie.region.trim() }}</p>
     </div>
   }
 </div>

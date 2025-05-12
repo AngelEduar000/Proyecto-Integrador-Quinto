@@ -43,7 +43,7 @@ export class EspeciesComponent implements OnInit {
 
     const coincideUso = !this.filtroUso || especie.uso === this.filtroUso;
 
-    const coincideRegion = !this.filtroRegion || especie.region === this.filtroRegion;
+    const coincideRegion = !this.filtroRegion || especie.region?.trim() === this.filtroRegion;
 
     return coincideTexto && coincideUso && coincideRegion;
   });
