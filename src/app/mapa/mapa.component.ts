@@ -124,20 +124,20 @@ export class MapaComponent implements AfterViewInit {
     this.map.setCenter(marker.getPosition());
 
     // Inicializar el nivel de zoom
-    let startZoom = this.map.getZoom();  // Cambiar const a let para permitir la modificación
+    let startZoom = this.map.getZoom();
     const targetZoom = 16;  // Ajusta el nivel de zoom más alto al valor deseado
-    const zoomStep = 1;  // Define el incremento del zoom
-    const intervalTime = 20;  // Intervalo más corto para hacerlo más fluido
+    const zoomStep = 0.2;  // Incremento más pequeño para hacer el zoom más suave
+    const intervalTime = 50;  // Intervalo más largo para hacer la animación más suave
 
-    // Animación gradual para aumentar el zoom usando requestAnimationFrame
-    const animateZoom = () => {
+    // Animación gradual para aumentar el zoom usando setInterval
+    const zoomInterval = setInterval(() => {
       if (startZoom < targetZoom) {
         this.map.setZoom(startZoom);
-        startZoom++;
-        requestAnimationFrame(animateZoom);  // Llamada recursiva para continuar la animación
+        startZoom += zoomStep;
+      } else {
+        clearInterval(zoomInterval); // Detener el intervalo cuando se alcanza el zoom objetivo
       }
-    };
-    requestAnimationFrame(animateZoom);
+    }, intervalTime);
 
     // Si ya existe un círculo, lo elimina
     if (this.circle) {
