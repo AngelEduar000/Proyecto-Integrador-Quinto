@@ -34,6 +34,7 @@ export class EspeciesComponent implements OnInit {
 
 
   especiesFiltradas() {
+    
   const texto = this.busqueda.toLowerCase();
 
   return this.especies.filter(especie => {
