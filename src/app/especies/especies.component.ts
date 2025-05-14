@@ -13,7 +13,7 @@ import { EspecieService, Especie } from '../servicios/especie.service';
 export class EspeciesComponent implements OnInit {
   busqueda: string = '';
   filtroUso: string = '';
-  filtroRegion: string = ''; // aunque no lo uses, lo puedes dejar
+  filtroRegion: string = '';
 
   especies: Especie[] = [];
   private especieService = inject(EspecieService);
@@ -29,26 +29,28 @@ export class EspeciesComponent implements OnInit {
   }
 
   get regionesDisponibles() {
-  return [...new Set(this.especies.map(e => e.region?.trim()))];
-}
-
+    const regionesSeparadas = this.especies.flatMap(e =>
+      e.region?.split(',').map(r => r.trim()) || []
+    );
+    return [...new Set(regionesSeparadas)].sort();
+  }
 
   especiesFiltradas() {
-    
-  const texto = this.busqueda.toLowerCase();
+    const texto = this.busqueda.toLowerCase();
 
-  return this.especies.filter(especie => {
-    const coincideTexto =
-      especie.nombre_comun.toLowerCase().includes(texto) ||
-      especie.uso.toLowerCase().includes(texto);
+    return this.especies.filter(especie => {
+      const coincideTexto =
+        especie.nombre_comun.toLowerCase().includes(texto) ||
+        especie.uso.toLowerCase().includes(texto);
 
-    const coincideUso = !this.filtroUso || especie.uso === this.filtroUso;
+      const coincideUso = !this.filtroUso || especie.uso === this.filtroUso;
 
-    const coincideRegion = !this.filtroRegion || especie.region?.trim() === this.filtroRegion;
+      const coincideRegion = !this.filtroRegion ||
+        especie.region?.split(',').map(r => r.trim()).includes(this.filtroRegion);
 
-    return coincideTexto && coincideUso && coincideRegion;
-  });
-}
+      return coincideTexto && coincideUso && coincideRegion;
+    });
+  }
 
   imagenEspecie(nombre: string): string {
     return this.especieService.obtenerImagen(nombre);
