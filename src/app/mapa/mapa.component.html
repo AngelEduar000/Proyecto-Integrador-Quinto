@@ -1,6 +1,15 @@
 <main class="map-container">
   <h1>Mapa de Conglomerados</h1>
 
+  <!-- Filtro por región -->
+  <div>
+    <label for="region-filter">Filtrar por Región:</label>
+    <select id="region-filter" (change)="onRegionChange($event)">
+      <option value="">Todas las Regiones</option>
+      <option *ngFor="let region of regiones" [value]="region">{{ region }}</option>
+    </select>
+  </div>
+
   <!-- Mapa -->
   <div id="map"></div>
 

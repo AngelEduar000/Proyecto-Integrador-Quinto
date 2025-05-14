@@ -18,6 +18,46 @@
   font-weight: bold;
 }
 
+/* Filtro por región (Título y selector en la misma línea) */
+.map-container div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.map-container label {
+  font-size: 16px;
+  color: #34495e;
+  margin-bottom: 0;
+  font-weight: bold;
+}
+
+#region-filter {
+  padding: 10px 15px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #ffffff;
+  transition: border-color 0.3s ease-in-out;
+  width: 250px; /* Ajuste el tamaño del select */
+  margin-bottom: 0;
+}
+
+#region-filter:focus {
+  border-color: #2c3e50;
+  outline: none;
+}
+
+#region-filter option {
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+#region-filter option:hover {
+  background-color: #f0f0f0;
+}
+
 /* Mapa */
 #map {
   width: 100%;
