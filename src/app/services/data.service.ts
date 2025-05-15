@@ -26,4 +26,5 @@ export class DataService {
   getJSON<T>(path: string): Observable<T> {
     return this.http.get<T>(`assets/${path}`);
   }
+  
 }
