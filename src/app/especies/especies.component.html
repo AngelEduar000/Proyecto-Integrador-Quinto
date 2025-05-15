@@ -32,6 +32,7 @@
 
 <!-- 🧾 Lista de especies -->
 <div id="especies-list" class="especies-grid">
+  
   @for (especie of especiesFiltradas(); track $index) {
     <div class="especie-card">
       <img [src]="imagenEspecie(especie.nombre_comun)" [alt]="especie.nombre_comun" />
