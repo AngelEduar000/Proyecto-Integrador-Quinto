@@ -5,7 +5,8 @@
   align-items: center;
   padding: 30px 20px;
   min-height: 100vh;
-  background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);
+  /*background: linear-gradient(to bottom right, #f5f7fa, #c3cfe2);*/
+  background: url('/imagenes/fondo.jpg') no-repeat center center;
   box-sizing: border-box;
   margin-top: 60px;
 }
