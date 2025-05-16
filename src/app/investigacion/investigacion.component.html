@@ -1,35 +1,77 @@
 <h1 class="titulo-pagina">Registro de Árboles en Investigación</h1>
 
-<form (ngSubmit)="guardarMuestra()" class="formulario">
-  <label>
-    Parcela:
-    <input type="text" [(ngModel)]="nuevaMuestra.parcela" name="parcela" required />
+<form (ngSubmit)="guardarMuestra()" #formMuestra="ngForm" class="formulario" novalidate>
+
+  <label class="label-con-icono">
+    <span class="icono"></span> Parcela:
+    <input
+      type="text"
+      [(ngModel)]="nuevaMuestra.parcela"
+      name="parcela"
+      required
+      #parcela="ngModel"
+      [class.invalid]="parcela.invalid && parcela.touched"
+    />
+    <span *ngIf="parcela.invalid && parcela.touched" class="error-msg">Parcela es requerida.</span>
   </label>
 
-  <label>
-    Subparcela:
-    <input type="text" [(ngModel)]="nuevaMuestra.subparcela" name="subparcela" required />
+  <label class="label-con-icono">
+    <span class="icono"></span> Subparcela:
+    <input
+      type="text"
+      [(ngModel)]="nuevaMuestra.subparcela"
+      name="subparcela"
+      required
+      #subparcela="ngModel"
+      [class.invalid]="subparcela.invalid && subparcela.touched"
+    />
+    <span *ngIf="subparcela.invalid && subparcela.touched" class="error-msg">Subparcela es requerida.</span>
   </label>
 
-  <label>
-    Ubicación en la subparcela:
-    <input type="text" [(ngModel)]="nuevaMuestra.ubicacion" name="ubicacion" required />
+  <label class="label-con-icono">
+    <span class="icono"></span> Ubicación en la subparcela:
+    <input
+      type="text"
+      [(ngModel)]="nuevaMuestra.ubicacion"
+      name="ubicacion"
+      required
+      #ubicacion="ngModel"
+      [class.invalid]="ubicacion.invalid && ubicacion.touched"
+    />
+    <span *ngIf="ubicacion.invalid && ubicacion.touched" class="error-msg">Ubicación es requerida.</span>
   </label>
 
-  <label>
-    Nombre local (opcional):
-    <input type="text" [(ngModel)]="nuevaMuestra.nombreLocal" name="nombreLocal" />
+  <label class="label-con-icono">
+    <span class="icono"></span> Nombre local (opcional):
+    <input
+      type="text"
+      [(ngModel)]="nuevaMuestra.nombreLocal"
+      name="nombreLocal"
+    />
   </label>
 
-  <label>
-    Código de referencia de muestra:
-    <input type="text" [(ngModel)]="nuevaMuestra.codigoReferencia" name="codigoReferencia" required />
+  <label class="label-con-icono">
+    <span class="icono"></span> Código de referencia de muestra:
+    <input
+      type="text"
+      [(ngModel)]="nuevaMuestra.codigoReferencia"
+      name="codigoReferencia"
+      required
+      #codigoReferencia="ngModel"
+      [class.invalid]="codigoReferencia.invalid && codigoReferencia.touched"
+    />
+    <span *ngIf="codigoReferencia.invalid && codigoReferencia.touched" class="error-msg">Código de referencia es requerido.</span>
   </label>
 
-  <label>
-    Imagen del árbol:
-    <input type="file" (change)="onImagenSeleccionada($event)" accept="image/*" />
+  <label class="label-con-icono">
+    <span class="icono"></span> Imagen del árbol:
+    <input
+      type="file"
+      (change)="onImagenSeleccionada($event)"
+      accept="image/*"
+    />
   </label>
 
-  <button type="submit">Guardar muestra</button>
+  <button type="submit" [disabled]="formMuestra.invalid">Guardar muestra</button>
+
 </form>
