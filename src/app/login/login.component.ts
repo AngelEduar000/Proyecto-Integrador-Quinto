@@ -6,6 +6,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PLATFORM_ID } from '@angular/core';
 import { take } from 'rxjs';
 import { FirabaseAuthService } from '../servicios/firabase-auth.service';
+import { error } from 'node:console';
 
 @Component({
   selector: 'app-login',
@@ -69,6 +70,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       data => {
         console.log(data);
         this.router.navigate(['/']);
+      },
+      error => {
+       this.errorMessage = error;
       }
     )
   }

@@ -1,12 +1,12 @@
 <main class="login-container">
     <h2>Iniciar Sesión</h2>
-  
+
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <!-- Campo de usuario -->
       <div class="input-group">
         <input type="text" formControlName="username" placeholder="Usuario" required>
       </div>
-  
+
       <!-- Campo de contraseña con ícono de ojo -->
       <div class="input-group password-container">
         <input
@@ -24,12 +24,13 @@
           />
         </span>
       </div>
-  
+
       <!-- Botón de login -->
       <button type="submit">Ingresar</button>
-  
+
       <!-- Mensaje de error -->
-      <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+       @if(errorMessage) {
+      <p class="error-message">{{ errorMessage }}</p>
+       }
     </form>
   </main>
-  
