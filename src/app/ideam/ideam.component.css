@@ -1,5 +1,5 @@
 .fondo{
-  background: url('/imagenes/fondo.jpg') no-repeat center center fixed;
+  background: url('/imagenes/fondo.jpg') no-repeat center center;
   background-size: cover;
   min-height: 100vh;
 
