@@ -5,9 +5,15 @@
     padding-right: 2rem;
     font-family: 'Segoe UI', Roboto, sans-serif;
     color: #2f3e46;
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: auto; 
+    margin: 0 auto; 
     box-sizing: border-box;
+
+    background-image: url('/imagenes/fondo.jpg'); /* Ajusta la ruta a tu imagen */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
   }
   
   .titulo-dashboard {

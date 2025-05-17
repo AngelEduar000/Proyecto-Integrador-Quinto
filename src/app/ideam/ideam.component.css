@@ -1,3 +1,98 @@
+.fondo{
+  background: url('/imagenes/fondo.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+
+}
+/* Contenedor principal */
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+
+/* Tarjetas estilo glassmorphism */
+.card {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  overflow: hidden;
+}
+
+/* Encabezados de tarjeta */
+.card-header {
+  background: rgba(0, 0, 0, 0.4);
+  font-weight: bold;
+  font-size: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Cuerpo de la tarjeta */
+.card-body {
+  background: rgba(255, 255, 255, 0.25);
+  color: #000;
+}
+
+/* Tablas */
+.table {
+  background-color: transparent;
+}
+
+.table thead {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: #000;
+  font-weight: bold;
+}
+
+.table-success {
+  background-color: rgba(144, 238, 144, 0.4);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Inputs y selects */
+.form-control,
+.form-select {
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(4px);
+  color: #000;
+}
+
+.form-control:focus,
+.form-select:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+/* Botones */
+.btn-primary {
+  background-color: rgba(0, 123, 255, 0.7);
+  border: none;
+}
+
+.btn-light {
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-warning,
+.btn-danger {
+  opacity: 0.9;
+}
+
+.btn:hover {
+  opacity: 1;
+}
+
+
+
+
 /* Opcional: mejora visual en móviles */
   @media (max-width: 768px) {
     .table-responsive {

@@ -1,6 +1,6 @@
 <div class="row form-container">
   <div class="col-lg-4 offset-lg-4">
-    <div class="card bg-light mb-3">
+    <div class="card glass-card mb-3" >
       <div class="card-header text-center">Agregar Brigadista</div>
       <div class="card-body">
         <form [formGroup]="brigadistaForm" (ngSubmit)="onSubmit()">
@@ -38,7 +38,7 @@
           
           <div class="form-group">
             <label for="rol">Rol</label>
-            <select id="rol" formControlName="rol" class="form-control">
+            <select id="rol" formControlName="rol" class="form-control select-text-black">
               <option value="">Seleccione un rol</option>
               <option value="Investigador">Investigador</option>
               <option value="CoInvestigador">CoInvestigador</option>

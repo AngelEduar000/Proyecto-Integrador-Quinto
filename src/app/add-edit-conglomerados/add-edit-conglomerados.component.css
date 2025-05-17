@@ -1,4 +1,46 @@
 .form-container {
-    margin-top: 150px;
+    background: url('/imagenes/fondo.jpg') no-repeat center center;
+    background-size: cover;
+    min-height: 100vh;
   }
+
+  /* Estilo Glassmorphism */
+.glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: white;
+  margin-top: 100px;
+  max-width: 600px;
+  
+}
+
+.glass-card .card-header {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-weight: bold;
+  color: #fff;
+}
+
+.glass-card .form-control {
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  color: white;
+}
+
+.glass-card .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.glass-card label {
+  color: white;
+}
+
+.glass-card .text-danger {
+  color: #ffb3b3 !important;
+}
+
   

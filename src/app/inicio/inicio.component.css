@@ -5,7 +5,10 @@ body {
   font-family: sans-serif; /* Fuente de ejemplo */
   line-height: 1.6;
   color: #333; /* Color de texto de ejemplo */
-  background-color: #ccd4e0; /* Asegura que el fondo del cuerpo sea blanco */
+  /*background-color: #ccd4e0; /* Asegura que el fondo del cuerpo sea blanco */
+  background: url('/imagenes/fondo.jpg') no-repeat center center;
+  background-size: cover;
+  min-height: 100vh;
 }
 
 

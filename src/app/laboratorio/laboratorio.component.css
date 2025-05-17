@@ -1,9 +1,15 @@
 :host {
   display: block;
   padding: 80px 2rem 2rem;
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: auto; 
+  margin: 0 auto; 
   font-family: 'Segoe UI', Roboto, sans-serif;
+
+  background-image: url('/imagenes/fondo.jpg'); /* Ajusta la ruta a tu imagen */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
 }
 
 .titulo-pagina {
