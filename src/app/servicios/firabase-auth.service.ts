@@ -22,6 +22,7 @@ export class FirabaseAuthService {
 
     return from(signInWithEmailAndPassword(this.auth, username, password)).pipe(
       switchMap((cred) => {
+        console.log(cred);
         const uid = cred.user.uid;
         const userDoc = doc(this.firestore, `usuarios/${uid}`);
         return from(getDoc(userDoc)).pipe(

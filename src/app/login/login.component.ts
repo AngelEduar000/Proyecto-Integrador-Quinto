@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { PLATFORM_ID } from '@angular/core';
 import { take } from 'rxjs';
+import { FirabaseAuthService } from '../servicios/firabase-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -24,21 +25,23 @@ export class LoginComponent implements OnInit, OnDestroy {
   errorMessage = '';
   isBrowser: boolean;
 
+  private router = inject(Router);
+  private firabaseAuth = inject(FirabaseAuthService);
+  private fb = inject(FormBuilder);
+
   constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-    this.loginForm = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
-    });
 
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
   ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+
     if (this.isBrowser) {
       document.body.classList.add('login-background');
     }
@@ -62,23 +65,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     const { username, password } = this.loginForm.value;
 
-    this.http.get<any[]>('assets/data/usuarios.json').pipe(take(1)).subscribe({
-      next: users => {
-        const user = users.find(u => u.username === username && u.password === password);
-
-        if (user) {
-          if(this.isBrowser) {
-            localStorage.setItem('loggedUser', JSON.stringify({ username: user.username, role: user.role }));
-          }
-          this.router.navigate(['/']); // Redirigir al inicio
-        } else {
-          this.errorMessage = 'Usuario o contraseña incorrectos.';
-        }
-      },
-      error: err => {
-        console.error('Error al cargar usuarios:', err);
-        this.errorMessage = 'Error en el servidor.';
+    this.firabaseAuth.login(username, password).pipe(take(1)).subscribe(
+      data => {
+        console.log(data);
+        this.router.navigate(['/']);
       }
-    });
+    )
   }
 }
