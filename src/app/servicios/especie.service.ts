@@ -14,7 +14,7 @@ export interface Especie {
   providedIn: 'root'
 })
 export class EspecieService {
-  private apiUrl = 'https://proyecto-integrador-quinto-backend-production.up.railway.app/api';
+  private apiUrl = 'https://proyecto-integrador-quinto-backend.vercel.app/';
 
   constructor(private http: HttpClient) {}
 
