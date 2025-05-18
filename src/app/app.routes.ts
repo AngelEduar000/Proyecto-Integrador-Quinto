@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 
@@ -14,6 +14,7 @@ import { LaboratorioComponent } from './laboratorio/laboratorio.component';
 import { IdeamComponent } from './ideam/ideam.component';
 import { AgregarConglomeradoComponent } from './add-edit-conglomerados/add-edit-conglomerados.component';
 import {AddEditBrigadistasComponent} from './add-edit-brigadistas/add-edit-brigadistas.component';
+import { AddUserComponent } from "./add-user/add-user.component";
 
 
 
@@ -28,7 +29,8 @@ export const routes: Routes = [
     { path: `laboratorio`, component: LaboratorioComponent },
     { path: `ideam`, component: IdeamComponent },
     { path: 'add', component: AgregarConglomeradoComponent },
-    { path: 'add2', component: AddEditBrigadistasComponent }
+    { path: 'add2', component: AddEditBrigadistasComponent },
+    { path: 'add-user', component: AddUserComponent }
 
 ];
 

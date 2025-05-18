@@ -1,0 +1,33 @@
+<div class="background-wrapper">
+    <div class="form-container">
+  <h2 class="form-title">Agregar Usuario</h2>
+  <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>Nombre</label>
+      <input formControlName="name" type="text" />
+    </div>
+    <div class="form-group">
+      <label>Apellido</label>
+      <input formControlName="apellido" type="text" />
+    </div>
+    <div class="form-group">
+      <label>Correo</label>
+      <input formControlName="email" type="email" />
+    </div>
+    <div class="form-group">
+      <label>Rol</label>
+      <select formControlName="role">
+        <option value="administrador">Administrador</option>
+        <option value="ideam">Ideam</option>
+        <option value="investigador">Investigador</option>
+        <option value="cientifico">Científico</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Contraseña</label>
+      <input formControlName="password" type="password" />
+    </div>
+    <button type="submit" [disabled]="addUserForm.invalid">Agregar</button>
+  </form>
+</div>
+</div>
