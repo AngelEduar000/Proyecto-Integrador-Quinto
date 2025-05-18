@@ -19,6 +19,17 @@
   font-weight: bold;
 }
 
+button {
+  background: #7cd5b3;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+
+
 /* Mapa */
 #map {
   width: 100%;
