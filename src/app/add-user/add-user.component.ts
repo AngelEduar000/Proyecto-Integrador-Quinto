@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DropdownComponent } from '../dropdown/dropdown.component';
+import { UserService } from '../servicios/user.service';
 
 @Component({
   selector: 'app-add-user',
@@ -12,6 +13,7 @@ import { DropdownComponent } from '../dropdown/dropdown.component';
 })
 export class AddUserComponent {
   addUserForm: FormGroup;
+  private userService: UserService = inject(UserService);
 
   roles = [
     {
@@ -37,8 +39,7 @@ export class AddUserComponent {
       name: ['', Validators.required],
       apellido: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      role: ['user', Validators.required],
-      password: ['', Validators.required]
+      role: ['user', Validators.required]
     });
   }
 
@@ -49,8 +50,17 @@ export class AddUserComponent {
 
   onSubmit() {
     if (this.addUserForm.valid) {
-      console.log(this.addUserForm.value);
-      // Aquí iría la lógica para guardar el usuario
+      const user = {
+        isFirstTime: true,
+        createOn: new Date(),
+        ...this.addUserForm.value,
+      }
+
+      this.userService.createUser(user).subscribe(
+        data => {
+          console.log(data);
+        }
+      );
     }
   }
 }

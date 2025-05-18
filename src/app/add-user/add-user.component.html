@@ -18,10 +18,6 @@
       <label>Rol</label>
       <app-dropdown [labelOption]="'label'" [valueOption]="'value'" [options]="roles" (select)="changeSelect($event)" />
     </div>
-    <div class="form-group">
-      <label>Contraseña</label>
-      <input formControlName="password" type="password" />
-    </div>
     <button type="submit" [disabled]="addUserForm.invalid">Agregar</button>
   </form>
 </div>

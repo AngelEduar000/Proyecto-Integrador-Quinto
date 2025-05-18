@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { DataService } from '../services/data.service';
+import { DataService } from '../servicios/data.service';
 import { take } from 'rxjs';
 
 declare var google: any;
@@ -56,7 +56,7 @@ export class MapaComponent implements AfterViewInit {
   filterByRegion(region: string): void {
     this.clearMarkers(); // Limpiar todos los marcadores antes de agregar los nuevos
     const filteredConglomerados = region ? this.conglomerados.filter(conglomerado => conglomerado.region === region) : this.conglomerados;
-    
+
     // Mostrar los marcadores correspondientes
     filteredConglomerados.forEach((conglomerado) => {
       const [latStr, lngStr] = conglomerado.coordenadas;
@@ -92,7 +92,7 @@ export class MapaComponent implements AfterViewInit {
     document.getElementById('zona-region')!.innerText = conglomerado.region || '-';
     document.getElementById('zona-municipio')!.innerText = conglomerado.municipio || '-';
     document.getElementById('zona-fecha-creacion')!.innerText = conglomerado.fecha_creacion || '-';
-    
+
     const especiesLista = document.getElementById('especies-lista')!;
     especiesLista.innerHTML = '';
     conglomerado.especies.forEach((especie: string) => {
