@@ -1,14 +1,30 @@
-/* 🌐 Asegura que el contenido no quede debajo del navbar */
+/* 🌐 Host con fondo a pantalla completa */
 :host {
   display: block;
-  padding-top: 80px; /* ajusta según la altura de tu navbar */
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+  padding-top: 80px; /* espacio navbar */
+  padding-bottom: 2rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  padding-bottom: 2rem; /* Agregado margen inferior */
-  max-width: 1200px;
-  margin: 0 auto;
+
+  background: url('/imagenes/fondo.jpg') no-repeat center center fixed;
+  background-size: cover;
+
   font-family: "Segoe UI", Roboto, sans-serif;
   color: #333;
+  box-sizing: border-box;
+}
+
+/* Contenedor interno para limitar ancho y centrar contenido */
+.contenido {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(255 255 255 / 0.85); /* fondo blanco translúcido para legibilidad */
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
   box-sizing: border-box;
 }
 
@@ -18,24 +34,12 @@
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
   color: #2a4d69;
-  font-weight: bold;
+  font-weight: 700;
   letter-spacing: 0.5px;
 }
 
-/* 🔍 Buscador y 🎯 Filtros */
-.buscador,
-.filtros {
-  margin: 1rem 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
-  /* flex-direction: column; */
-  align-items: stretch;
-}
-
-.buscador input,
-.filtros select {
+/* 🔍 Buscador */
+.buscador input {
   padding: 0.75rem 1.25rem;
   font-size: 1rem;
   border: 1px solid #ccc;
@@ -46,42 +50,89 @@
   min-width: unset;
 }
 
-.buscador input:focus,
-.filtros select:focus {
+.buscador input:focus {
   border-color: #5e8ab5;
   outline: none;
+}
+
+/* 🎯 Filtros */
+.filtros {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* Etiquetas de filtros en blanco y negrita */
+.filtros label {
+  color: #fff;
+  font-weight: 700;
+  align-self: center; /* para alinear vertical si hace falta */
+}
+
+/* Select con fondo oscuro y texto blanco */
+.filtros select {
+  background-color: rgba(0, 0, 0, 0.6); /* fondo negro semi-transparente */
+  color: #fff;                          /* texto blanco */
+  border: 1px solid #888;               /* borde más claro para contraste */
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  min-width: 220px;
+  transition: border-color 0.3s ease;
+  width: 100%;
+  min-width: unset;
+}
+
+.filtros select:focus {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-color: #ccc;
+  outline: none;
+}
+
+/* Contenedor flex para buscador */
+.buscador {
+  margin: 1rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: stretch;
 }
 
 /* 🧾 Grid de especies */
 .especies-grid {
   display: grid;
   gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Ajustado para mejorar la distribución */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   margin-top: 2rem;
 }
 
 /* 🪵 Tarjetas */
 .especie-card {
-  background: #ffffff;
+  background: #fff;
   border: 1px solid #e0e0e0;
   border-radius: 16px;
   padding: 1rem;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .especie-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 16px rgb(0 0 0 / 0.1);
 }
 
 .especie-card img {
   width: 100%;
-  height: 200px; /* Tamaño fijo para las imágenes */
+  height: 200px;
   object-fit: cover;
   border-radius: 12px;
   margin-bottom: 1rem;
@@ -99,16 +150,21 @@
 .territorio-list {
   padding-left: 1.25rem;
   text-align: left;
+  margin-top: 0.5rem;
 }
 
-/* 🖥️ Responsividad: diseño para pantallas más pequeñas */
+/* 🖥️ Responsividad */
 
-/* Pantallas pequeñas: móviles */
+/* Móviles */
 @media (max-width: 600px) {
   :host {
-    padding-top: 60px; /* Reduce el espacio superior en móviles */
+    padding-top: 60px;
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .contenido {
+    padding: 1rem;
   }
 
   .titulo-pagina {
@@ -123,7 +179,7 @@
   }
 
   .especies-grid {
-    grid-template-columns: 1fr; /* Una columna en dispositivos móviles */
+    grid-template-columns: 1fr;
     gap: 1rem;
   }
 
@@ -132,12 +188,11 @@
   }
 
   .especie-card img {
-    max-width: 100%;
     height: 200px;
   }
 }
 
-/* Pantallas medianas: tabletas */
+/* Tabletas */
 @media (max-width: 768px) {
   .titulo-pagina {
     font-size: 2rem;
@@ -149,7 +204,7 @@
   }
 
   .especies-grid {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Acomoda las tarjetas en 2-3 columnas */
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   }
 
   .especie-card {
@@ -161,12 +216,15 @@
   }
 }
 
-/* Pantallas grandes: escritorios */
+/* Escritorios grandes */
 @media (min-width: 1200px) {
   :host {
-    max-width: 1200px;
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  .contenido {
+    padding: 2rem 3rem;
   }
 
   .titulo-pagina {
@@ -175,7 +233,7 @@
   }
 
   .especies-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Mantiene la cuadrícula adaptable */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   }
 
   .especie-card {
@@ -185,4 +243,9 @@
   .especie-card img {
     height: 200px;
   }
+
+  .buscador input {
+    width: 80%; /*porcentaje de ancho en la pantalla*/
+  }
 }
+
