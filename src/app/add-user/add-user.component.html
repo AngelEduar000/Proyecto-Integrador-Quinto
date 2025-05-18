@@ -16,12 +16,7 @@
     </div>
     <div class="form-group">
       <label>Rol</label>
-      <select formControlName="role">
-        <option value="administrador">Administrador</option>
-        <option value="ideam">Ideam</option>
-        <option value="investigador">Investigador</option>
-        <option value="cientifico">Científico</option>
-      </select>
+      <app-dropdown [labelOption]="'label'" [valueOption]="'value'" [options]="roles" (select)="changeSelect($event)" />
     </div>
     <div class="form-group">
       <label>Contraseña</label>

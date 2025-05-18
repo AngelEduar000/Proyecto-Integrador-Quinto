@@ -1,0 +1,16 @@
+<div class="custom-select-wrapper">
+  <div class="custom-select-display" (click)="toggleDropdown()">
+    {{ selectOption[labelOption] || placeholder }}
+    <span class="arrow" [class.open]="isOpen">&#9662;</span>
+  </div>
+
+  @if (isOpen) {
+    <ul class="custom-select-options">
+      @for (option of options; track $index) {
+        <li (click)="chooseOption(option)">
+          {{ option[labelOption] }}
+        </li>
+      }
+    </ul>
+  }
+</div>

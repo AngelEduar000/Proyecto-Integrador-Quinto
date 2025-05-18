@@ -1,16 +1,36 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { DropdownComponent } from '../dropdown/dropdown.component';
 
 @Component({
   selector: 'app-add-user',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DropdownComponent],
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent {
   addUserForm: FormGroup;
+
+  roles = [
+    {
+      value: 'administrador',
+      label: 'Administrador'
+    },
+    {
+      value: 'ideam',
+      label: 'Ideam'
+    },
+    {
+      value: 'investigador',
+      label: 'Investigador'
+    },
+    {
+      value: 'cientifico',
+      label: 'Científico'
+    }
+  ]
 
   constructor(private fb: FormBuilder) {
     this.addUserForm = this.fb.group({
@@ -20,6 +40,11 @@ export class AddUserComponent {
       role: ['user', Validators.required],
       password: ['', Validators.required]
     });
+  }
+
+  changeSelect(value: any) {
+    this.addUserForm.controls['role'].setValue(value);
+    this.addUserForm.updateValueAndValidity();
   }
 
   onSubmit() {
