@@ -1,14 +1,13 @@
-:host {
-  /* position: fixed; */
-  inset: 0;
+:host, html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: url('/assets/imagenes/fondo.jpg') no-repeat center center;
+  background-size: cover;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('/assets/imagenes/fondo.jpg') no-repeat center center;
-  background-size: cover;
-  font-family: 'Segoe UI', sans-serif;
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -18,16 +17,12 @@
   padding: 0;
 }
 
-body, html {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .background-wrapper {
   width: 100%;
-  max-width: 450px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   padding: 20px;
 }
 
@@ -36,9 +31,10 @@ body, html {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-radius: 16px;
-  /* border: 1px solid rgba(255, 255, 255, 0.3); */
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
   padding: 30px;
+  width: 100%;
+  max-width: 450px;
 }
 
 .form-title {
@@ -54,14 +50,12 @@ body, html {
   margin-bottom: 18px;
 }
 
-
 .form-group label {
   display: block;
   margin-bottom: 6px;
   font-weight: 600;
   color: #ffffffcc;
 }
-
 
 .form-group input {
   width: 100%;
@@ -76,8 +70,6 @@ body, html {
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
   outline: none;
 }
-
-
 
 .form-group input::placeholder {
   color: #eeeeee88;
@@ -103,4 +95,40 @@ button[type="submit"]:hover:not([disabled]) {
 button[disabled] {
   background-color: rgba(158, 158, 158, 0.5);
   cursor: not-allowed;
+}
+
+/* ------------------------ */
+/* 📱 RESPONSIVE DESIGN */
+/* ------------------------ */
+
+/* Pantallas pequeñas (móviles) */
+@media (max-width: 480px) {
+  .form-container {
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .form-title {
+    font-size: 22px;
+  }
+
+  .form-group input {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  button[type="submit"] {
+    font-size: 15px;
+  }
+}
+
+/* Pantallas medianas (tablets) */
+@media (max-width: 768px) {
+  .form-container {
+    padding: 24px;
+  }
+
+  .form-title {
+    font-size: 24px;
+  }
 }
