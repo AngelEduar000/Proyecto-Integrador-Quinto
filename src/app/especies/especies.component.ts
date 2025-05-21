@@ -11,56 +11,45 @@ import { EspecieService, Especie } from '../servicios/especie.service';
   styleUrls: ['./especies.component.css']
 })
 export class EspeciesComponent implements OnInit {
+  especies: Especie[] = [];
   busqueda: string = '';
   filtroUso: string = '';
   filtroRegion: string = '';
-  especies: Especie[] = [];
-  cargando: boolean = true;
 
-  private especieService = inject(EspecieService);
+  usosDisponibles: string[] = [];
+  regionesDisponibles: string[] = [];
+
+  constructor(private especieService: EspecieService) {}
 
   ngOnInit(): void {
-    this.especieService.obtenerEspecies().subscribe({
-      next: (data) => {
-        this.especies = data;
-        this.cargando = false;
-      },
-      error: (err) => {
-        console.error('Error al cargar especies:', err);
-        this.cargando = false;
-      }
+    this.cargarEspecies();
+  }
+
+  cargarEspecies(): void {
+    this.especieService.obtenerEspecies().subscribe((datos) => {
+      this.especies = datos;
+
+      // Llenar los filtros únicos
+      this.usosDisponibles = [...new Set(this.especies.map(e => e.uso).filter(Boolean))];
+      this.regionesDisponibles = [...new Set(this.especies.map(e => e.region).filter(Boolean))];
     });
   }
 
-  get usosDisponibles() {
-    return [...new Set(this.especies.map(e => e.uso))];
-  }
-
-  get regionesDisponibles() {
-    const regionesSeparadas = this.especies.flatMap(e =>
-      e.region?.split(',').map(r => r.trim()) || []
-    );
-    return [...new Set(regionesSeparadas)].sort();
-  }
-
-  especiesFiltradas() {
-    const texto = this.busqueda.toLowerCase();
-
+  especiesFiltradas(): Especie[] {
     return this.especies.filter(especie => {
-      const coincideTexto =
-        especie.nombre_comun.toLowerCase().includes(texto) ||
-        especie.uso.toLowerCase().includes(texto);
+      const coincideBusqueda =
+        this.busqueda.trim() === '' ||
+        especie.nombre_comun.toLowerCase().includes(this.busqueda.toLowerCase()) ||
+        especie.uso.toLowerCase().includes(this.busqueda.toLowerCase());
 
-      const coincideUso = !this.filtroUso || especie.uso === this.filtroUso;
+      const coincideUso = this.filtroUso === '' || especie.uso === this.filtroUso;
+      const coincideRegion = this.filtroRegion === '' || especie.region === this.filtroRegion;
 
-      const coincideRegion = !this.filtroRegion ||
-        especie.region?.split(',').map(r => r.trim()).includes(this.filtroRegion);
-
-      return coincideTexto && coincideUso && coincideRegion;
+      return coincideBusqueda && coincideUso && coincideRegion;
     });
   }
 
-  imagenEspecie(nombre: string): string {
-    return this.especieService.obtenerImagen(nombre);
+  imagenEspecie(nombreComun: string): string {
+    return this.especieService.obtenerImagen(nombreComun);
   }
 }
