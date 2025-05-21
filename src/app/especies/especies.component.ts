@@ -14,13 +14,21 @@ export class EspeciesComponent implements OnInit {
   busqueda: string = '';
   filtroUso: string = '';
   filtroRegion: string = '';
-
   especies: Especie[] = [];
+  cargando: boolean = true;
+
   private especieService = inject(EspecieService);
 
   ngOnInit(): void {
-    this.especieService.obtenerEspecies().subscribe(data => {
-      this.especies = data;
+    this.especieService.obtenerEspecies().subscribe({
+      next: (data) => {
+        this.especies = data;
+        this.cargando = false;
+      },
+      error: (err) => {
+        console.error('Error al cargar especies:', err);
+        this.cargando = false;
+      }
     });
   }
 

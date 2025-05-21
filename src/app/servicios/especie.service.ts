@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 export interface Especie {
   nombre_comun: string;
@@ -19,10 +20,19 @@ export class EspecieService {
   constructor(private http: HttpClient) {}
 
   obtenerEspecies(): Observable<Especie[]> {
-    return this.http.get<Especie[]>(`${this.apiUrl}/mostrar_especie`);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get<Especie[]>(`${this.apiUrl}/mostrar_especie`, { headers }).pipe(
+      catchError((error) => {
+        console.error('Error al obtener especies:', error);
+        return of([]); // Retorna arreglo vacío si hay error
+      })
+    );
   }
 
-  obtenerImagen( nombre: string ): string {
-    return `${this.apiUrl}/imagen_especie/${nombre}`;
+  obtenerImagen(nombre: string): string {
+    return `${this.apiUrl}/imagen_especie/${encodeURIComponent(nombre)}`;
   }
 }
