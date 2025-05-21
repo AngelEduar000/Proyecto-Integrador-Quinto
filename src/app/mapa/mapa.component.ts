@@ -49,7 +49,7 @@ export class MapaComponent implements AfterViewInit {
   // Extraer las regiones únicas
   extractRegions(data: any[]): string[] {
     const regionesUnicas = new Set(data.map((item) => item.region));
-    return Array.from(regionesUnicas);
+    return Array.from(regionesUnicas);  
   }
 
   // Función para filtrar los marcadores por región
