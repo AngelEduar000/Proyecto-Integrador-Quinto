@@ -29,9 +29,9 @@ export const routes: Routes = [
   { path: 'laboratorio', component: LaboratorioComponent },
   { path: 'ideam', component: IdeamComponent },
 
-  { path: 'add2', component: AddEditBrigadistasComponent },
-  { path: 'add-user', component: AddUserComponent },
-  { path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent } 
+
+  { path: 'add-user', component: AddUserComponent }
+  
 ];
 
 
