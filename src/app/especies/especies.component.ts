@@ -1,6 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router, NavigationEnd } from '@angular/router'; // 👈 Agrega esto
+import { filter } from 'rxjs/operators'; // 👈 Agrega esto
 import { EspecieService, Especie } from '../servicios/especie.service';
 
 @Component({
@@ -19,19 +21,35 @@ export class EspeciesComponent implements OnInit {
   usosDisponibles: string[] = [];
   regionesDisponibles: string[] = [];
 
-  constructor(private especieService: EspecieService) {}
+  constructor(private especieService: EspecieService, private router: Router) {} // 👈 inyecta Router
 
   ngOnInit(): void {
     this.cargarEspecies();
+
+    // 👇 Se suscribe a la navegación para recargar si vuelves a esta ruta
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.cargarEspecies();
+      });
   }
 
   cargarEspecies(): void {
     this.especieService.obtenerEspecies().subscribe((datos) => {
       this.especies = datos;
 
-      // Llenar los filtros únicos
-      this.usosDisponibles = [...new Set(this.especies.map(e => e.uso).filter(Boolean))];
-      this.regionesDisponibles = [...new Set(this.especies.map(e => e.region).filter(Boolean))];
+      this.usosDisponibles = [
+        ...new Set(
+          this.especies
+            .map(e => e.uso)
+            .filter(Boolean)
+            .flatMap(uso => uso.split(',').map(u => u.trim()))
+        )
+      ];
+
+      this.regionesDisponibles = [
+        ...new Set(this.especies.flatMap(e => e.region).filter(Boolean))
+      ];
     });
   }
 
@@ -43,7 +61,7 @@ export class EspeciesComponent implements OnInit {
         especie.uso.toLowerCase().includes(this.busqueda.toLowerCase());
 
       const coincideUso = this.filtroUso === '' || especie.uso === this.filtroUso;
-      const coincideRegion = this.filtroRegion === '' || especie.region === this.filtroRegion;
+      const coincideRegion = this.filtroRegion === '' || especie.region.includes(this.filtroRegion);
 
       return coincideBusqueda && coincideUso && coincideRegion;
     });

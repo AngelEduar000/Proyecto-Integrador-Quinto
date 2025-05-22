@@ -8,7 +8,7 @@ export interface Especie {
   nombre_cientifico: string;
   familia: string;
   uso: string;
-  region: string;
+  region: string[];  
 }
 
 @Injectable({
