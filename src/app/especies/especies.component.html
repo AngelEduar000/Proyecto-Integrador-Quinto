@@ -14,7 +14,7 @@
 <!-- 🎯 Filtros -->
 <div class="filtros">
   <label>
-    Uso medicinal:
+    Usos:
     <select [(ngModel)]="filtroUso">
       <option value="">Todos</option>
       <option *ngFor="let uso of usosDisponibles" [value]="uso">{{ uso }}</option>
