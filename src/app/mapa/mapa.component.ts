@@ -86,13 +86,11 @@ export class MapaComponent implements AfterViewInit {
     document.getElementById('zona-municipio')!.innerText = conglomerado.municipio || '-';
     document.getElementById('zona-fecha-creacion')!.innerText = conglomerado.fecha_creacion || '-';
 
-    const especiesLista = document.getElementById('especies-lista')!;
-    especiesLista.innerHTML = '';
-    conglomerado.especies.split(',').forEach((especie: string) => {
-      const li = document.createElement('li');
-      li.innerText = especie.trim();
-      especiesLista.appendChild(li);
-    });
+    // Si tienes un contenedor para especies, puedes dejarlo vacío o no tocarlo
+    const especiesLista = document.getElementById('especies-lista');
+    if (especiesLista) {
+      especiesLista.innerHTML = '';  // Limpiar por si acaso, pero no mostrar nada
+    }
   }
 
   zoomToConglomerado(marker: any, conglomerado: any): void {
