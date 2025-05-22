@@ -19,20 +19,21 @@ import { AddUserComponent } from "./add-user/add-user.component";
 
 
 export const routes: Routes = [
-    { path: '', component: InicioComponent },
-    { path: 'login', component: LoginComponent },
-    { path: 'mapa', component: MapaComponent },
-    { path: 'especies', component: EspeciesComponent },
-    { path: 'reportes', component: ReportesComponent },
-    { path: `navbar`, component: NavbarComponent },
-    { path: 'investigacion', component: InvestigacionComponent },
-    { path: `laboratorio`, component: LaboratorioComponent },
-    { path: `ideam`, component: IdeamComponent },
-    { path: 'add', component: AgregarConglomeradoComponent },
-    { path: 'add2', component: AddEditBrigadistasComponent },
-    { path: 'add-user', component: AddUserComponent }
-
+  { path: '', component: InicioComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'mapa', component: MapaComponent },
+  { path: 'especies', component: EspeciesComponent },
+  { path: 'reportes', component: ReportesComponent },
+  { path: 'navbar', component: NavbarComponent },
+  { path: 'investigacion', component: InvestigacionComponent },
+  { path: 'laboratorio', component: LaboratorioComponent },
+  { path: 'ideam', component: IdeamComponent },
+  { path: 'add', component: AgregarConglomeradoComponent },
+  { path: 'add2', component: AddEditBrigadistasComponent },
+  { path: 'add-user', component: AddUserComponent },
+  { path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent } 
 ];
+
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Conglomerado } from '../interfaces/conglomerado';
-import { Brigadista } from '../interfaces/brigadista'; // Asegúrate de tener esta interfaz
+import { BrigadistasService } from '../servicios/brigadista.service';
+import { Brigadista } from '../interfaces/brigadista';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -15,86 +15,63 @@ import { RouterModule } from '@angular/router';
 export class IdeamComponent implements OnInit {
 
   brigadaForm!: FormGroup;
-
-  conglomerados: Conglomerado[] = [
-    {
-      id: 1,
-      Identificador: 'CG01',
-      FechaCreacion: new Date('2023-01-15'),
-      FechaEstablecimiento: new Date('2023-02-01'),
-      Region: 'Andina',
-      Municipio: 'Bucaramanga',
-      coordenadas: [7.12345, -73.12345]
-    }
-  ];
-
-  // Simulación de brigadistas
-  brigadistas: Brigadista[] = [
-    {
-      id_usuario: 1,
-      nombre: 'Ana Gómez',
-      correo: 'ana@correo.com',
-      direccion: 'Calle 123',
-      telefono: '3001234567',
-      rol: 'Investigador'
-    },
-    {
-      id_usuario: 2,
-      nombre: 'Luis Pérez',
-      correo: 'luis@correo.com',
-      direccion: 'Carrera 45',
-      telefono: '3109876543',
-      rol: 'CoInvestigador'
-    },
-    {
-      id_usuario: 3,
-      nombre: 'Clara Ríos',
-      correo: 'clara@correo.com',
-      direccion: 'Avenida Siempre Viva',
-      telefono: '3204567890',
-      rol: 'Investigador'
-    }
-  ];
-
-  // Filtrados
+  brigadistas: Brigadista[] = [];
   investigadores: Brigadista[] = [];
   coinvestigadores: Brigadista[] = [];
+  conglomerados: any[] = [];
 
-  constructor(private fb: FormBuilder) {}
+  
+
+  constructor(private fb: FormBuilder, private brigadistaService: BrigadistasService) {}
 
   ngOnInit(): void {
-    // Separar por rol
-    this.investigadores = this.brigadistas.filter(b => b.rol === 'Investigador');
-    this.coinvestigadores = this.brigadistas.filter(b => b.rol === 'CoInvestigador');
-
-    // Formulario
     this.brigadaForm = this.fb.group({
       nombreBrigada: ['', Validators.required],
       fechaVisita: ['', Validators.required],
-      jefeBrigada: ['', Validators.required], // solo investigadores
-      investigador: [[], Validators.required],
-      CoInvestigador: [[]]
+      jefeBrigada: ['', Validators.required],
+      investigador: ['', Validators.required], // corregido: no es array
+      CoInvestigador: ['', Validators.required] // añadido Validators.required para coherencia con HTML
+    });
+    
+
+    // Obtener brigadistas desde el servicio
+    this.brigadistaService.obtenerBrigadistas().subscribe(data => {
+      this.brigadistas = data;
+
+      // Filtrar según el rol
+      this.investigadores = this.brigadistas.filter(b => b.rol === 'Investigador');
+      this.coinvestigadores = this.brigadistas.filter(b => b.rol === 'CoInvestigador');
     });
   }
-//LOGICA DE ALERTA 
+
+  // Manejo del formulario
   onSubmit(): void {
     if (this.brigadaForm.valid) {
       const nuevaBrigada = this.brigadaForm.value;
-  
-      // Aquí iría tu lógica para guardar la brigada, por ejemplo:
+
+      // Lógica de envío de datos (puedes reemplazar esto con una llamada al backend)
       console.log('Brigada registrada:', nuevaBrigada);
-  
-      // Mostrar alerta de éxito
+
+      // Mensaje de éxito
       alert('Brigada registrada correctamente');
-  
-      // Opcional: resetear el formulario
+
+      // Reiniciar el formulario
       this.brigadaForm.reset();
     } else {
-      // Marcar todos los campos como tocados para mostrar errores
       this.brigadaForm.markAllAsTouched();
-  
-      // Mostrar alerta de error
       alert('Formulario inválido. Por favor, corrija los errores.');
     }
   }
+    eliminarBrigadista(id: number): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este brigadista?')) {
+      this.brigadistas = this.brigadistas.filter(b => b.id_usuario !== id);
+    }
+  }
+    eliminarConglomerado(id: number): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este conglomerado?')) {
+      // Aquí puedes implementar la lógica real, por ahora solo muestra por consola
+      console.log(`Conglomerado con ID ${id} eliminado.`);
+    }
+  }
+
 }

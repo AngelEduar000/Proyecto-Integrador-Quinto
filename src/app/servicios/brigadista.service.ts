@@ -1,16 +1,39 @@
 // src/app/services/brigadistas.service.ts
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Brigadista } from '../interfaces/brigadista'; 
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class BrigadistasService {
-  private brigadistas = [
-    { id: 1, nombre: 'Ana López', rol: 'Investigador' },
-    { id: 2, nombre: 'Carlos Ruiz', rol: 'CoInvestigador' },
-    { id: 3, nombre: 'Diana Gómez', rol: 'Investigador' }
-  ];
+  private apiUrl = 'https://proyecto-integrador-quinto-backend.vercel.app/api/brigadistas';
 
-  getBrigadistas(): Observable<any[]> {
-    return of(this.brigadistas); // esto luego será una llamada HTTP
+  constructor(private http: HttpClient) {}
+
+  // Obtener todos los brigadistas
+  obtenerBrigadistas(): Observable<Brigadista[]> {
+    return this.http.get<Brigadista[]>(this.apiUrl);
+  }
+
+  // Obtener un brigadista por ID
+  obtenerBrigadistaPorId(id: number): Observable<Brigadista> {
+    return this.http.get<Brigadista>(`${this.apiUrl}/${id}`);
+  }
+
+  // Agregar un nuevo brigadista
+  agregarBrigadista(brigadista: Brigadista): Observable<Brigadista> {
+    return this.http.post<Brigadista>(this.apiUrl, brigadista);
+  }
+
+  // Actualizar un brigadista existente
+  actualizarBrigadista(id: number, brigadista: Brigadista): Observable<Brigadista> {
+    return this.http.put<Brigadista>(`${this.apiUrl}/${id}`, brigadista);
+  }
+
+  // Eliminar un brigadista por ID
+  eliminarBrigadista(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

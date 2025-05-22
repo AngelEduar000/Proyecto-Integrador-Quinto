@@ -1,17 +1,19 @@
 <div class="row form-container">
   <div class="col-lg-4 offset-lg-4">
-    <div class="card glass-card mb-3" >
-      <div class="card-header text-center">Agregar Brigadista</div>
+    <div class="card glass-card mb-3">
+      <div class="card-header text-center">
+        {{ route.snapshot.paramMap.get('id') ? 'Editar Brigadista' : 'Agregar Brigadista' }}
+      </div>
       <div class="card-body">
         <form [formGroup]="brigadistaForm" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label>Nombre</label>
             <input type="text" formControlName="nombre" class="form-control" placeholder="Ingrese el nombre" />
             <small class="text-danger" *ngIf="brigadistaForm.get('nombre')?.invalid && brigadistaForm.get('nombre')?.touched">
-              Nombre es requerido
+              El nombre es requerido
             </small>
           </div>
-          
+
           <div class="form-group">
             <label>Correo</label>
             <input type="email" formControlName="correo" class="form-control" placeholder="Ingrese el correo" />
@@ -19,23 +21,23 @@
               Ingrese un correo válido
             </small>
           </div>
-          
+
           <div class="form-group">
             <label>Dirección</label>
             <input type="text" formControlName="direccion" class="form-control" placeholder="Ingrese la dirección" />
             <small class="text-danger" *ngIf="brigadistaForm.get('direccion')?.invalid && brigadistaForm.get('direccion')?.touched">
-              Ingrese una direccion válido
+              La dirección es requerida
             </small>
           </div>
-          
+
           <div class="form-group">
             <label>Teléfono</label>
             <input type="tel" formControlName="telefono" class="form-control" placeholder="Ingrese el teléfono" />
             <small class="text-danger" *ngIf="brigadistaForm.get('telefono')?.invalid && brigadistaForm.get('telefono')?.touched">
-              Ingrese un telefono válido
+              El teléfono es requerido
             </small>
           </div>
-          
+
           <div class="form-group">
             <label for="rol">Rol</label>
             <select id="rol" formControlName="rol" class="form-control select-text-black">
@@ -47,14 +49,13 @@
               Seleccione un rol
             </small>
           </div>
-          
-          <div class="row mt-4 text-center">
-            <div class="col-lg-6">
-              <a routerLink="/ideam" class="btn btn-secondary w-100">Volver</a>
-            </div>
-            <div class="col-lg-6">
-              <button type="submit" [disabled]="brigadistaForm.invalid" class="btn btn-success w-100">Aceptar</button>
-            </div>
+
+          <!-- Botones arreglados -->
+          <div class="d-flex justify-content-between gap-2 mt-4">
+            <a routerLink="/ideam" class="btn btn-secondary flex-fill">Volver</a>
+            <button type="submit" [disabled]="brigadistaForm.invalid" class="btn btn-success flex-fill">
+              {{ route.snapshot.paramMap.get('id') ? 'Actualizar' : 'Registrar' }}
+            </button>
           </div>
         </form>
       </div>

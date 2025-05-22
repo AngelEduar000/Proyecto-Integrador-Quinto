@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
+import { BrigadistasService } from '../servicios/brigadista.service';
+import { Brigadista } from '../interfaces/brigadista';
 
 @Component({
   selector: 'app-add-edit-brigadistas',
@@ -18,36 +20,64 @@ import { RouterModule } from '@angular/router';
 export class AddEditBrigadistasComponent implements OnInit {
 
   brigadistaForm!: FormGroup;
+  idBrigadista: number | null = null;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    public route: ActivatedRoute,
+    private brigadistaService: BrigadistasService
+  ) {}
 
-  ngOnInit(): void {
-    this.brigadistaForm = this.fb.group({
-      nombre: ['', Validators.required],
-      correo: ['', [Validators.required, Validators.email]],
-      direccion: ['', Validators.required],
-      telefono: ['', Validators.required],
-      rol: ['', Validators.required]
+ngOnInit(): void {
+  this.brigadistaForm = this.fb.group({
+    nombre: ['', Validators.required],
+    correo: ['', [Validators.required, Validators.email]],
+    direccion: ['', Validators.required],
+    telefono: ['', Validators.required],
+    rol: ['', Validators.required]
+  });
+
+  const idParam = this.route.snapshot.paramMap.get('id');
+  if (idParam) {
+    this.idBrigadista = parseInt(idParam, 10);
+    this.brigadistaService.obtenerBrigadistaPorId(this.idBrigadista).subscribe({
+      next: (brigadista: Brigadista) => {
+        // No incluir el ID aquí
+        this.brigadistaForm.patchValue({
+          nombre: brigadista.nombre,
+          correo: brigadista.correo,
+          direccion: brigadista.direccion,
+          telefono: brigadista.telefono,
+          rol: brigadista.rol
+        });
+      },
+      error: () => {
+        alert('Error al cargar el brigadista. Verifica que el ID sea válido.');
+      }
     });
   }
-//LOGICA ALERTA
-  onSubmit(): void {
-    if (this.brigadistaForm.valid) {
-      const nuevoBrigadista = this.brigadistaForm.value;
-  
-      // Aquí iría tu lógica para enviar los datos al backend o servicio
-      console.log('Brigadista registrado:', nuevoBrigadista);
-  
-      // Mostrar alerta de éxito
-      alert('Brigadista registrado correctamente');
-  
-      // Resetear formulario si deseas
-      this.brigadistaForm.reset();
+}
+
+
+onSubmit(): void {
+  if (this.brigadistaForm.valid) {
+    const brigadista = this.brigadistaForm.value;
+
+    if (this.idBrigadista) {
+      // Enviar brigadista y el ID separado
+      console.log('Editar brigadista con ID:', this.idBrigadista, brigadista);
+      alert('Brigadista editado correctamente');
     } else {
-      this.brigadistaForm.markAllAsTouched();
-      alert('Formulario inválido. Por favor, corrija los errores.');
+      console.log('Registrar brigadista:', brigadista);
+      alert('Brigadista registrado correctamente');
     }
+
+    this.brigadistaForm.reset();
+  } else {
+    this.brigadistaForm.markAllAsTouched();
+    alert('Formulario inválido. Por favor, corrija los errores.');
   }
-  
+}
+
 
 }
