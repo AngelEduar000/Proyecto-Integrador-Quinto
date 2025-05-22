@@ -37,6 +37,6 @@
     <img [src]="imagenEspecie(especie.nombre_comun)" [alt]="especie.nombre_comun" />
     <h3>{{ especie.nombre_comun }} ({{ especie.nombre_cientifico }})</h3>
     <p><strong>Usos Medicinales:</strong> {{ especie.uso }}</p>
-    <p><strong>Región:</strong> {{ especie.region?.trim() || 'No especificada' }}</p>
+    <p><strong>Región:</strong> {{ especie.region?.join(', ') || 'No especificada' }}</p>
   </div>
 </div>

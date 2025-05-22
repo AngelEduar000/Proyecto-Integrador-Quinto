@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EspecieService, Especie } from '../servicios/especie.service';
@@ -26,14 +26,23 @@ export class EspeciesComponent implements OnInit {
   }
 
   cargarEspecies(): void {
-    this.especieService.obtenerEspecies().subscribe((datos) => {
-      this.especies = datos;
+  this.especieService.obtenerEspecies().subscribe((datos) => {
+    this.especies = datos;
 
-      // Llenar los filtros únicos
-      this.usosDisponibles = [...new Set(this.especies.map(e => e.uso).filter(Boolean))];
-      this.regionesDisponibles = [...new Set(this.especies.map(e => e.region).filter(Boolean))];
-    });
-  }
+    this.usosDisponibles = [
+      ...new Set(
+        this.especies
+          .map(e => e.uso)
+          .filter(Boolean)
+          .flatMap(uso => uso.split(',').map(u => u.trim()))
+      )
+    ];
+
+    this.regionesDisponibles = [
+      ...new Set(this.especies.flatMap(e => e.region).filter(Boolean))
+    ];
+  });
+}
 
   especiesFiltradas(): Especie[] {
     return this.especies.filter(especie => {
@@ -43,7 +52,7 @@ export class EspeciesComponent implements OnInit {
         especie.uso.toLowerCase().includes(this.busqueda.toLowerCase());
 
       const coincideUso = this.filtroUso === '' || especie.uso === this.filtroUso;
-      const coincideRegion = this.filtroRegion === '' || especie.region === this.filtroRegion;
+      const coincideRegion = this.filtroRegion === '' || especie.region.includes(this.filtroRegion);
 
       return coincideBusqueda && coincideUso && coincideRegion;
     });
