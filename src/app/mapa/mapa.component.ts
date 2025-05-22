@@ -15,7 +15,7 @@ declare var google: any;
 export class MapaComponent implements AfterViewInit {
 
   conglomerados: any[] = [];
-  markers: any[] = [];  // Array para almacenar los marcadores
+  markers: any[] = [];
   map: any;
   circle: any;
   regiones: string[] = [];
@@ -33,8 +33,8 @@ export class MapaComponent implements AfterViewInit {
           next: (data) => {
             console.log('✅ Datos de conglomerados cargados:', data);
             this.conglomerados = data;
-            this.regiones = this.extractRegions(data); // Extraer las regiones únicas
-            this.initMap(); // Inicializar el mapa con todos los conglomerados
+            this.regiones = this.extractRegions(data);
+            this.initMap();
           },
           error: (err) => {
             console.error('Error al cargar los datos', err);
@@ -46,22 +46,17 @@ export class MapaComponent implements AfterViewInit {
     }
   }
 
-  // Extraer las regiones únicas
   extractRegions(data: any[]): string[] {
     const regionesUnicas = new Set(data.map((item) => item.region));
-    return Array.from(regionesUnicas);  
+    return Array.from(regionesUnicas);
   }
 
-  // Función para filtrar los marcadores por región
   filterByRegion(region: string): void {
-    this.clearMarkers(); // Limpiar todos los marcadores antes de agregar los nuevos
-    const filteredConglomerados = region ? this.conglomerados.filter(conglomerado => conglomerado.region === region) : this.conglomerados;
+    this.clearMarkers();
+    const filteredConglomerados = region ? this.conglomerados.filter(c => c.region === region) : this.conglomerados;
 
-    // Mostrar los marcadores correspondientes
     filteredConglomerados.forEach((conglomerado) => {
-      const [latStr, lngStr] = conglomerado.coordenadas;
-      const lat = parseFloat(latStr);
-      const lng = parseFloat(lngStr);
+      const [lat, lng] = conglomerado.coordenadas;
 
       if (isNaN(lat) || isNaN(lng)) {
         console.warn(`❗ Coordenadas inválidas para el conglomerado: ${conglomerado.identificador}`);
@@ -75,17 +70,15 @@ export class MapaComponent implements AfterViewInit {
         animation: google.maps.Animation.DROP
       });
 
-      // Añadir listener de clic para actualizar el panel de información
       marker.addListener("click", () => {
         this.updateInfoPanel(conglomerado);
         this.zoomToConglomerado(marker, conglomerado);
       });
 
-      this.markers.push(marker); // Almacenar el marcador
+      this.markers.push(marker);
     });
   }
 
-  // Función para actualizar el panel de información
   updateInfoPanel(conglomerado: any): void {
     document.getElementById('zona-nombre')!.innerText = conglomerado.identificador;
     document.getElementById('zona-radio')!.innerText = `${this.radioGeneral} m`;
@@ -95,14 +88,13 @@ export class MapaComponent implements AfterViewInit {
 
     const especiesLista = document.getElementById('especies-lista')!;
     especiesLista.innerHTML = '';
-    conglomerado.especies.forEach((especie: string) => {
+    conglomerado.especies.split(',').forEach((especie: string) => {
       const li = document.createElement('li');
-      li.innerText = especie;
+      li.innerText = especie.trim();
       especiesLista.appendChild(li);
     });
   }
 
-  // Función para hacer zoom al conglomerado y mostrar el círculo del radio con animación gradual
   zoomToConglomerado(marker: any, conglomerado: any): void {
     this.map.setCenter(marker.getPosition());
     let startZoom = this.map.getZoom();
@@ -115,7 +107,7 @@ export class MapaComponent implements AfterViewInit {
         this.map.setZoom(startZoom);
         startZoom += zoomStep;
       } else {
-        clearInterval(zoomInterval); // Detener el intervalo
+        clearInterval(zoomInterval);
       }
     }, intervalTime);
 
@@ -138,7 +130,6 @@ export class MapaComponent implements AfterViewInit {
     this.map.panTo(marker.getPosition());
   }
 
-  // Limpiar los marcadores del mapa
   clearMarkers(): void {
     for (let i = 0; i < this.markers.length; i++) {
       this.markers[i].setMap(null);
@@ -146,13 +137,11 @@ export class MapaComponent implements AfterViewInit {
     this.markers = [];
   }
 
-  // Función que se llama cuando cambia la región seleccionada
   onRegionChange(event: any): void {
     const selectedRegion = event.target.value;
-    this.filterByRegion(selectedRegion); // Filtrar los conglomerados según la región seleccionada
+    this.filterByRegion(selectedRegion);
   }
 
-  // Función para cargar el script de Google Maps
   loadGoogleMapsScript(): Promise<void> {
     return new Promise((resolve, reject) => {
       if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
@@ -164,12 +153,11 @@ export class MapaComponent implements AfterViewInit {
         script.onerror = () => reject('No se pudo cargar el script de Google Maps');
         document.head.appendChild(script);
       } else {
-        resolve(); // Ya está cargado
+        resolve();
       }
     });
   }
 
-  // Inicializar el mapa
   initMap(): void {
     this.map = new google.maps.Map(document.getElementById("map") as HTMLElement, {
       zoom: 5.5,
@@ -177,7 +165,6 @@ export class MapaComponent implements AfterViewInit {
       mapTypeId: google.maps.MapTypeId.HYBRID
     });
 
-    // Al inicio, muestra todos los conglomerados
     this.filterByRegion('');
   }
 }
