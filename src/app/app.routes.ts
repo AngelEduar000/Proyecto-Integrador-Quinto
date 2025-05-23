@@ -28,10 +28,10 @@ export const routes: Routes = [
   { path: 'investigacion', component: InvestigacionComponent },
   { path: 'laboratorio', component: LaboratorioComponent },
   { path: 'ideam', component: IdeamComponent },
-  { path: 'add', component: AgregarConglomeradoComponent,data: { renderMode: 'dynamic' }  },
-  { path: 'add2', component: AddEditBrigadistasComponent,data: { renderMode: 'dynamic' }  },
+  { path: 'add', component: AgregarConglomeradoComponent,data: { renderMode: 'no-prerender' }  },
+  { path: 'add2', component: AddEditBrigadistasComponent,data: { renderMode: 'no-prerender' }  },
   { path: 'add-user', component: AddUserComponent },
-  {path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent, data: { renderMode: 'dynamic' } }
+  {path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent, data: { renderMode: 'no-prerender' } }
 
 ];
 
