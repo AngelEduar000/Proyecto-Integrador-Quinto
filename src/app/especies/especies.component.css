@@ -249,3 +249,83 @@
   }
 }
 
+
+
+/* Contenedor del filtro nombre común */
+.filtro-nombre-comun {
+  max-height: 210px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  width: 220px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Cada opción checkbox */
+.filtro-nombre-comun div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+  font-size: 0.95rem;
+  color: #fff; /* mejor contraste con fondo oscuro */
+}
+
+/* Checkbox con algo de espacio a la derecha */
+.filtro-nombre-comun input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+}
+
+/* Label para hacer clic más fácil */
+.filtro-nombre-comun label {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Scrollbar estilizada para webkit (Chrome, Edge, Safari) */
+.filtro-nombre-comun::-webkit-scrollbar {
+  width: 6px;
+}
+
+.filtro-nombre-comun::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.3);
+  border-radius: 3px;
+}
+
+.filtro-nombre-comun::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* Responsividad */
+
+/* Para pantallas menores o iguales a 768px (tabletas y móviles grandes) */
+@media (max-width: 768px) {
+  .filtro-nombre-comun {
+    width: 100%;      /* ocupa todo el ancho posible */
+    max-height: 180px; /* un poco menos de alto para pantallas pequeñas */
+  }
+}
+
+/* Para móviles muy pequeños, menor o igual a 480px */
+@media (max-width: 480px) {
+  .filtro-nombre-comun {
+    max-height: 140px;
+    padding: 6px 10px;
+  }
+
+  .filtro-nombre-comun div {
+    font-size: 0.85rem;
+  }
+
+  .filtro-nombre-comun input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    margin-right: 6px;
+  }
+}
+
+

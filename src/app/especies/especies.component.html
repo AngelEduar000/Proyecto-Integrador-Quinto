@@ -1,18 +1,35 @@
-<!-- 🏷️ Título principal -->
 <h1 class="titulo-pagina">Especies medicinales y forestales</h1>
 
-<!-- 🔍 Barra de búsqueda -->
-<div class="buscador">
+<!-- búsqueda por texto para uso medicinal -->
+<div class="buscador" style="margin-bottom: 15px;">
   <input
     type="text"
     [(ngModel)]="busqueda"
-    placeholder="Buscar por nombre o uso medicinal..."
+    placeholder="Buscar por uso medicinal..."
     class="form-control"
   />
 </div>
 
-<!-- 🎯 Filtros -->
-<div class="filtros">
+<!-- filtros -->
+<div class="filtros" style="display: flex; gap: 30px; flex-wrap: wrap;">
+
+  <!-- filtro múltiple con checkboxes -->
+  <div>
+    <label><strong>Nombre común:</strong></label>
+    <div class="filtro-nombre-comun">
+      <div *ngFor="let nombre of nombresComunesDisponibles">
+        <input
+          type="checkbox"
+          [id]="nombre"
+          [value]="nombre"
+          (change)="toggleNombreComunSeleccionado(nombre)"
+          [checked]="filtroNombresComunes.includes(nombre)"
+        />
+        <label [for]="nombre">{{ nombre }}</label>
+      </div>
+    </div>
+  </div>
+
   <label>
     Usos:
     <select [(ngModel)]="filtroUso">
@@ -30,10 +47,9 @@
   </label>
 </div>
 
-<!-- 🧾 Lista de especies -->
-
-<div id="especies-list" class="especies-grid">
-  <div *ngFor="let especie of especiesFiltradas(); let i = index" class="especie-card">
+<!-- lista de especies -->
+<div id="especies-list" class="especies-grid" style="margin-top: 20px;">
+  <div *ngFor="let especie of especiesFiltradas()" class="especie-card">
     <img [src]="imagenEspecie(especie.nombre_comun)" [alt]="especie.nombre_comun" />
     <h3>{{ especie.nombre_comun }} ({{ especie.nombre_cientifico }})</h3>
     <p><strong>Usos Medicinales:</strong> {{ especie.uso }}</p>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, NavigationEnd } from '@angular/router'; // 👈 Agrega esto
-import { filter } from 'rxjs/operators'; // 👈 Agrega esto
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import { EspecieService, Especie } from '../servicios/especie.service';
 
 @Component({
@@ -14,19 +14,20 @@ import { EspecieService, Especie } from '../servicios/especie.service';
 })
 export class EspeciesComponent implements OnInit {
   especies: Especie[] = [];
-  busqueda: string = '';
+  busqueda: string = '';           // búsqueda por texto (uso medicinal)
+  filtroNombresComunes: string[] = []; // arreglo para varias especies seleccionadas
   filtroUso: string = '';
   filtroRegion: string = '';
 
+  nombresComunesDisponibles: string[] = [];
   usosDisponibles: string[] = [];
   regionesDisponibles: string[] = [];
 
-  constructor(private especieService: EspecieService, private router: Router) {} // 👈 inyecta Router
+  constructor(private especieService: EspecieService, private router: Router) {}
 
   ngOnInit(): void {
     this.cargarEspecies();
 
-    // 👇 Se suscribe a la navegación para recargar si vuelves a esta ruta
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {
@@ -50,20 +51,38 @@ export class EspeciesComponent implements OnInit {
       this.regionesDisponibles = [
         ...new Set(this.especies.flatMap(e => e.region).filter(Boolean))
       ];
+
+      this.nombresComunesDisponibles = [
+        ...new Set(this.especies.map(e => e.nombre_comun).filter(Boolean))
+      ];
     });
+  }
+
+  toggleNombreComunSeleccionado(nombre: string): void {
+    const index = this.filtroNombresComunes.indexOf(nombre);
+    if (index === -1) {
+      this.filtroNombresComunes.push(nombre);
+    } else {
+      this.filtroNombresComunes.splice(index, 1);
+    }
   }
 
   especiesFiltradas(): Especie[] {
     return this.especies.filter(especie => {
       const coincideBusqueda =
         this.busqueda.trim() === '' ||
-        especie.nombre_comun.toLowerCase().includes(this.busqueda.toLowerCase()) ||
         especie.uso.toLowerCase().includes(this.busqueda.toLowerCase());
 
-      const coincideUso = this.filtroUso === '' || especie.uso === this.filtroUso;
-      const coincideRegion = this.filtroRegion === '' || especie.region.includes(this.filtroRegion);
+      const coincideNombreComun =
+        this.filtroNombresComunes.length === 0 ||
+        this.filtroNombresComunes.includes(especie.nombre_comun);
 
-      return coincideBusqueda && coincideUso && coincideRegion;
+      const coincideUso = this.filtroUso === '' || especie.uso === this.filtroUso;
+
+      const coincideRegion =
+        this.filtroRegion === '' || especie.region.includes(this.filtroRegion);
+
+      return coincideBusqueda && coincideNombreComun && coincideUso && coincideRegion;
     });
   }
 
