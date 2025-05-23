@@ -20,8 +20,6 @@ export class IdeamComponent implements OnInit {
   coinvestigadores: Brigadista[] = [];
   conglomerados: any[] = [];
 
-  
-
   constructor(private fb: FormBuilder, private brigadistaService: BrigadistasService) {}
 
   ngOnInit(): void {
@@ -29,49 +27,63 @@ export class IdeamComponent implements OnInit {
       nombreBrigada: ['', Validators.required],
       fechaVisita: ['', Validators.required],
       jefeBrigada: ['', Validators.required],
-      investigador: ['', Validators.required], // corregido: no es array
-      CoInvestigador: ['', Validators.required] // añadido Validators.required para coherencia con HTML
+      investigador: ['', Validators.required],
+      CoInvestigador: ['', Validators.required]
     });
-    
 
-    // Obtener brigadistas desde el servicio
-    this.brigadistaService.obtenerBrigadistas().subscribe(data => {
-      this.brigadistas = data;
+    // Cargar brigadistas desde backend
+    this.cargarBrigadistas();
+  }
 
-      // Filtrar según el rol
-      this.investigadores = this.brigadistas.filter(b => b.rol === 'Investigador');
-      this.coinvestigadores = this.brigadistas.filter(b => b.rol === 'CoInvestigador');
+  cargarBrigadistas(): void {
+    this.brigadistaService.obtenerBrigadistas().subscribe({
+      next: (data) => {
+        this.brigadistas = data;
+
+        // Filtrar por rol para llenar selectores u otros
+        this.investigadores = this.brigadistas.filter(b => b.rol === 'Investigador');
+        this.coinvestigadores = this.brigadistas.filter(b => b.rol === 'CoInvestigador');
+      },
+      error: (err) => {
+        console.error('Error cargando brigadistas:', err);
+      }
     });
   }
 
-  // Manejo del formulario
   onSubmit(): void {
     if (this.brigadaForm.valid) {
       const nuevaBrigada = this.brigadaForm.value;
 
-      // Lógica de envío de datos (puedes reemplazar esto con una llamada al backend)
+      // Aquí iría la lógica para enviar la brigada a backend o procesar
       console.log('Brigada registrada:', nuevaBrigada);
-
-      // Mensaje de éxito
       alert('Brigada registrada correctamente');
-
-      // Reiniciar el formulario
       this.brigadaForm.reset();
     } else {
       this.brigadaForm.markAllAsTouched();
       alert('Formulario inválido. Por favor, corrija los errores.');
     }
   }
-    eliminarBrigadista(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este brigadista?')) {
-      this.brigadistas = this.brigadistas.filter(b => b.id_usuario !== id);
-    }
-  }
-    eliminarConglomerado(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este conglomerado?')) {
-      // Aquí puedes implementar la lógica real, por ahora solo muestra por consola
-      console.log(`Conglomerado con ID ${id} eliminado.`);
+
+  eliminarBrigadista(id: number): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este brigadista? Esta acción no se puede deshacer.')) {
+      this.brigadistaService.eliminarBrigadista(id).subscribe({
+        next: () => {
+          // Actualizar lista local
+          this.brigadistas = this.brigadistas.filter(b => b.id_usuario !== id);
+          alert('Brigadista eliminado correctamente');
+        },
+        error: (err) => {
+          console.error('Error al eliminar brigadista:', err);
+          alert('No se pudo eliminar el brigadista. Intenta nuevamente.');
+        }
+      });
     }
   }
 
+  eliminarConglomerado(id: number): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este conglomerado?')) {
+      // Implementa esta función según tu backend
+      console.log(`Conglomerado con ID ${id} eliminado.`);
+    }
+  }
 }

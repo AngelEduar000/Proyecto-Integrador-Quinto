@@ -1,5 +1,5 @@
 export interface Brigadista {
-  id_usuario: number;
+  id_usuario?: number;
   nombre: string;
   correo: string;
   direccion: string;

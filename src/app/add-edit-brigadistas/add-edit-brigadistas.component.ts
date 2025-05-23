@@ -12,7 +12,7 @@ import { Brigadista } from '../interfaces/brigadista';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule 
+    RouterModule
   ],
   templateUrl: './add-edit-brigadistas.component.html',
   styleUrls: ['./add-edit-brigadistas.component.css']
