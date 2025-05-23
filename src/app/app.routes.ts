@@ -28,8 +28,8 @@ export const routes: Routes = [
   { path: 'investigacion', component: InvestigacionComponent },
   { path: 'laboratorio', component: LaboratorioComponent },
   { path: 'ideam', component: IdeamComponent },
-  { path: 'add', component: AgregarConglomeradoComponent,data: { renderMode: 'no-prerender' }  },
-  { path: 'add2', component: AddEditBrigadistasComponent,data: { renderMode: 'no-prerender' }  },
+  { path: 'add', component: AgregarConglomeradoComponent,},
+  { path: 'add2', component: AddEditBrigadistasComponent,},
   { path: 'add-user', component: AddUserComponent },
   //{path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent, data: { renderMode: 'no-prerender' } }
 
