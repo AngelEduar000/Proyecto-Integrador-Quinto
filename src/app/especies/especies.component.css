@@ -105,8 +105,9 @@
 /* 🧾 Grid de especies */
 .especies-grid {
   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 280px)); /* Siempre 280px */
   gap: 2rem;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  justify-content: center; /* Centra las columnas */
   margin-top: 2rem;
 }
 
@@ -123,6 +124,8 @@
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
+  max-width: 400px; /* evita que se estire más allá del ancho deseado */
+  width: 100%;
 }
 
 .especie-card:hover {

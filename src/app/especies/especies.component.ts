@@ -14,8 +14,8 @@ import { EspecieService, Especie } from '../servicios/especie.service';
 })
 export class EspeciesComponent implements OnInit {
   especies: Especie[] = [];
-  busqueda: string = '';           // búsqueda por texto (uso medicinal)
-  filtroNombresComunes: string[] = []; // arreglo para varias especies seleccionadas
+  busqueda: string = '';                  // búsqueda por texto (uso medicinal)
+  filtroNombresComunes: string[] = [];   // arreglo para varias especies seleccionadas
   filtroUso: string = '';
   filtroRegion: string = '';
 
@@ -77,10 +77,16 @@ export class EspeciesComponent implements OnInit {
         this.filtroNombresComunes.length === 0 ||
         this.filtroNombresComunes.includes(especie.nombre_comun);
 
-      const coincideUso = this.filtroUso === '' || especie.uso === this.filtroUso;
+      const coincideUso =
+        this.filtroUso === '' ||
+        especie.uso
+          .split(',')
+          .map(u => u.trim().toLowerCase())
+          .includes(this.filtroUso.toLowerCase());
 
       const coincideRegion =
-        this.filtroRegion === '' || especie.region.includes(this.filtroRegion);
+        this.filtroRegion === '' ||
+        especie.region.includes(this.filtroRegion);
 
       return coincideBusqueda && coincideNombreComun && coincideUso && coincideRegion;
     });
