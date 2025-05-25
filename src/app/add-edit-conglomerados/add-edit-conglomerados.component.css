@@ -1,46 +1,126 @@
 .form-container {
-    background: url('/imagenes/fondo.jpg') no-repeat center center;
-    background-size: cover;
-    min-height: 100vh;
-  }
+  display: flex;
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+  min-height: 110vh; /* Asegurar que el contenedor tenga al menos la altura completa de la ventana */
+  background: url('/imagenes/fondo.jpg') no-repeat center center fixed; /* Fijo para evitar el desplazamiento con el contenido */
+  background-size: cover; /* Cubrir toda el área de fondo */
+}
 
-  /* Estilo Glassmorphism */
 .glass-card {
-  background: rgba(255, 255, 255, 0.15);
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: white;
-  margin-top: 100px;
-  max-width: 600px;
-  
+  background: rgba(0, 0, 0, 0.4); /* Fondo más oscuro con mayor opacidad */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra más suave */
+  backdrop-filter: blur(10px); /* Efecto de desenfoque para simular vidrio */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde más tenue */
 }
 
-.glass-card .card-header {
-  background: transparent;
+.card-header {
+  background-color: rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem;
+  font-size: 1.2rem;
   font-weight: bold;
+  color: #fff; /* Texto claro para mejor contraste sobre el fondo */
+  border-radius: 10px 10px 0 0;
+}
+
+.card-body {
+  padding: 1.5rem;
+  color: #fff; /* Texto claro para mejor contraste */
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #eee; /* Texto ligeramente más claro para las etiquetas */
+}
+
+.form-control {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 5px;
   color: #fff;
+  padding: 0.75rem;
+  width: 100%;
 }
 
-.glass-card .form-control {
-  background: rgba(255, 255, 255, 0.25);
+.form-control::placeholder {
+  color: #ccc;
+}
+
+.form-control:focus {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-color: #007bff; /* Color primario de Bootstrap para el enfoque */
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.text-danger {
+  color: #dc3545 !important; /* Color de advertencia de Bootstrap */
+  font-size: 0.8rem;
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
   border: none;
-  color: white;
 }
 
-.glass-card .form-control::placeholder {
-  color: rgba(255, 255, 255, 0.8);
+.btn-secondary:hover {
+  background-color: #5a6268;
 }
 
-.glass-card label {
-  color: white;
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
 }
 
-.glass-card .text-danger {
-  color: #ffb3b3 !important;
+.btn-success:hover {
+  background-color: #218838;
 }
 
-  
+.btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.mt-4 {
+  margin-top: 1.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.col-lg-6 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+/* Opcional: Añadir algo de margen a la tarjeta para mejor espaciado */
+.offset-lg-4 {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 992px) {
+  .offset-lg-4 {
+    margin-left: 33.333333%;
+  }
+}
