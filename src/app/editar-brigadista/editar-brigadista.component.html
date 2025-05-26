@@ -1,0 +1,34 @@
+<div class="background-wrapper">
+  <div class="form-container">
+    <h2 class="form-title">Editar Brigadista</h2>
+
+<form [formGroup]="brigadistaForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>Nombre: </label>
+    <input type="text" formControlName="nombre"><br><br>
+  </div>
+
+  <div class="form-group">
+    <label>Correo: </label>
+  <input type="text" formControlName="correo"><br><br>
+</div>
+
+<div class="form-group">
+  <label>Dirección: </label>
+  <input type="email" formControlName="direccion"><br><br>
+</div>
+
+<div class="form-group">
+  <label>Teléfono: </label>
+  <input type="text" formControlName="telefono"><br><br>
+</div>
+
+<div class="form-group">
+  <label>Rol:</label>
+  <input type="text" formControlName="rol"><br><br>
+</div>
+
+  <button type="submit" [disabled]="brigadistaForm.invalid">Guardar</button>
+</form>
+  </div>
+</div>

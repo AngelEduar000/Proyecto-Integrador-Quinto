@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddEditBrigadistasComponent } from './add-edit-brigadistas.component';
+import { AddEditBrigadistasComponent } from './addbrigadistas.component';
 
 describe('AddEditBrigadistasComponent', () => {
   let component: AddEditBrigadistasComponent;

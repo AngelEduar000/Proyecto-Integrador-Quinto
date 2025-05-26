@@ -13,8 +13,9 @@ import { InvestigacionComponent } from './investigacion/investigacion.component'
 import { LaboratorioComponent } from './laboratorio/laboratorio.component';
 import { IdeamComponent } from './ideam/ideam.component';
 import { AgregarConglomeradoComponent } from './add-edit-conglomerados/add-edit-conglomerados.component';
-import {AddEditBrigadistasComponent} from './add-edit-brigadistas/add-edit-brigadistas.component';
+import {AddEditBrigadistasComponent} from './addbrigadistas/addbrigadistas.component';
 import { AddUserComponent } from "./add-user/add-user.component";
+import { EditarBrigadistaComponent } from './editar-brigadista/editar-brigadista.component';
 
 
 
@@ -31,6 +32,7 @@ export const routes: Routes = [
   { path: 'add', component: AgregarConglomeradoComponent,},
   { path: 'add2', component: AddEditBrigadistasComponent,},
   { path: 'add-user', component: AddUserComponent },
+  {path: 'brigadistas/edit/:id', component: EditarBrigadistaComponent }
   //{path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent, data: { renderMode: 'no-prerender' } }
 
 ];
