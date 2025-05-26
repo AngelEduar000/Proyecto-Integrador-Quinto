@@ -14,8 +14,8 @@ import { Brigadista } from '../interfaces/brigadista';
     ReactiveFormsModule,
     RouterModule
   ],
-  templateUrl: './addbrigadistas.component.html',
-  styleUrls: ['./addbrigadistas.component.css']
+  templateUrl: './add-edit-brigadistas.component.html',
+  styleUrls: ['./add-edit-brigadistas.component.css']
 })
 export class AddEditBrigadistasComponent implements OnInit {
 

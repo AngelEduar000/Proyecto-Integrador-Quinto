@@ -13,7 +13,7 @@ import { InvestigacionComponent } from './investigacion/investigacion.component'
 import { LaboratorioComponent } from './laboratorio/laboratorio.component';
 import { IdeamComponent } from './ideam/ideam.component';
 import { AgregarConglomeradoComponent } from './add-edit-conglomerados/add-edit-conglomerados.component';
-import {AddEditBrigadistasComponent} from './addbrigadistas/addbrigadistas.component';
+import {AddEditBrigadistasComponent} from './add-edit-brigadistas/add-edit-brigadistas.component';
 import { AddUserComponent } from "./add-user/add-user.component";
 
 
