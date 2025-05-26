@@ -15,7 +15,7 @@ import { IdeamComponent } from './ideam/ideam.component';
 import { AgregarConglomeradoComponent } from './add-edit-conglomerados/add-edit-conglomerados.component';
 import {AddEditBrigadistasComponent} from './addbrigadistas/addbrigadistas.component';
 import { AddUserComponent } from "./add-user/add-user.component";
-import { EditarBrigadistaComponent } from './editar-brigadista/editar-brigadista.component';
+
 
 
 
@@ -29,13 +29,12 @@ export const routes: Routes = [
   { path: 'investigacion', component: InvestigacionComponent },
   { path: 'laboratorio', component: LaboratorioComponent },
   { path: 'ideam', component: IdeamComponent },
-  { path: 'add', component: AgregarConglomeradoComponent,},
-  { path: 'add2', component: AddEditBrigadistasComponent,},
-  { path: 'add-user', component: AddUserComponent },
-  {path: 'brigadistas/edit/:id', component: EditarBrigadistaComponent }
-  //{path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent, data: { renderMode: 'no-prerender' } }
-
+  { path: 'add', component: AgregarConglomeradoComponent },
+  { path: 'add2', component: AddEditBrigadistasComponent }, // Para agregar
+  { path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent }, // Para editar
+  { path: 'add-user', component: AddUserComponent }
 ];
+
 
 
 @NgModule({

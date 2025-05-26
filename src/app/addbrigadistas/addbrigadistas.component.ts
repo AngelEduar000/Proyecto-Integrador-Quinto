@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, ActivatedRoute } from '@angular/router';
+import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { BrigadistasService } from '../servicios/brigadista.service';
 import { Brigadista } from '../interfaces/brigadista';
 
@@ -22,62 +22,67 @@ export class AddEditBrigadistasComponent implements OnInit {
   brigadistaForm!: FormGroup;
   idBrigadista: number | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    public route: ActivatedRoute,
-    private brigadistaService: BrigadistasService
-  ) {}
+  public fb = inject(FormBuilder);
+  public route = inject(ActivatedRoute);
+  public router = inject(Router);
+  public brigadistaService = inject(BrigadistasService);
 
-ngOnInit(): void {
-  this.brigadistaForm = this.fb.group({
-    nombre: ['', Validators.required],
-    correo: ['', [Validators.required, Validators.email]],
-    direccion: ['', Validators.required],
-    telefono: ['', Validators.required],
-    rol: ['', Validators.required]
-  });
-
-  const idParam = this.route.snapshot.paramMap.get('id');
-  if (idParam) {
-    this.idBrigadista = parseInt(idParam, 10);
-    this.brigadistaService.obtenerBrigadistaPorId(this.idBrigadista).subscribe({
-      next: (brigadista: Brigadista) => {
-        // No incluir el ID aquí
-        this.brigadistaForm.patchValue({
-          nombre: brigadista.nombre,
-          correo: brigadista.correo,
-          direccion: brigadista.direccion,
-          telefono: brigadista.telefono,
-          rol: brigadista.rol
-        });
-      },
-      error: () => {
-        alert('Error al cargar el brigadista. Verifica que el ID sea válido.');
-      }
+  ngOnInit(): void {
+    this.brigadistaForm = this.fb.group({
+      nombre: ['', Validators.required],
+      correo: ['', [Validators.required, Validators.email]],
+      direccion: ['', Validators.required],
+      telefono: ['', Validators.required],
+      rol: ['', Validators.required]
     });
-  }
-}
 
-
-onSubmit(): void {
-  if (this.brigadistaForm.valid) {
-    const brigadista = this.brigadistaForm.value;
-
-    if (this.idBrigadista) {
-      // Enviar brigadista y el ID separado
-      console.log('Editar brigadista con ID:', this.idBrigadista, brigadista);
-      alert('Brigadista editado correctamente');
-    } else {
-      console.log('Registrar brigadista:', brigadista);
-      alert('Brigadista registrado correctamente');
+    const idParam = this.route.snapshot.paramMap.get('id');
+    const idNum = idParam ? Number(idParam) : null;
+    if (idNum && !isNaN(idNum)) {
+      this.idBrigadista = idNum;
+      this.brigadistaService.obtenerBrigadistaPorId(this.idBrigadista).subscribe({
+        next: (brigadista: Brigadista) => {
+          this.brigadistaForm.patchValue({
+            nombre: brigadista.nombre,
+            correo: brigadista.correo,
+            direccion: brigadista.direccion,
+            telefono: brigadista.telefono,
+            rol: brigadista.rol
+          });
+        },
+        error: () => {
+          alert('Error al cargar el brigadista. Verifica que el ID sea válido.');
+        }
+      });
     }
-
-    this.brigadistaForm.reset();
-  } else {
-    this.brigadistaForm.markAllAsTouched();
-    alert('Formulario inválido. Por favor, corrija los errores.');
   }
-}
 
+  onSubmit(): void {
+    if (this.brigadistaForm.valid) {
+      const brigadista: Brigadista = this.brigadistaForm.value;
 
+      if (this.idBrigadista) {
+        // Actualizar brigadista existente
+        this.brigadistaService.actualizarBrigadista(this.idBrigadista, brigadista).subscribe({
+          next: () => {
+            alert('Brigadista editado correctamente');
+            this.router.navigate(['/ideam']);
+          },
+          error: () => alert('Error al editar el brigadista')
+        });
+      } else {
+        // Agregar nuevo brigadista
+        this.brigadistaService.agregarBrigadista(brigadista).subscribe({
+          next: () => {
+            alert('Brigadista registrado correctamente');
+            this.router.navigate(['/ideam']);
+          },
+          error: () => alert('Error al registrar el brigadista')
+        });
+      }
+    } else {
+      this.brigadistaForm.markAllAsTouched();
+      alert('Formulario inválido. Por favor, corrija los errores.');
+    }
+  }
 }
