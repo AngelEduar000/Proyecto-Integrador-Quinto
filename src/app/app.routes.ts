@@ -32,7 +32,7 @@ export const routes: Routes = [
   { path: 'add', component: AgregarConglomeradoComponent,},
   { path: 'add2', component: AddEditBrigadistasComponent,},
   { path: 'add-user', component: AddUserComponent },
-  {path: 'brigadistas/edit/:id', component: EditarBrigadistaComponent }
+  {path: 'brigadistas/edit', component: EditarBrigadistaComponent }
   //{path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent, data: { renderMode: 'no-prerender' } }
 
 ];
