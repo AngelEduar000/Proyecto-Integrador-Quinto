@@ -1,17 +1,27 @@
 
 /* Estilos básicos del cuerpo (ajusta según sea necesario) */
+
+body::before { /* Crea un fondo oscuro detrás del contenido */
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Ajusta el nivel de oscuridad */
+  z-index: -1;
+}
+
 body {
   margin: 0;
   font-family: sans-serif; /* Fuente de ejemplo */
   line-height: 1.6;
-  color: #333; /* Color de texto de ejemplo */
+  color: white; /* Color de texto de ejemplo */
   /*background-color: #ccd4e0; /* Asegura que el fondo del cuerpo sea blanco */
-  background: url('/imagenes/fondo.jpg') no-repeat center center;
+  background: url("/assets/imagenes/forestbg.jpg") no-repeat center fixed;
   background-size: cover;
   min-height: 100vh;
 }
-
-
 
 /* Imágenes Responsivas - Regla General
    Asegura que las imágenes se reduzcan proporcionalmente y no excedan el ancho del contenedor.
@@ -22,7 +32,6 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
-  
 }
 
 /* Contenedor principal del contenido de la página - Ajustado al 90% de ancho */
@@ -39,7 +48,7 @@ img {
 /* --- Sección de Introducción --- */
 .intro {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 65px;
 }
 
 /* Asegura que el título y el párrafo sean elementos de bloque para apilarse */
@@ -50,13 +59,16 @@ img {
 }
 
 .intro h2 {
-    font-size: 2.8rem; /* Aumenta el tamaño del título */
-    margin-bottom: 20px; /* Ajusta el espacio debajo del título */
+  font-weight: bold; /* Asegura que el título sea negrita */
+  font-size: 2.3rem; /* Aumenta el tamaño del título */
+  margin-bottom: 20px; /* Ajusta el espacio debajo del título */
 }
 
 .intro p {
-    font-size: 1.3rem; /* Aumenta el tamaño del texto */
-    margin-bottom: 15px; /* Ajusta el espacio debajo del párrafo */
+  font-size: 1.1rem; /* Aumenta el tamaño del texto */
+  max-width: 75%;
+  font-weight: 400;
+  margin: 0 auto 25px auto; /* Ajusta el espacio debajo del párrafo */
 }
 
 .intro-img {
@@ -71,14 +83,14 @@ img {
   flex-wrap: wrap; /* Permite que los botones se envuelvan en pantallas más pequeñas */
   justify-content: center; /* Centra los botones */
   gap: 30px; /* Espacio entre los botones */
-  margin-bottom: 40px;
+  margin-bottom: 55px;
 }
 
 .btn {
   display: inline-block;
   padding: 15px 26px;
-  font-size: 1.8rem;  /* Tamaño de fuente aumentado */
-  background-color: #28a745; /* Cambiado a verde */
+  font-size: 1.8rem; /* Tamaño de fuente aumentado */
+  background-color: #bfdab9;
   color: white;
   text-decoration: none;
   border-radius: 5px;
@@ -87,27 +99,32 @@ img {
 }
 
 .btn:hover {
-  background-color: #218838; /* Verde más oscuro al pasar el mouse */
+  background-color: #859e7f; /* Verde más oscuro al pasar el mouse */
+  color: #2E5339;
 }
 
 /* --- Sección de Información --- */
 .info {
-  margin-bottom: 30px;
+  margin-bottom: 70px;
+  color: white;
 }
 
 .info h2 {
   text-align: center;
   margin-bottom: 20px;
   font-size: 2.8rem; /* Aumenta el tamaño del título */
+  color: white; /* Cambia el color del texto a blanco para mejor contraste */
 }
 
-.info > p { /* Apunta al párrafo directamente debajo de .info */
+.info > p {
+  /* Apunta al párrafo directamente debajo de .info */
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 60px;
   font-size: 1.3rem; /* Aumenta el tamaño del texto */
   max-width: 1200px; /* Mantiene un ancho máximo para mejor lectura */
   margin-left: auto;
   margin-right: auto;
+  color: white; /* Cambia el color del texto a blanco para mejor contraste */
 }
 
 /* Cuadrícula de Información - Mobile First (Una sola columna) */
@@ -119,23 +136,33 @@ img {
 }
 
 .info-box {
-  border: 1px solid #ddd;
+  border: 1px solid hsla(0, 0%, 87%, 0.2);
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  background-color: #f9f9f9; /* Fondo claro para las cajas */
+  backdrop-filter: blur(5px); /* Añade un efecto de desenfoque al fondo */
+  width: 100%; /* Asegura que las cajas de información ocupen todo el ancho disponible */
   max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espacio entre el título, párrafo e imagen */
+  justify-content: space-between;
 }
 
 .info-box h3 {
-  margin-top: 0;
-  color: #0056b3; /* Color del encabezado de ejemplo - ajustar si es necesario */
+  font-weight: bold;
+}
+
+.info-box p {
+  max-width: 90%;
+  margin: 0 auto; /* Centra el párrafo dentro de la caja */
 }
 
 .info-img {
+  width: 10rem;
   max-width: 60%; /* Tamaño reducido de las imágenes de información */
   height: auto;
-  margin: 15px auto 0 auto; /* Centra la imagen más pequeña */
+  margin: 10px auto 0 auto; /* Centra la imagen más pequeña */
   border-radius: 8px;
 }
 
@@ -147,10 +174,22 @@ img {
   max-width: 100%; /* Asegura que el carrusel no se desborde de su contenedor (.main-content) */
   overflow: hidden; /* Crucial: Oculta las partes del contenedor de imágenes fuera del área visible */
   position: relative; /* Necesario si se usa posicionamiento absoluto dentro, aunque preferimos usar flex aquí */
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   /* Opcional: Añadir una máscara de gradiente para bordes más suaves */
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
 }
 
 .image-container {
@@ -173,7 +212,8 @@ img {
 }
 
 /* Pausar la animación al pasar el mouse */
-.carousel:hover .image-container { /* Selector corregido */
+.carousel:hover .image-container {
+  /* Selector corregido */
   animation-play-state: paused;
 }
 
@@ -212,32 +252,32 @@ img {
   }
 
   .intro h2 {
-    font-size: 1.6rem;  /* Reduce el tamaño del título en móviles */
+    font-size: 1.6rem; /* Reduce el tamaño del título en móviles */
   }
 
   .intro p {
-    font-size: 1rem;  /* Reduce el tamaño del texto en móviles */
+    font-size: 1rem; /* Reduce el tamaño del texto en móviles */
   }
 
   .intro-img {
-    max-width: 95%;  /* Aumenta el tamaño de la imagen a 95% en móviles */
+    max-width: 95%; /* Aumenta el tamaño de la imagen a 95% en móviles */
   }
 
   .buttons {
-    gap: 6px;  /* Reduce el espacio entre los botones solo en dispositivos móviles */
+    gap: 20px; /* Reduce el espacio entre los botones solo en dispositivos móviles */
   }
 
   .btn {
-    padding: 8px 8px;  /* Reduce el padding solo en móviles */
-    font-size: 0.9rem;  /* Reduce el tamaño de la fuente solo en móviles */
+    padding: 8px 8px; /* Reduce el padding solo en móviles */
+    font-size: 0.9rem; /* Reduce el tamaño de la fuente solo en móviles */
   }
 
   .info h2 {
-    font-size: 1.6rem;  /* Reduce el tamaño del título en móviles */
+    font-size: 1.6rem; /* Reduce el tamaño del título en móviles */
   }
 
   .info p {
-    font-size: 1rem;  /* Reduce el tamaño del texto en móviles */
+    font-size: 0.9rem; /* Reduce el tamaño del texto en móviles */
   }
 
   /* Carrusel: Imágenes más grandes en móviles */
@@ -259,20 +299,20 @@ img {
   }
 
   .btn {
-    padding: 10px 20px;  /* Padding ajustado para tablet */
-    font-size: 1.2rem;  /* Tamaño de fuente ajustado para tablet */
+    padding: 10px 16px; /* Padding ajustado para tablet */
+    font-size: 1.2rem; /* Tamaño de fuente ajustado para tablet */
   }
 
   .info h2 {
-    font-size: 2rem;  /* Reduce el tamaño del título en móviles */
+    font-size: 2rem; /* Reduce el tamaño del título en móviles */
   }
 
   .info p {
-    font-size: 1.2rem;  /* Reduce el tamaño del texto en móviles */
+    font-size: 1rem; /* Reduce el tamaño del texto en móviles */
   }
 
   .intro-img {
-    max-width: 95%;  /* Aumenta el tamaño de la imagen a 95% en tablet */
+    max-width: 95%; /* Aumenta el tamaño de la imagen a 95% en tablet */
   }
 
   /* Carrusel: Ajustar el tamaño de las imágenes para tabletas */
@@ -291,11 +331,11 @@ img {
   }
 
   .btn {
-    padding: 18px 28px;  /* Padding ajustado para escritorio */
-    font-size: 1.5rem;  /* Tamaño de fuente ajustado para escritorio */
+    padding: 12px 24px; /* Padding ajustado para escritorio */
+    font-size: 1.5rem; /* Tamaño de fuente ajustado para escritorio */
   }
 
   .intro-img {
-    max-width: 80%;  /* Tamaño de imagen de intro para escritorio */
+    max-width: 80%; /* Tamaño de imagen de intro para escritorio */
   }
 }
