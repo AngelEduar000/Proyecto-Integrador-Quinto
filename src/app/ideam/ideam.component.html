@@ -33,7 +33,7 @@
               <td>{{ item.nombre_municipio }}</td>
               <td>{{ item.coordenadas }}</td> <!-- O reemplaza con el valor correcto -->
               <td class="text-center">
-                <button [routerLink]="['/edit', item.id_conglomerado]" type="button" class="btn btn-warning btn-sm">Editar</button>
+                <button [routerLink]="['/conglomerados/edit', item.id_conglomerado]" type="button" class="btn btn-warning btn-sm">Editar</button>
               </td>
               <td class="text-center">
                 <button type="button" class="btn btn-danger btn-sm" (click)="eliminarConglomerado(item.id_conglomerado)">Eliminar</button>

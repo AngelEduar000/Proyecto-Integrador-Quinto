@@ -30,6 +30,7 @@ export const routes: Routes = [
   { path: 'laboratorio', component: LaboratorioComponent },
   { path: 'ideam', component: IdeamComponent },
   { path: 'add', component: AgregarConglomeradoComponent },
+  { path: 'conglomerados/edit/:id', component: AgregarConglomeradoComponent },
   { path: 'add2', component: AddEditBrigadistasComponent }, // Para agregar
   { path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent }, // Para editar
   { path: 'add-user', component: AddUserComponent }

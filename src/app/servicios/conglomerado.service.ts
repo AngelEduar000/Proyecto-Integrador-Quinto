@@ -33,7 +33,7 @@ export class ConglomeradosService {
   }
 
   // Eliminar un conglomerado por ID
-  eliminarConglomerado(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${id}`);
+  eliminarConglomerado(id_conglomerado: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id_conglomerado}`);
   }
 }
