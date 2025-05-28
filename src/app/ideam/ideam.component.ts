@@ -99,11 +99,29 @@ export class IdeamComponent implements OnInit {
     }
   }
 
+//   eliminarConglomerado(id: number): void {
+//     if (confirm('¿Estás seguro de que deseas eliminar este conglomerado?')) {
+//       // Aquí debes llamar a tu servicio de conglomerados para eliminar
+//       this.conglomeradoService.eliminarConglomerado(id).subscribe({
+//         next: () => {
+//           this.conglomerados = this.conglomerados.filter(c => c.id_conglomerado !== id);
+//           alert('Conglomerado eliminado correctamente');
+//         },
+//         error: (err) => {
+//           console.error('Error al eliminar conglomerado:', err);
+//           alert('No se pudo eliminar el conglomerado. Intenta nuevamente.');
+//         }
+//       });
+//     }
+//   }
+// }
+
+
   eliminarConglomerado(id: number): void {
-    if (confirm('¿Estás seguro de que deseas eliminar este conglomerado?')) {
-      // Aquí debes llamar a tu servicio de conglomerados para eliminar
+    if (confirm('¿Estás seguro de que deseas eliminar este conglomerado? Esta acción no se puede deshacer.')) {
       this.conglomeradoService.eliminarConglomerado(id).subscribe({
         next: () => {
+          // Filtrar y eliminar el conglomerado de la lista local
           this.conglomerados = this.conglomerados.filter(c => c.id_conglomerado !== id);
           alert('Conglomerado eliminado correctamente');
         },
