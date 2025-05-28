@@ -1,7 +1,7 @@
 // interfaces/conglomerado.ts
 
 export interface Conglomerado {
-  id_conglomerado: number;
+  id_conglomerado?: number;
   identificador: string;
   fecha_creacion: Date;
   fecha_establecimiento: Date;
