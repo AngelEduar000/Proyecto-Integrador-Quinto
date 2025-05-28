@@ -32,7 +32,7 @@
   color: white;
   font-size: 32px;
   cursor: pointer;
-  z-index: 1000;
+  z-index: auto;
   border-radius: 4px;
   transition: background-color 0.3s ease;
 }
