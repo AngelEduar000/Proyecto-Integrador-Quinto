@@ -25,18 +25,18 @@
         </thead>
         <tbody>
             <tr *ngFor="let item of conglomerados" class="table-success">
-              <td>{{ item.id }}</td>
-              <td>{{ item.Identificador }}</td>
-              <td>{{ item.FechaCreacion | date:'shortDate' }}</td>
-              <td>{{ item.FechaEstablecimiento | date:'shortDate' }}</td>
-              <td>{{ item.Region }}</td>
-              <td>{{ item.Municipio }}</td>
-              <td>{{ item.Coordenadas }}</td> <!-- O reemplaza con el valor correcto -->
+              <td>{{ item.id_conglomerado }}</td>
+              <td>{{ item.identificador }}</td>
+              <td>{{ item.fecha_creacion | date:'shortDate' }}</td>
+              <td>{{ item.fecha_establecimiento | date:'shortDate' }}</td>
+              <td>{{ item.nombre_region }}</td>
+              <td>{{ item.nombre_municipio }}</td>
+              <td>{{ item.coordenadas }}</td> <!-- O reemplaza con el valor correcto -->
               <td class="text-center">
-                <button [routerLink]="['/edit', item.id]" type="button" class="btn btn-warning btn-sm">Editar</button>
+                <button [routerLink]="['/edit', item.id_conglomerado]" type="button" class="btn btn-warning btn-sm">Editar</button>
               </td>
               <td class="text-center">
-                <button type="button" class="btn btn-danger btn-sm" (click)="eliminarConglomerado(item.id)">Eliminar</button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="eliminarConglomerado(item.id_conglomerado)">Eliminar</button>
               </td>
             </tr>
         </tbody>

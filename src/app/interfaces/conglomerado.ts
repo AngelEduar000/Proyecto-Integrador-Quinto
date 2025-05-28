@@ -1,12 +1,11 @@
 // interfaces/conglomerado.ts
 
 export interface Conglomerado {
-    id: number;
-    Identificador: string;
-    FechaCreacion: Date;
-    FechaEstablecimiento: Date;
-    Region: string;
-    Municipio: string;
-    coordenadas: number[];
-  }
-  
+  id_conglomerado: number;
+  identificador: string;
+  fecha_creacion: Date;
+  fecha_establecimiento: Date;
+  nombre_region: string;
+  nombre_municipio: string;
+  coordenadas: number[];
+}

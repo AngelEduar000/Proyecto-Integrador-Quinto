@@ -1,33 +1,39 @@
+// src/app/services/brigadistas.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, map } from 'rxjs';
-
-export interface Conglomerado {
-  id: number;
-  identificador: string;
-  fechaCreacion: Date;
-  fechaEstablecimiento: Date;
-  region: string;
-  municipio: string;
-  coordenadas: string;
-}
+import { Observable } from 'rxjs';
+import { Conglomerado } from '../interfaces/conglomerado';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ConglomeradoService {
-
-  private apiUrl = 'http://tuservidor.com/api/conglomerados';
+export class ConglomeradosService {
+  private apiUrl = 'https://proyecto-integrador-quinto-backend.vercel.app/api/gestion-conglomerado';
 
   constructor(private http: HttpClient) {}
 
-  getConglomerados(): Observable<Conglomerado[]> {
-    return this.http.get<any[]>(this.apiUrl).pipe(
-      map(data => data.map(item => ({
-        ...item,
-        fechaCreacion: new Date(item.fechaCreacion),
-        fechaEstablecimiento: new Date(item.fechaEstablecimiento)
-      })))
-    );
+  // Obtener todos los conglomerado
+  obtenerConglomerados(): Observable<Conglomerado[]> {
+    return this.http.get<Conglomerado[]>(this.apiUrl);
+  }
+
+  // Obtener un conglomerado por ID
+  obtenerConglomeradoPorId(id: number): Observable<Conglomerado> {
+    return this.http.get<Conglomerado>(`${this.apiUrl}/${id}`);
+  }
+
+  // Agregar un nuevo conglomerado
+  agregarConglomerado(conglomerado: Conglomerado): Observable<Conglomerado> {
+    return this.http.post<Conglomerado>(this.apiUrl, conglomerado);
+  }
+
+  // Actualizar un conglomerado existente
+  actualizarConglomerado(id: number, conglomerado: Conglomerado): Observable<Conglomerado> {
+    return this.http.put<Conglomerado>(`${this.apiUrl}/${id}`, conglomerado);
+  }
+
+  // Eliminar un conglomerado por ID
+  eliminarConglomerado(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

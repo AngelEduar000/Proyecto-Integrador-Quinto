@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BrigadistasService } from '../servicios/brigadista.service';
+import { ConglomeradosService } from '../servicios/conglomerado.service'; // IMPORTAR servicio conglomerado
 import { Brigadista } from '../interfaces/brigadista';
+import { Conglomerado } from '../interfaces/conglomerado';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -15,12 +17,18 @@ import { RouterModule } from '@angular/router';
 export class IdeamComponent implements OnInit {
 
   brigadaForm!: FormGroup;
+
   brigadistas: Brigadista[] = [];
   investigadores: Brigadista[] = [];
   coinvestigadores: Brigadista[] = [];
-  conglomerados: any[] = [];
 
-  constructor(private fb: FormBuilder, private brigadistaService: BrigadistasService) {}
+  conglomerados: Conglomerado[] = [];  // plural y tipo correcto
+
+  constructor(
+    private fb: FormBuilder,
+    private brigadistaService: BrigadistasService,
+    private conglomeradoService: ConglomeradosService
+  ) {}
 
   ngOnInit(): void {
     this.brigadaForm = this.fb.group({
@@ -31,8 +39,8 @@ export class IdeamComponent implements OnInit {
       CoInvestigador: ['', Validators.required]
     });
 
-    // Cargar brigadistas desde backend
     this.cargarBrigadistas();
+    this.cargarConglomerados();
   }
 
   cargarBrigadistas(): void {
@@ -46,6 +54,18 @@ export class IdeamComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error cargando brigadistas:', err);
+      }
+    });
+  }
+
+  cargarConglomerados(): void {
+    this.conglomeradoService.obtenerConglomerados().subscribe({
+      next: (data) => {
+        this.conglomerados = data;
+        console.log('Conglomerados cargados:', this.conglomerados);
+      },
+      error: (err) => {
+        console.error('Error cargando conglomerados:', err);
       }
     });
   }
@@ -68,7 +88,6 @@ export class IdeamComponent implements OnInit {
     if (confirm('¿Estás seguro de que deseas eliminar este brigadista? Esta acción no se puede deshacer.')) {
       this.brigadistaService.eliminarBrigadista(id).subscribe({
         next: () => {
-          // Actualizar lista local
           this.brigadistas = this.brigadistas.filter(b => b.id_usuario !== id);
           alert('Brigadista eliminado correctamente');
         },
@@ -82,8 +101,17 @@ export class IdeamComponent implements OnInit {
 
   eliminarConglomerado(id: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este conglomerado?')) {
-      // Implementa esta función según tu backend
-      console.log(`Conglomerado con ID ${id} eliminado.`);
+      // Aquí debes llamar a tu servicio de conglomerados para eliminar
+      this.conglomeradoService.eliminarConglomerado(id).subscribe({
+        next: () => {
+          this.conglomerados = this.conglomerados.filter(c => c.id_conglomerado !== id);
+          alert('Conglomerado eliminado correctamente');
+        },
+        error: (err) => {
+          console.error('Error al eliminar conglomerado:', err);
+          alert('No se pudo eliminar el conglomerado. Intenta nuevamente.');
+        }
+      });
     }
   }
 }
