@@ -8,7 +8,7 @@
   padding-bottom: 2rem;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
-  background: url('/imagenes/fondo.jpg') no-repeat center center fixed;
+  background: url('/assets/imagenes/forestbg.jpg') no-repeat center center fixed;
   background-size: cover;
   font-family: sans-serif; /* Fuente de ejemplo */
   color: #ffffffa1;
@@ -40,13 +40,21 @@
 .buscador input {
   padding: 0.75rem 1.25rem;
   font-size: 1rem;
-  background-color: rgba(0, 0, 0, 0.24);  /* negro más transparente */
+  background-color: rgba(0, 0, 0, 0.427);  /* negro más transparente */
   border: 1px solid #cccccc75;
   border-radius: 8px;
   min-width: 220px;
   transition: border-color 0.3s ease;
   width: 100%;
   min-width: unset;
+  color: #fff;          /* color de fuente blanco */
+  font-weight: 700;     /* negrilla */
+}
+
+.buscador input::placeholder {
+  color: white;
+  opacity: 1;
+  font-weight: 700;
 }
 
 .buscador input:focus {

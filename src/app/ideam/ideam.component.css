@@ -1,5 +1,5 @@
 .fondo {
-  background: url('/imagenes/fondo.jpg') no-repeat center center;
+  background: url('/assets/imagenes/forestbg.jpg') no-repeat center center;
   background-size: cover;
   min-height: 100vh;
   box-sizing: border-box;
