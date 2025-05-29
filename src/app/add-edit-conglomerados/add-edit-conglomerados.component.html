@@ -56,26 +56,29 @@
           </div>
           <!--  -->
 
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="latitud">Latitud</label>
-            <input id="latitud" type="number" formControlName="latitud" class="form-control" placeholder="Ingrese la Latitud" />
+            <input
+              id="latitud"
+              type="text"
+              formControlName="latitud"
+              class="form-control"
+              placeholder="Ingrese la Latitud" />
             <small class="text-danger" *ngIf="conglomeradoForm.get('latitud')?.touched && conglomeradoForm.get('latitud')?.invalid">
               <span *ngIf="conglomeradoForm.get('latitud')?.errors?.['required']">Latitud es requerida</span>
               <span *ngIf="conglomeradoForm.get('latitud')?.errors?.['pattern']">Debe ser un número válido</span>
             </small>
-          </div>
+          </div> -->
 
           <div class="form-group">
-            <label for="longitud">Longitud</label>
-            <input id="longitud" type="number" formControlName="longitud" class="form-control" placeholder="Ingrese la Longitud" />
-            <small class="text-danger" *ngIf="conglomeradoForm.get('longitud')?.touched && conglomeradoForm.get('longitud')?.invalid">
-              <span *ngIf="conglomeradoForm.get('longitud')?.errors?.['required']">Longitud es requerida</span>
-              <span *ngIf="conglomeradoForm.get('longitud')?.errors?.['pattern']">Debe ser un número válido</span>
-            </small>
+            <label for="coordenadas">Coordenadas</label>
+            <input id="text-danger" formControlName="coordenadas" type="text" class="form-control" placeholder="Ej: 5.635358, -76.594291" />
+            <div *ngIf="conglomeradoForm.get('coordenadas')?.invalid && conglomeradoForm.get('coordenadas')?.touched">
+              <small class="error">Formato inválido. Use: número, número</small>
+            </div>
           </div>
 
-
-
+          
           <div class="row mt-4 text-center">
             <div class="col-lg-6">
               <a routerLink="/ideam" class="btn btn-secondary w-100">Volver</a>

@@ -18,6 +18,7 @@ export class AgregarConglomeradoComponent implements OnInit {
   conglomeradoForm!: FormGroup;
   municipios: any[] = [];
   municipiosDropdown: { label: string, value: any }[] = [];
+  id_conglomerado?: number;
 
   regiones = [
     { value: 'Andina', label: 'Andina' },
@@ -26,7 +27,7 @@ export class AgregarConglomeradoComponent implements OnInit {
     { value: 'Orinoquía', label: 'Orinoquía' },
     { value: 'Amazónica', label: 'Amazónica' },
     { value: 'Insular', label: 'Insular' }
-  ]
+  ];
 
   public fb = inject(FormBuilder);
   public route = inject(ActivatedRoute);
@@ -41,8 +42,7 @@ export class AgregarConglomeradoComponent implements OnInit {
       fechaEstablecimiento: ['', Validators.required],
       region: ['', Validators.required],
       municipio: ['', Validators.required],
-      latitud: ['', [Validators.required, Validators.pattern('^-?(?:\\d+|\\d+\\.\\d+)$')]],
-      longitud: ['', [Validators.required, Validators.pattern('^-?(?:\\d+|\\d+\\.\\d+)$')]],
+      coordenadas: ['', [Validators.required, Validators.pattern('^-?\\d+(\\.\\d+)?\\s*,\\s*-?\\d+(\\.\\d+)?$')]]
     });
 
     this.municipiosService.obtenerMunicipios().subscribe({
@@ -55,6 +55,38 @@ export class AgregarConglomeradoComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error al cargar municipios:', err);
+      }
+    });
+
+    this.route.params.subscribe(params => {
+      if (params['id']) {
+        this.id_conglomerado = +params['id'];
+        this.cargarDatos(this.id_conglomerado);
+      }
+    });
+  }
+
+  cargarDatos(id: number): void {
+    this.conglomeradosService.obtenerConglomeradoPorId(id).subscribe({
+      next: (conglomerado) => {
+        let coordenadasStr = '';
+        if (Array.isArray(conglomerado.coordenadas)) {
+          coordenadasStr = `${conglomerado.coordenadas[0]},${conglomerado.coordenadas[1]}`;
+        } else if (typeof conglomerado.coordenadas === 'string') {
+          coordenadasStr = conglomerado.coordenadas;
+        }
+
+        this.conglomeradoForm.patchValue({
+          identificador: conglomerado.identificador,
+          fechaCreacion: new Date(conglomerado.fecha_creacion).toISOString().substring(0, 10),
+          fechaEstablecimiento: new Date(conglomerado.fecha_establecimiento).toISOString().substring(0, 10),
+          region: conglomerado.nombre_region,
+          municipio: conglomerado.id_municipio,
+          coordenadas: coordenadasStr
+        });
+      },
+      error: (err) => {
+        console.error('Error al cargar conglomerado:', err);
       }
     });
   }
@@ -72,26 +104,31 @@ export class AgregarConglomeradoComponent implements OnInit {
   onSubmit(): void {
     if (this.conglomeradoForm.valid) {
       const form = this.conglomeradoForm.value;
+      const [lat, lng] = form.coordenadas.split(',').map((c: string) => parseFloat(c.trim()));
 
       const nuevoConglomerado: Conglomerado = {
         identificador: form.identificador,
         fecha_creacion: new Date(form.fechaCreacion),
         fecha_establecimiento: new Date(form.fechaEstablecimiento),
         nombre_region: form.region,
-        id_municipio: form.municipio,  // mejor que nombre_municipio para indicar que es un ID
-        coordenadas: [parseFloat(form.latitud), parseFloat(form.longitud)],
-        id_conglomerado: 0
+        id_municipio: form.municipio,
+        coordenadas: `${lat},${lng}`,
+        id_conglomerado: this.id_conglomerado ?? 0
       };
 
-      this.conglomeradosService.agregarConglomerado(nuevoConglomerado).subscribe({
+      const peticion$ = this.id_conglomerado
+        ? this.conglomeradosService.actualizarConglomerado(this.id_conglomerado, nuevoConglomerado)
+        : this.conglomeradosService.agregarConglomerado(nuevoConglomerado);
+
+      peticion$.subscribe({
         next: () => {
-          alert('Conglomerado registrado correctamente');
+          alert(this.id_conglomerado ? 'Conglomerado actualizado correctamente' : 'Conglomerado registrado correctamente');
           this.conglomeradoForm.reset();
           this.router.navigate(['/ideam']);
         },
         error: (err) => {
-          console.error('Error al registrar conglomerado', err);
-          alert('Error al registrar el conglomerado.');
+          console.error('Error al guardar conglomerado', err);
+          alert('Error al guardar el conglomerado.');
         }
       });
     } else {

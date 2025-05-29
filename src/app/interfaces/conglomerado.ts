@@ -4,6 +4,6 @@ export interface Conglomerado {
   fecha_establecimiento: Date;
   nombre_region: string;
   id_municipio: number;
-  coordenadas: number[];
+  coordenadas: string;
   id_conglomerado: number;
 }
