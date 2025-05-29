@@ -1,16 +1,18 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Municipio } from '../interfaces/municipio';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MunicipiosService {
-  private apiUrl = 'https://proyecto-integrador-quinto-backend.vercel.app/api/mostrar_municipios'; // Asegúrate que esta URL sea la correcta
+
+  private url = 'https://proyecto-integrador-quinto-backend.vercel.app/api/mostrar_municipios'; // Cambia aquí por tu URL real
 
   constructor(private http: HttpClient) {}
 
-  obtenerMunicipios(): Observable<string[]> {
-    return this.http.get<string[]>(this.apiUrl);
+  obtenerMunicipios(): Observable<Municipio[]> {
+    return this.http.get<Municipio[]>(this.url);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl  } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { ConglomeradosService } from '../servicios/conglomerado.service';
@@ -16,8 +16,8 @@ import { MunicipiosService } from '../servicios/municipios.service';
 })
 export class AgregarConglomeradoComponent implements OnInit {
   conglomeradoForm!: FormGroup;
-  municipios: string[] = [];
-  municipiosDropdown: { label: string, value: string }[] = [];
+  municipios: any[] = [];
+  municipiosDropdown: { label: string, value: any }[] = [];
 
   regiones = [
     { value: 'Andina', label: 'Andina' },
@@ -40,7 +40,7 @@ export class AgregarConglomeradoComponent implements OnInit {
       fechaCreacion: ['', Validators.required],
       fechaEstablecimiento: ['', Validators.required],
       region: ['', Validators.required],
-      municipio: ['', Validators.required], // control simple para el dropdown
+      municipio: ['', Validators.required],
       latitud: ['', [Validators.required, Validators.pattern('^-?(?:\\d+|\\d+\\.\\d+)$')]],
       longitud: ['', [Validators.required, Validators.pattern('^-?(?:\\d+|\\d+\\.\\d+)$')]],
     });
@@ -48,8 +48,10 @@ export class AgregarConglomeradoComponent implements OnInit {
     this.municipiosService.obtenerMunicipios().subscribe({
       next: (municipios) => {
         this.municipios = municipios;
-        // Transformar municipios a formato para DropdownComponent
-        this.municipiosDropdown = municipios.map(m => ({ label: m, value: m }));
+        this.municipiosDropdown = municipios.map(m => ({
+          label: `${m.nombre}, ${m.departamento}`,
+          value: m.id
+        }));
       },
       error: (err) => {
         console.error('Error al cargar municipios:', err);
@@ -76,7 +78,7 @@ export class AgregarConglomeradoComponent implements OnInit {
         fecha_creacion: new Date(form.fechaCreacion),
         fecha_establecimiento: new Date(form.fechaEstablecimiento),
         nombre_region: form.region,
-        nombre_municipio: form.municipio,
+        id_municipio: form.municipio,  // mejor que nombre_municipio para indicar que es un ID
         coordenadas: [parseFloat(form.latitud), parseFloat(form.longitud)],
         id_conglomerado: 0
       };
@@ -85,7 +87,7 @@ export class AgregarConglomeradoComponent implements OnInit {
         next: () => {
           alert('Conglomerado registrado correctamente');
           this.conglomeradoForm.reset();
-          this.router.navigate(['/conglomerados']);
+          this.router.navigate(['/ideam']);
         },
         error: (err) => {
           console.error('Error al registrar conglomerado', err);

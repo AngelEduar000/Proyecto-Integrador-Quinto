@@ -1,30 +1,33 @@
 
 <div class="custom-select-wrapper">
   <div class="custom-select-display" (click)="toggleDropdown()">
-    {{ selectOption[labelOption] || placeholder }}
+    {{ selectOption ? selectOption[labelOption] : placeholder }}
     <span class="arrow" [class.open]="isOpen">&#9662;</span>
   </div>
 
-  @if (isOpen) {
-    <ul class="custom-select-options">
-      <li>
-        <input
-          type="text"
-          [(ngModel)]="searchTerm"
-          (click)="$event.stopPropagation()"
-          (input)="onSearchChange()"
-          placeholder="Buscar..."
-          style="width: 100%; padding: 8px; margin-bottom: 8px; border-radius: 6px; border: none;"
-        />
-      </li>
-      @for (option of filteredOptions; track $index) {
-        <li (click)="chooseOption(option)">
-          {{ option[labelOption] }}
-        </li>
-      }
-    </ul>
-  }
+  <ul class="custom-select-options" *ngIf="isOpen">
+    <li>
+      <input
+        type="text"
+        [(ngModel)]="searchTerm"
+        (click)="$event.stopPropagation()"
+        (input)="onSearchChange()"
+        placeholder="Buscar..."
+        style="width: 100%; padding: 8px; margin-bottom: 8px; border-radius: 6px; border: none;"
+      />
+    </li>
+    <li
+      *ngFor="let option of filteredOptions; let i = index"
+      (click)="chooseOption(option)"
+    >
+      {{ option[labelOption] }}
+    </li>
+    <li *ngIf="filteredOptions.length === 0" style="color: gray; padding: 8px;">
+      No se encontraron opciones
+    </li>
+  </ul>
 </div>
+
 
 
 

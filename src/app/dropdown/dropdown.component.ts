@@ -10,11 +10,10 @@ import {
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
-
 @Component({
   selector: 'app-dropdown',
   templateUrl: './dropdown.component.html',
-  styleUrl: './dropdown.component.css',
+  styleUrls: ['./dropdown.component.css'],
   standalone: true,
   imports: [CommonModule, FormsModule]
 })
@@ -26,13 +25,17 @@ export class DropdownComponent implements OnChanges {
   @Output() select = new EventEmitter<any>();
 
   isOpen = false;
-  selectOption: any = {};
+  selectOption: any = null;
   searchTerm: string = '';
   filteredOptions: any[] = [];
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['options']) {
       this.filteredOptions = this.options || [];
+      // Si ya hay un valor seleccionado, actualizar selectOption para mostrarlo
+      if (this.selectOption) {
+        this.selectOption = this.options.find(opt => opt[this.valueOption] === this.selectOption[this.valueOption]) || null;
+      }
     }
   }
 
