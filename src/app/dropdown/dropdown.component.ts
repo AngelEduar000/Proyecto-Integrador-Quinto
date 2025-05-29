@@ -54,6 +54,7 @@ export class DropdownComponent implements OnChanges {
     this.searchTerm = '';
     this.filteredOptions = this.options || [];
   }
+  
 
   onSearchChange() {
     const term = this.searchTerm.toLowerCase();
