@@ -1,34 +1,52 @@
 <h1 class="titulo-pagina">Especies medicinales y forestales</h1>
 
 <!-- búsqueda por texto para uso medicinal -->
-<div class="buscador" style="margin-bottom: 15px;">
+<div class="buscador" style="margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
   <input
     type="text"
     [(ngModel)]="busqueda"
     placeholder="Buscar por uso medicinal..."
     class="form-control"
+    style="flex: 1;"
   />
+  <button type="button" aria-label="Buscar" style="background: none; border: none; cursor: pointer; padding: 0;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="7"></circle>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+    </svg>
+  </button>
 </div>
+
 
 <!-- filtros -->
 <div class="filtros" style="display: flex; gap: 30px; flex-wrap: wrap;">
 
   <!-- filtro múltiple con checkboxes -->
-  <div>
-    <label><strong>Nombre común:</strong></label>
-    <div class="filtro-nombre-comun">
-      <div *ngFor="let nombre of nombresComunesDisponibles">
-        <input
-          type="checkbox"
-          [id]="nombre"
-          [value]="nombre"
-          (change)="toggleNombreComunSeleccionado(nombre)"
-          [checked]="filtroNombresComunes.includes(nombre)"
-        />
-        <label [for]="nombre">{{ nombre }}</label>
-      </div>
+  <div class="dropdown-checkbox">
+  <!-- Checkbox oculto que controla el desplegable -->
+  <input type="checkbox" id="toggle-nombre-comun" class="toggle-checkbox" />
+
+  <!-- Label que actúa como botón para desplegar -->
+  <label for="toggle-nombre-comun" class="dropdown-label">
+    <strong>Nombre común:</strong>
+    <span class="arrow">▼</span>
+  </label>
+
+  <!-- Lista que se despliega -->
+  <div class="dropdown-list">
+    <div *ngFor="let nombre of nombresComunesDisponibles">
+      <input
+        type="checkbox"
+        [id]="nombre"
+        [value]="nombre"
+        (change)="toggleNombreComunSeleccionado(nombre)"
+        [checked]="filtroNombresComunes.includes(nombre)"
+      />
+      <label [for]="nombre">{{ nombre }}</label>
     </div>
   </div>
+</div>
+
 
   <label>
     Usos:
