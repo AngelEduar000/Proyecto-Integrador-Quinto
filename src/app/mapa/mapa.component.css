@@ -9,18 +9,37 @@
   background: url('/imagenes/fondo.jpg') no-repeat center center;
   box-sizing: border-box;
   margin-top: 60px;
+  color: #f5f2f2;
+  font-family: sans-serif; /* Fuente de ejemplo */
+  font-weight: bold; /* negrilla */
 }
 
 /* Título */
 .map-container h1 {
   font-size: 28px;
-  color: #2c3e50;
+  color: #fafbfc;
   margin-bottom: 20px;
   font-weight: bold;
 }
 
+/* Recuadro alargado con fondo negro semi-transparente y texto naranja */
+.instruction-box {
+  background-color: rgba(0, 0, 0, 0.3);  /* negro más transparente */
+  border-radius: 10px;
+  padding: 15px 20px;
+  max-width: 1100px;
+  color: rgb(204, 206, 212);
+  font-family: Arial, sans-serif;
+  line-height: 1.1;
+  user-select: text;
+  margin: 10px auto;
+  box-sizing: border-box;
+}
+
+
+
 button {
-  background: #7cd5b3;
+  background: #68ea98;
   color: #fff;
   padding: 8px 16px;
   border: none;
@@ -44,9 +63,11 @@ button {
 #region-filter {
   padding: 10px 15px;
   font-size: 14px;
+  font-weight: bold; /* negrilla */
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #ffffff;
+  background-color: #2d2c2c;
+  opacity: 0.5;
   transition: border-color 0.3s ease-in-out;
   width: 250px; /* Ajuste el tamaño del select */
   margin-bottom: 10px;
@@ -55,7 +76,8 @@ button {
 
 /* Panel de información */
 #info-panel {
-  background: rgba(255, 255, 255, 0.97);
+  background: rgba(0, 0, 0, 0.5); /* fondo semi-transparente al 50% */
+  /* opacity: 0.5;  <-- quitar esta línea */
   border-radius: 12px;
   padding: 24px 28px;
   width: 100%;
@@ -67,18 +89,21 @@ button {
 #info-panel h2 {
   font-size: 20px;
   margin-bottom: 16px;
-  color: #34495e;
+  color: #ffffff;      /* texto blanco */
+  font-weight: bold;   /* negrita */
 }
 
 #info-panel p,
 #info-panel ul {
   margin: 6px 0;
   font-size: 15px;
-  color: #555;
+  color: #ffffff;      /* texto blanco */
+  font-weight: bold;   /* negrita */
 }
 
 #info-panel strong {
-  color: #2c3e50;
+  color: #ffffff;      /* texto blanco */
+  font-weight: bold;   /* negrita */
 }
 
 #info-panel ul {
@@ -88,6 +113,7 @@ button {
 #info-panel li {
   margin-bottom: 4px;
 }
+
 
 /* Estilos para el círculo en el mapa */
 #map .google-map-circle {

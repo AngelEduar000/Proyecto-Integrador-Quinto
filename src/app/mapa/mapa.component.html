@@ -1,9 +1,19 @@
 <main class="map-container">
   <h1>Mapa de Conglomerados</h1>
+  <div class="instruction-box">
+    <p>
+    Para usar el mapa:<br>
+    - Haz clic en uno de los íconos rojos para hacer zoom y ver claramente el conglomerado y y su informacion en el panel inferior.<br>
+    - Para buscar por regiones, usa el filtro desplegable que está en la parte superior.<br>
+    - Para alejar el zoom, mantén presionada la tecla Ctrl y mueve la rueda del mouse hacia atrás.<br>
+    - También puedes usar los botones "-" y "+" que están sobre el muñeco amarillo para controlar el zoom.
+    </p>
+  </div>
+
 
   <!-- Filtro por región -->
   <div>
-    <label for="region-filter">Filtrar por Región:</label>
+    <label for="region-filter">Filtrar por Región: </label>
     <select id="region-filter" (change)="onRegionChange($event)">
       <option value="">Todas las Regiones</option>
       <option *ngFor="let region of regiones" [value]="region">{{ region }}</option>
