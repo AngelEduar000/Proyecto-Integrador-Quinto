@@ -23,20 +23,38 @@
           </div>
 
           <div class="form-group">
-            <label for="region">Región</label>
-            <input id="region" type="text" formControlName="region" class="form-control" placeholder="Ingrese la Región" />
-            <small class="text-danger" *ngIf="conglomeradoForm.get('region')?.invalid && conglomeradoForm.get('region')?.touched">
-              Región es requerida
+            <label for="fechaEstablecimiento">Fecha de establecimiento</label>
+            <input id="fechaEstablecimiento" type="date" formControlName="fechaEstablecimiento" class="form-control" />
+            <small class="text-danger" *ngIf="conglomeradoForm.get('fechaEstablecimiento')?.invalid && conglomeradoForm.get('fechaEstablecimiento')?.touched">
+              Fecha es requerida
             </small>
           </div>
 
           <div class="form-group">
-            <label for="municipio">Municipio</label>
-            <input id="municipio" type="text" formControlName="municipio" class="form-control" placeholder="Ingrese el Municipio" />
-            <small class="text-danger" *ngIf="conglomeradoForm.get('municipio')?.invalid && conglomeradoForm.get('municipio')?.touched">
-              Municipio es requerido
-            </small>
-          </div>
+    <label>Regiones</label>
+    <app-dropdown
+      [labelOption]="'label'"
+      [valueOption]="'value'"
+      [options]="regiones"
+      (select)="changeSelectRegion($event)">
+    </app-dropdown>
+  </div>
+
+
+          <!--  -->
+          <div class="form-group">
+    <label>Municipio</label>
+    <app-dropdown
+      [labelOption]="'label'"
+      [valueOption]="'value'"
+      [options]="municipiosDropdown"
+      (select)="changeSelectMunicipio($event)">
+    </app-dropdown>
+    <small class="text-danger" *ngIf="conglomeradoForm.get('municipio')?.invalid && conglomeradoForm.get('municipio')?.touched">
+      Municipio es requerido
+    </small>
+  </div>
+          <!--  -->
 
           <div class="form-group">
             <label for="latitud">Latitud</label>
@@ -55,6 +73,8 @@
               <span *ngIf="conglomeradoForm.get('longitud')?.errors?.['pattern']">Debe ser un número válido</span>
             </small>
           </div>
+
+
 
           <div class="row mt-4 text-center">
             <div class="col-lg-6">
