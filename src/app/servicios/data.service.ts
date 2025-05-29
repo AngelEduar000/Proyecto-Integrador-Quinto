@@ -13,6 +13,7 @@ export class DataService {
   getConglomerados(): Observable<any[]> {
     return this.http.get<any[]>(`${BASE_URL}/mostrar_conglomerado`);
   }
+  
 
   // Extraer especies únicas desde los conglomerados
   getEspecies(): Observable<string[]> {
