@@ -5,7 +5,7 @@
   margin: 0 auto; 
   font-family: 'Segoe UI', Roboto, sans-serif;
 
-  background-image: url('/imagenes/fondo.jpg'); /* Ajusta la ruta a tu imagen */
+  background-image: url('/assets/imagenes/forestbg.jpg'); /* Ajusta la ruta a tu imagen */
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

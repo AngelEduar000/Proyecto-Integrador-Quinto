@@ -4,7 +4,7 @@
   justify-content: center; /* Centrar horizontalmente */
   align-items: center;     /* Centrar verticalmente */
   min-height: 110vh;       /* Altura mínima: pantalla completa */
-  background: url('/imagenes/fondo.jpg') no-repeat center center fixed;
+  background: url('/assets/imagenes/forestbg.jpg') no-repeat center center fixed;
   background-size: cover;
   padding: 1rem;
   box-sizing: border-box;
