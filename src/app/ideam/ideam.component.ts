@@ -5,6 +5,7 @@ import { BrigadistasService } from '../servicios/brigadista.service';
 import { ConglomeradosService } from '../servicios/conglomerado.service'; // IMPORTAR servicio conglomerado
 import { Brigadista } from '../interfaces/brigadista';
 import { Conglomerado } from '../interfaces/conglomerado';
+import { Conglomerado2 } from '../interfaces/conglomerado2';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -23,6 +24,7 @@ export class IdeamComponent implements OnInit {
   coinvestigadores: Brigadista[] = [];
 
   conglomerados: Conglomerado[] = [];  // plural y tipo correcto
+  conglomerados2: Conglomerado2[] = [];  // plural y tipo correcto
 
   constructor(
     private fb: FormBuilder,
@@ -61,8 +63,8 @@ export class IdeamComponent implements OnInit {
   cargarConglomerados(): void {
     this.conglomeradoService.obtenerConglomerados().subscribe({
       next: (data) => {
-        this.conglomerados = data;
-        console.log('Conglomerados cargados:', this.conglomerados);
+        this.conglomerados2 = data;
+        console.log('Conglomerados cargados:', this.conglomerados2);
       },
       error: (err) => {
         console.error('Error cargando conglomerados:', err);

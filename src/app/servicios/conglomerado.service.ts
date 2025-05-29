@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Conglomerado } from '../interfaces/conglomerado';
+import { Conglomerado2 } from '../interfaces/conglomerado2';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,8 @@ export class ConglomeradosService {
   constructor(private http: HttpClient) {}
 
   // Obtener todos los conglomerado
-  obtenerConglomerados(): Observable<Conglomerado[]> {
-    return this.http.get<Conglomerado[]>(this.apiUrl);
+  obtenerConglomerados(): Observable<Conglomerado2[]> {
+    return this.http.get<Conglomerado2[]>(this.apiUrl);
   }
 
   // Obtener un conglomerado por ID
