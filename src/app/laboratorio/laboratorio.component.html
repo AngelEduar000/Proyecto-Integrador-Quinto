@@ -1,6 +1,5 @@
 <h1 class="titulo-pagina">Análisis de Muestras - Laboratorio</h1>
 
-<!-- 🔍 Búsqueda -->
 <div class="busqueda">
   <input
     type="text"
@@ -10,28 +9,73 @@
   <button (click)="buscarMuestra()">Buscar</button>
 </div>
 
-<!-- 🧪 Si se encuentra la muestra -->
+<!-- Mostrar detalles y edición si hay muestra encontrada -->
 <div *ngIf="muestra" class="card">
-  <h2>Referencia: {{ muestra.codigoReferencia }}</h2>
-  <p><strong>Ubicación:</strong> Parcela {{ muestra.parcela }}, Subparcela {{ muestra.subparcela }}</p>
-  <p><strong>Posición:</strong> {{ muestra.ubicacion }}</p>
-  <p><strong>Nombre local:</strong> {{ muestra.nombreLocal || 'No registrado' }}</p>
+  <h2>Referencia: {{ muestra.codigo_referencia }}</h2>
+  <p><strong>Conglomerado:</strong> {{ muestra.conglomerado_nombre }}</p>
+  <p><strong>Subparcela:</strong> {{ muestra.subparcela_nombre }}</p>
+  <p><strong>Distancia horizontal desde el centro:</strong> {{ muestra.distancia_x }} m</p>
+  <p><strong>Distancia vertical desde el centro:</strong> {{ muestra.distancia_y }} m</p>
+  <p><strong>Tipo de muestra:</strong> {{ muestra.tipo_muestra | titlecase }}</p>
+  <p><strong>Nombre local:</strong> {{ muestra.nombre_local || 'No registrado' }}</p>
 
   <hr />
 
-  <h3>Datos científicos</h3>
+  <label style="display: flex; align-items: center; gap: 0.75rem;">
+    Especie:
+    <select
+      [(ngModel)]="especieSeleccionadaId"
+      (change)="cargarDatosEspecie()"
+      style="flex-grow: 1;"
+    >
+      <option value="" disabled>Seleccione especie</option>
+      <option *ngFor="let e of especies" [value]="e.id">{{ e.nombre_cientifico }}</option>
+    </select>
 
-  <label>Nombre científico:
-    <input type="text" [(ngModel)]="resultado.nombreCientifico" />
+    <button
+      (click)="mostrarFormularioNuevaEspecie()"
+      type="button"
+      class="btn-pequeno"
+      title="Crear nueva especie"
+    >
+      Crear especie
+    </button>
   </label>
 
-  <label>Usos:
-    <input type="text" [(ngModel)]="resultado.usos" />
+  <div *ngIf="especieSeleccionadaId" class="datos-especie" style="margin-top: 1rem;">
+    <label>
+      Usos:
+      <input type="text" [(ngModel)]="especieEdit.usos" />
+    </label>
+
+    <label>
+      Observaciones:
+      <input type="text" [(ngModel)]="especieEdit.observaciones" />
+    </label>
+
+    <button (click)="guardarEspecie()">Guardar datos de especie</button>
+  </div>
+</div>
+
+<!-- Formulario para crear nueva especie -->
+<div *ngIf="creandoNuevaEspecie" class="card" style="margin-top: 2rem;">
+  <h2>Crear Nueva Especie</h2>
+
+  <label>
+    Nombre científico:
+    <input type="text" [(ngModel)]="nuevaEspecie.nombre_cientifico" />
   </label>
 
-  <label>Observaciones:
-    <input type="text" [(ngModel)]="resultado.observaciones" />
+  <label>
+    Usos:
+    <input type="text" [(ngModel)]="nuevaEspecie.usos" />
   </label>
 
-  <button (click)="guardarResultado()">Guardar resultado</button>
+  <label>
+    Observaciones:
+    <input type="text" [(ngModel)]="nuevaEspecie.observaciones" />
+  </label>
+
+  <button (click)="guardarNuevaEspecie()">Crear especie</button>
+  <button (click)="cancelarCrearEspecie()" type="button" class="btn-cancelar">Cancelar</button>
 </div>

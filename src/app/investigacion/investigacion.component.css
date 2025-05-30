@@ -4,21 +4,22 @@
   padding: 20px;
   background: url('/assets/imagenes/forestbg.jpg') no-repeat center center;
   background-size: cover;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: sans-serif; /* Fuente general */
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: white; /* texto blanco general */
 }
 
-/* Título fijo en la parte superior - color original verde oscuro */
+/* Título fijo en la parte superior - color blanco */
 .titulo-pagina {
   width: 100%;
   text-align: center;
-  color: #2e4d25; /* verde oscuro */
+  color: white; /* blanco */
   font-weight: 700;
   font-size: 2.2rem;
   margin: 20px 0 10px 0;
-  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
   flex-shrink: 0;
 }
 
@@ -28,15 +29,15 @@
   max-width: 700px;
   padding: 30px 40px;
   border-radius: 15px;
-  background: rgba(255, 255, 255, 0.15); /* transparencia */
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  color: #ffffff; /* texto blanco dentro del formulario */
+  color: white; /* texto blanco dentro del formulario */
   box-sizing: border-box;
   margin: auto;
-  max-height: fit-content;  /* evita crecimiento vertical extra */
-  /* flex-grow eliminado para evitar espacio extra */
+  max-height: fit-content;
+  font-family: sans-serif;
 }
 
 /* Etiquetas y entradas - texto blanco */
@@ -46,38 +47,53 @@
   margin-bottom: 18px;
   font-weight: 600;
   font-size: 1rem;
-  color: #ffffff; /* etiqueta blanca */
+  color: white; /* etiqueta blanca */
 }
 
+/* Inputs de texto, archivo, número, select y textarea */
 input[type="text"],
-input[type="file"] {
+input[type="file"],
+input[type="number"],
+select,
+textarea {
   margin-top: 8px;
   padding: 10px 12px;
   font-size: 1rem;
-  border: 2px solid rgba(255, 255, 255, 0.7); /* borde blanco semitransparente */
+  border: 2px solid rgba(255, 255, 255, 0.7);
   border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.25); /* fondo semitransparente blanco */
+  background-color: rgba(255, 255, 255, 0.25);
   transition: border-color 0.3s ease;
   outline: none;
-  color: #ffffff; /* texto input blanco */
+  color: white;
+  resize: vertical;
+  font-family: sans-serif;
 }
 
-input[type="text"]::placeholder {
-  color: rgba(255, 255, 255, 0.7); /* placeholder blanco suave */
+/* Placeholder blanco suave para inputs y textarea */
+input[type="text"]::placeholder,
+input[type="number"]::placeholder,
+textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
+/* Focus */
 input[type="text"]:focus,
-input[type="file"]:focus {
-  border-color: #b2f2bb; /* verde pastel claro para enfoque */
+input[type="file"]:focus,
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+  border-color: #b2f2bb;
   background-color: rgba(255, 255, 255, 0.35);
 }
 
+/* Inputs inválidos */
 .invalid {
-  border-color: #ff6b6b; /* rojo para errores */
+  border-color: #ff6b6b;
 }
 
+/* Mensajes de error */
 .error-msg {
-  color: #ff6b6b; /* rojo para mensajes de error */
+  color: #ff6b6b;
   font-size: 0.85rem;
   margin-top: 5px;
 }
@@ -95,6 +111,7 @@ button {
   margin-top: 15px;
   width: 100%;
   transition: background-color 0.3s ease;
+  font-family: sans-serif;
 }
 
 button:disabled {
@@ -118,7 +135,10 @@ button:hover:not(:disabled) {
     font-size: 1.6rem;
   }
   input[type="text"],
-  input[type="file"] {
+  input[type="file"],
+  input[type="number"],
+  select,
+  textarea {
     font-size: 0.9rem;
   }
   button {

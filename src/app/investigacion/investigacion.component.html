@@ -2,67 +2,168 @@
 
 <form (ngSubmit)="guardarMuestra()" #formMuestra="ngForm" class="formulario" novalidate>
 
+  <!-- Selección de Conglomerado -->
   <label class="label-con-icono">
-    <span class="icono"></span> Parcela:
-    <input
-      type="text"
-      [(ngModel)]="nuevaMuestra.parcela"
-      name="parcela"
+    <span class="icono"></span> Conglomerado:
+    <select
+      [(ngModel)]="nuevaMuestra.id_conglomerado"
+      name="id_conglomerado"
       required
-      #parcela="ngModel"
-      [class.invalid]="parcela.invalid && parcela.touched"
-    />
-    <span *ngIf="parcela.invalid && parcela.touched" class="error-msg">Parcela es requerida.</span>
+      #id_conglomerado="ngModel"
+      (change)="cargarSubparcelas()"
+      [class.invalid]="id_conglomerado.invalid && id_conglomerado.touched"
+    >
+      <option value="" disabled selected>Seleccione un conglomerado</option>
+      <option *ngFor="let c of conglomerados" [value]="c.id">{{ c.nombre }}</option>
+    </select>
+    <span *ngIf="id_conglomerado.invalid && id_conglomerado.touched" class="error-msg">Conglomerado es requerido.</span>
   </label>
 
+  <!-- Selección de Subparcela -->
   <label class="label-con-icono">
     <span class="icono"></span> Subparcela:
-    <input
-      type="text"
-      [(ngModel)]="nuevaMuestra.subparcela"
-      name="subparcela"
+    <select
+      [(ngModel)]="nuevaMuestra.id_subparcela"
+      name="id_subparcela"
       required
-      #subparcela="ngModel"
-      [class.invalid]="subparcela.invalid && subparcela.touched"
-    />
-    <span *ngIf="subparcela.invalid && subparcela.touched" class="error-msg">Subparcela es requerida.</span>
+      #id_subparcela="ngModel"
+      [disabled]="!nuevaMuestra.id_conglomerado"
+      [class.invalid]="id_subparcela.invalid && id_subparcela.touched"
+    >
+      <option value="" disabled selected>Seleccione una subparcela</option>
+      <option *ngFor="let s of subparcelasFiltradas" [value]="s.id">{{ s.nombre }}</option>
+    </select>
+    <span *ngIf="id_subparcela.invalid && id_subparcela.touched" class="error-msg">Subparcela es requerida.</span>
   </label>
 
+  <!-- Distancia horizontal desde centro -->
   <label class="label-con-icono">
-    <span class="icono"></span> Ubicación en la subparcela:
+    <span class="icono"></span> Distancia horizontal desde el centro de la subparcela (metros):
     <input
-      type="text"
-      [(ngModel)]="nuevaMuestra.ubicacion"
-      name="ubicacion"
+      type="number"
+      step="0.01"
+      [(ngModel)]="nuevaMuestra.distancia_x"
+      name="distancia_x"
       required
-      #ubicacion="ngModel"
-      [class.invalid]="ubicacion.invalid && ubicacion.touched"
+      #distancia_x="ngModel"
+      [class.invalid]="distancia_x.invalid && distancia_x.touched"
     />
-    <span *ngIf="ubicacion.invalid && ubicacion.touched" class="error-msg">Ubicación es requerida.</span>
+    <span *ngIf="distancia_x.invalid && distancia_x.touched" class="error-msg">Este dato es requerido.</span>
   </label>
 
+  <!-- Distancia vertical desde centro -->
+  <label class="label-con-icono">
+    <span class="icono"></span> Distancia vertical desde el centro de la subparcela (metros):
+    <input
+      type="number"
+      step="0.01"
+      [(ngModel)]="nuevaMuestra.distancia_y"
+      name="distancia_y"
+      required
+      #distancia_y="ngModel"
+      [class.invalid]="distancia_y.invalid && distancia_y.touched"
+    />
+    <span *ngIf="distancia_y.invalid && distancia_y.touched" class="error-msg">Este dato es requerido.</span>
+  </label>
+
+  <!-- Especie (opcional) -->
+  <label class="label-con-icono">
+    <span class="icono"></span> Especie (opcional):
+    <select
+      [(ngModel)]="nuevaMuestra.especie"
+      name="especie"
+    >
+      <option value="" selected>Desconocida / No aplica</option>
+      <option *ngFor="let e of especies" [value]="e.id">{{ e.nombre }}</option>
+    </select>
+  </label>
+
+  <!-- Altura (metros) -->
+  <label class="label-con-icono">
+    <span class="icono"></span> Altura (metros):
+    <input
+      type="number"
+      step="0.01"
+      [(ngModel)]="nuevaMuestra.altura_mt"
+      name="altura_mt"
+      required
+      #altura_mt="ngModel"
+      [class.invalid]="altura_mt.invalid && altura_mt.touched"
+      min="0"
+    />
+    <span *ngIf="altura_mt.invalid && altura_mt.touched" class="error-msg">Altura válida es requerida.</span>
+  </label>
+
+  <!-- Diámetro (cm) -->
+  <label class="label-con-icono">
+    <span class="icono"></span> Diámetro (cm):
+    <input
+      type="number"
+      step="0.01"
+      [(ngModel)]="nuevaMuestra.diametro_cm"
+      name="diametro_cm"
+      required
+      #diametro_cm="ngModel"
+      [class.invalid]="diametro_cm.invalid && diametro_cm.touched"
+      min="0"
+    />
+    <span *ngIf="diametro_cm.invalid && diametro_cm.touched" class="error-msg">Diámetro válido es requerido.</span>
+  </label>
+
+  <!-- Observaciones -->
+  <label class="label-con-icono">
+    <span class="icono"></span> Observaciones:
+    <textarea
+      [(ngModel)]="nuevaMuestra.observaciones"
+      name="observaciones"
+      rows="3"
+    ></textarea>
+  </label>
+
+  <!-- Tipo de muestra -->
+  <label class="label-con-icono">
+    <span class="icono"></span> Tipo de muestra:
+    <select
+      [(ngModel)]="nuevaMuestra.tipo_muestra"
+      name="tipo_muestra"
+      required
+      #tipo_muestra="ngModel"
+      [class.invalid]="tipo_muestra.invalid && tipo_muestra.touched"
+    >
+      <option value="" disabled selected>Seleccione un tipo</option>
+      <option value="hoja">Hoja</option>
+      <option value="tallo">Tallo</option>
+      <option value="corteza">Corteza</option>
+      <option value="savia">Savia</option>
+    </select>
+    <span *ngIf="tipo_muestra.invalid && tipo_muestra.touched" class="error-msg">Tipo de muestra es requerido.</span>
+  </label>
+
+  <!-- Fecha de recolección -->
+  <label class="label-con-icono">
+    <span class="icono"></span> Fecha de recolección:
+    <input
+      type="date"
+      [(ngModel)]="nuevaMuestra.fecha_recoleccion"
+      name="fecha_recoleccion"
+      required
+      #fecha_recoleccion="ngModel"
+      [class.invalid]="fecha_recoleccion.invalid && fecha_recoleccion.touched"
+    />
+    <span *ngIf="fecha_recoleccion.invalid && fecha_recoleccion.touched" class="error-msg">Fecha es requerida.</span>
+  </label>
+
+  <!-- Nombre local (opcional) -->
   <label class="label-con-icono">
     <span class="icono"></span> Nombre local (opcional):
     <input
       type="text"
-      [(ngModel)]="nuevaMuestra.nombreLocal"
-      name="nombreLocal"
+      [(ngModel)]="nuevaMuestra.nombre_local"
+      name="nombre_local"
     />
   </label>
 
-  <label class="label-con-icono">
-    <span class="icono"></span> Código de referencia de muestra:
-    <input
-      type="text"
-      [(ngModel)]="nuevaMuestra.codigoReferencia"
-      name="codigoReferencia"
-      required
-      #codigoReferencia="ngModel"
-      [class.invalid]="codigoReferencia.invalid && codigoReferencia.touched"
-    />
-    <span *ngIf="codigoReferencia.invalid && codigoReferencia.touched" class="error-msg">Código de referencia es requerido.</span>
-  </label>
-
+  <!-- Imagen del árbol -->
   <label class="label-con-icono">
     <span class="icono"></span> Imagen del árbol:
     <input
@@ -73,5 +174,4 @@
   </label>
 
   <button type="submit" [disabled]="formMuestra.invalid">Guardar muestra</button>
-
 </form>
