@@ -1,90 +1,111 @@
 :host {
-    display: block;
-    padding-top: 80px;
-    padding-left: 2rem;
-    padding-right: 2rem;
-    font-family: 'Segoe UI', Roboto, sans-serif;
-    color: #2f3e46;
-    max-width: auto; 
-    margin: 0 auto; 
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 2rem 2rem;
+  font-family: sans-serif;
+  background: url('/assets/imagenes/forestbg.jpg') no-repeat center center/cover;
+  color: white;
+  box-sizing: border-box;
+}
 
-    background-image: url('/assets/imagenes/forestbg.jpg'); /* Ajusta la ruta a tu imagen */
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-  }
-  
-  .titulo-dashboard {
-    text-align: center;
-    font-size: 2.2rem;
-    margin-bottom: 2rem;
-    color: #264653;
-  }
-  
-  .dashboard {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-  }
-  
-  .panel-izquierdo {
-    flex: 2;
-    overflow-x: auto;
-  }
-  
-  .tabla-reportes {
-    width: 100%;
-    border-collapse: collapse;
-    background: #f9f9f9;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  .tabla-reportes th, .tabla-reportes td {
-    padding: 0.75rem;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
-  }
-  
-  .tabla-reportes th {
-    background-color: #a8dadc;
-    color: #1d3557;
-  }
-  
-  .tabla-reportes tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .panel-derecho {
-    flex: 1;
-    display: flex;
+.titulo-pagina {
+  font-weight: 700;
+  font-size: 2.5rem;
+  margin-bottom: 30px;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.selector-reporte {
+  margin-bottom: 30px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+}
+
+.selector-reporte label {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.selector-reporte select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+  background-color: rgba(255,255,255,0.15);
+  color: white;
+  cursor: pointer;
+}
+
+.selector-reporte select option {
+  background-color: white;
+  color: black;
+}
+
+.contenido-reporte {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tabla-reporte {
+  flex: 1 1 400px;
+  max-height: 450px;
+  overflow-y: auto;
+  background: rgba(0,0,0,0.4);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+}
+
+.tabla-reporte h2 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.tabla-reporte table {
+  width: 100%;
+  border-collapse: collapse;
+  color: white;
+}
+
+.tabla-reporte th,
+.tabla-reporte td {
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 10px 8px;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.tabla-reporte th {
+  background-color: rgba(255,255,255,0.15);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.grafico-reporte {
+  flex: 1 1 400px;
+  background: rgba(0,0,0,0.4);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .contenido-reporte {
     flex-direction: column;
-    gap: 1rem;
+    gap: 25px;
   }
-  
-  .card-resumen {
-    background: #e0f7f1;
-    border-left: 6px solid #2a9d8f;
-    padding: 1rem;
-    border-radius: 8px;
-  }
-  
-  .card-resumen h3 {
-    margin: 0;
-    font-size: 1.1rem;
-    color: #264653;
-  }
-  
-  .card-resumen .valor {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin-top: 0.5rem;
-  }
-  
-  .zonas-lista {
-    padding-left: 1.25rem;
-    margin: 0.5rem 0 0;
-  }
-  
+}
