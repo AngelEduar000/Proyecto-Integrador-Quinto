@@ -14,8 +14,8 @@ export class ConglomeradosService {
   constructor(private http: HttpClient) {}
 
   // Obtener todos los conglomerado
-  obtenerConglomerados(): Observable<Conglomerado2[]> {
-    return this.http.get<Conglomerado2[]>(this.apiUrl);
+  obtenerConglomerados(): Observable<Conglomerado[]> {
+    return this.http.get<Conglomerado[]>(this.apiUrl);
   }
 
   // Obtener un conglomerado por ID
@@ -24,13 +24,13 @@ export class ConglomeradosService {
   }
 
   // Agregar un nuevo conglomerado
-  agregarConglomerado(conglomerado: Conglomerado): Observable<Conglomerado> {
-    return this.http.post<Conglomerado>(this.apiUrl, conglomerado);
+  agregarConglomerado(conglomerado: Conglomerado2): Observable<Conglomerado2> {
+    return this.http.post<Conglomerado2>(this.apiUrl, conglomerado);
   }
 
   // Actualizar un conglomerado existente
-  actualizarConglomerado(id: number, conglomerado: Conglomerado): Observable<Conglomerado> {
-    return this.http.put<Conglomerado>(`${this.apiUrl}/${id}`, conglomerado);
+  actualizarConglomerado(id: number, conglomerado: Conglomerado2): Observable<Conglomerado2> {
+    return this.http.put<Conglomerado2>(`${this.apiUrl}/${id}`, conglomerado);
   }
 
   // Eliminar un conglomerado por ID

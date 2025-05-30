@@ -24,13 +24,13 @@
           </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of conglomerados2" class="table-success">
+            <tr *ngFor="let item of conglomerados" class="table-success">
               <td>{{ item.id_conglomerado }}</td>
               <td>{{ item.identificador }}</td>
               <td>{{ item.fecha_creacion | date:'shortDate' }}</td>
               <td>{{ item.fecha_establecimiento | date:'shortDate' }}</td>
               <td>{{ item.nombre_region }}</td>
-              <td>{{ item.nombre_municipio }}</td>
+              <td>{{ item.nombre_municipio.nombre }}, {{ item.nombre_municipio.departamento }}</td>
               <td>{{ item.coordenadas }}</td> <!-- O reemplaza con el valor correcto -->
               <td class="text-center">
                 <button [routerLink]="['/conglomerados/edit', item.id_conglomerado]" type="button" class="btn btn-warning btn-sm">Editar</button>

@@ -60,17 +60,19 @@ export class IdeamComponent implements OnInit {
     });
   }
 
-  cargarConglomerados(): void {
-    this.conglomeradoService.obtenerConglomerados().subscribe({
-      next: (data) => {
-        this.conglomerados2 = data;
-        console.log('Conglomerados cargados:', this.conglomerados2);
-      },
-      error: (err) => {
-        console.error('Error cargando conglomerados:', err);
-      }
-    });
-  }
+cargarConglomerados(): void {
+  this.conglomeradoService.obtenerConglomerados().subscribe({
+    next: (data) => {
+      // Ordenar por id_conglomerado de menor a mayor
+      this.conglomerados = data.sort((a, b) => a.id_conglomerado - b.id_conglomerado);
+      console.log('Conglomerados cargados:', this.conglomerados);
+    },
+    error: (err) => {
+      console.error('Error cargando conglomerados:', err);
+    }
+  });
+}
+
 
   onSubmit(): void {
     if (this.brigadaForm.valid) {
