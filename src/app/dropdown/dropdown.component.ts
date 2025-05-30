@@ -5,7 +5,8 @@ import {
   Input,
   Output,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  OnInit
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -22,6 +23,9 @@ export class DropdownComponent implements OnChanges {
   @Input() valueOption: string = '';
   @Input() labelOption: string = '';
   @Input() placeholder: string = 'Seleccione una opción';
+
+  @Input() selectedValue: any = null; // ✅ Recibe el valor inicial
+
   @Output() select = new EventEmitter<any>();
 
   isOpen = false;
@@ -32,12 +36,16 @@ export class DropdownComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['options']) {
       this.filteredOptions = this.options || [];
-      // Si ya hay un valor seleccionado, actualizar selectOption para mostrarlo
-      if (this.selectOption) {
-        this.selectOption = this.options.find(opt => opt[this.valueOption] === this.selectOption[this.valueOption]) || null;
-      }
+    }
+
+    if (changes['selectedValue']) {
+      const foundOption = this.options.find(opt =>
+        opt[this.valueOption] === this.selectedValue
+      );
+      this.selectOption = foundOption || null;  // null si no encontró opción válida
     }
   }
+
 
   toggleDropdown() {
     this.isOpen = !this.isOpen;
@@ -54,7 +62,6 @@ export class DropdownComponent implements OnChanges {
     this.searchTerm = '';
     this.filteredOptions = this.options || [];
   }
-  
 
   onSearchChange() {
     const term = this.searchTerm.toLowerCase();

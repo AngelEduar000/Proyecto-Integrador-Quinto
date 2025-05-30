@@ -3,7 +3,7 @@ export interface Conglomerado {
   fecha_creacion: Date;
   fecha_establecimiento: Date;
   nombre_region: string;
-  id_municipio: number;
+  nombre_municipio: any;
   coordenadas: string;
-  id_conglomerado: number;
+  id_conglomerado?: number;
 }
