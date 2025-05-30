@@ -19,7 +19,7 @@ export class MapaComponent implements AfterViewInit {
   map: any;
   circle: any;
   regiones: string[] = [];
-  radioGeneral = 80;
+  radioGeneral = 110;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
