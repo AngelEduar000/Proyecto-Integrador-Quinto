@@ -14,6 +14,29 @@
         <label>Correo*</label>
         <input formControlName="email" type="email" />
       </div>
+
+
+      <div class="form-group password-group">
+        <label>Contraseña*</label>
+        <div class="password-wrapper">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            placeholder="Contraseña"
+            id="password"
+            required
+          />
+          <span class="toggle-password" (click)="togglePassword()">
+            <img
+              [src]="showPassword ? '/imagenes/ojo_cerrado.ico' : '/imagenes/ojo_abierto.ico'"
+              id="eye-icon"
+              alt="Mostrar contraseña"
+            />
+          </span>
+        </div>
+      </div>
+
+
       <div class="form-group">
         <label>Rol*</label>
         <app-dropdown

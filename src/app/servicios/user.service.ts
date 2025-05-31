@@ -47,7 +47,7 @@ export class UserService {
   createUser(data: any): Observable<any> {
     if(!this.isBrowser) { return of(null); }
 
-    return from(createUserWithEmailAndPassword(this.auth, data.email, 'PI1234*')).pipe(
+    return from(createUserWithEmailAndPassword(this.auth, data.email, data.password)).pipe(
       switchMap((userCreated) => {
         const idUser = userCreated.user.uid;
         const userDoc = doc(this.firestore, `usuarios/${idUser}`);

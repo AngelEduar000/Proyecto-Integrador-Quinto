@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent {
+  showPassword = false;
   private router = inject(Router);
   addUserForm: FormGroup;
   private userService: UserService = inject(UserService);
@@ -30,6 +31,7 @@ export class AddUserComponent {
       name: ['', Validators.required],
       apellido: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required],
       role: ['', Validators.required] // Valor por defecto que existe en roles
     });
   }
@@ -37,6 +39,10 @@ export class AddUserComponent {
   changeSelect(value: any) {
     this.addUserForm.controls['role'].setValue(value);
     this.addUserForm.updateValueAndValidity();
+  }
+
+    togglePassword(): void {
+    this.showPassword = !this.showPassword;
   }
 
   onSubmit() {

@@ -97,6 +97,39 @@ button[disabled] {
   cursor: not-allowed;
 }
 
+
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 45px; /* espacio para el icono */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.toggle-password img {
+  width: 22px;
+  height: 22px;
+  filter: brightness(90%);
+  transition: filter 0.2s ease;
+}
+
+.toggle-password img:hover {
+  filter: brightness(110%);
+}
+
+
 /* ------------------------ */
 /* 📱 RESPONSIVE DESIGN */
 /* ------------------------ */
