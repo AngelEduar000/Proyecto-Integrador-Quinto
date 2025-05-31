@@ -17,9 +17,13 @@ export class MapaComponent implements AfterViewInit {
   conglomerados: any[] = [];
   markers: any[] = [];
   map: any;
-  circle: any;
+
+  // Restauramos las propiedades para el círculo principal y las subparcelas
+  circle: any; // Para el círculo grande rojo
+  subPlotCircles: any[] = []; // Para las 5 subparcelas celestes
+  
   regiones: string[] = [];
-  radioGeneral = 110;
+  radioGeneral = 110; // Radio del conglomerado principal
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -56,7 +60,12 @@ export class MapaComponent implements AfterViewInit {
     const filteredConglomerados = region ? this.conglomerados.filter(c => c.region === region) : this.conglomerados;
 
     filteredConglomerados.forEach((conglomerado) => {
-      const [lat, lng] = conglomerado.coordenadas;
+      let lat: number, lng: number;
+      if (Array.isArray(conglomerado.coordenadas)) {
+        [lat, lng] = conglomerado.coordenadas;
+      } else {
+        [lat, lng] = conglomerado.coordenadas.split(',').map(Number);
+      }
 
       if (isNaN(lat) || isNaN(lng)) {
         console.warn(`❗ Coordenadas inválidas para el conglomerado: ${conglomerado.identificador}`);
@@ -86,46 +95,78 @@ export class MapaComponent implements AfterViewInit {
     document.getElementById('zona-municipio')!.innerText = conglomerado.municipio || '-';
     document.getElementById('zona-fecha-creacion')!.innerText = conglomerado.fecha_creacion || '-';
 
-    // Si tienes un contenedor para especies, puedes dejarlo vacío o no tocarlo
     const especiesLista = document.getElementById('especies-lista');
     if (especiesLista) {
-      especiesLista.innerHTML = '';  // Limpiar por si acaso, pero no mostrar nada
+      especiesLista.innerHTML = '';
     }
   }
 
   zoomToConglomerado(marker: any, conglomerado: any): void {
-    this.map.setCenter(marker.getPosition());
+    this.map.panTo(marker.getPosition());
+
+    // 1. RESTAURAMOS LA ANIMACIÓN DE ZOOM
     let startZoom = this.map.getZoom();
-    const targetZoom = 16;
+    const targetZoom = 18; // Acercamos lo suficiente para ver las subparcelas
     const zoomStep = 0.2;
-    const intervalTime = 50;
+    const intervalTime = 40; // Un poco más rápido
 
     const zoomInterval = setInterval(() => {
-      if (startZoom < targetZoom) {
-        this.map.setZoom(startZoom);
+      // Solo hacer zoom si el zoom actual es menor que el objetivo
+      if (this.map.getZoom() < targetZoom) {
         startZoom += zoomStep;
+        if (startZoom > targetZoom) {
+            startZoom = targetZoom; // Asegurarse de no pasar del objetivo
+        }
+        this.map.setZoom(startZoom);
       } else {
+        this.map.setZoom(targetZoom); // Clavar el zoom final
         clearInterval(zoomInterval);
       }
     }, intervalTime);
 
+    // 2. Limpiar todos los círculos anteriores (el principal y las subparcelas)
     if (this.circle) {
       this.circle.setMap(null);
     }
+    this.subPlotCircles.forEach(circle => circle.setMap(null));
+    this.subPlotCircles = [];
 
-    const radio = this.radioGeneral;
+    // 3. DIBUJAMOS EL CÍRCULO PRINCIPAL ROJO
     this.circle = new google.maps.Circle({
       map: this.map,
       center: marker.getPosition(),
-      radius: radio,
+      radius: this.radioGeneral, // 110 metros
       fillColor: '#FF0000',
-      fillOpacity: 0.35,
+      fillOpacity: 0.2, // Un poco más transparente para ver lo de adentro
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
       strokeWeight: 2
     });
 
-    this.map.panTo(marker.getPosition());
+    // 4. DIBUJAMOS LAS 5 SUBPARCELAS CELESTES
+    const centerPoint = marker.getPosition();
+    const subPlotRadius = 15;
+    const distanceToCenter = 95;
+
+    const subPlotOptions = {
+      strokeColor: '#00BFFF',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#87CEEB',
+      fillOpacity: 0.45,
+      map: this.map,
+      radius: subPlotRadius
+    };
+    
+    // Subparcela central
+    this.subPlotCircles.push(new google.maps.Circle({ ...subPlotOptions, center: centerPoint }));
+
+    // Subparcelas satélite
+    const headings = [0, 90, 180, 270];
+    headings.forEach(heading => {
+      const satelliteCenter = google.maps.geometry.spherical.computeOffset(centerPoint, distanceToCenter, heading);
+      this.subPlotCircles.push(new google.maps.Circle({ ...subPlotOptions, center: satelliteCenter }));
+    });
   }
 
   clearMarkers(): void {
@@ -144,7 +185,7 @@ export class MapaComponent implements AfterViewInit {
     return new Promise((resolve, reject) => {
       if (typeof google === 'undefined' || typeof google.maps === 'undefined') {
         const script = document.createElement('script');
-        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD2A5gNXoB8-TYjCQJF7o9oEa3_B_EufKk&callback';
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyD2A5gNXoB8-TYjCQJF7o9oEa3_B_EufKk&libraries=geometry&callback';
         script.async = true;
         script.defer = true;
         script.onload = () => resolve();
@@ -162,7 +203,6 @@ export class MapaComponent implements AfterViewInit {
       center: { lat: 4.60971, lng: -74.08175 },
       mapTypeId: google.maps.MapTypeId.HYBRID
     });
-
     this.filterByRegion('');
   }
 }
