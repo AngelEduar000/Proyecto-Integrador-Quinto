@@ -108,7 +108,7 @@ export class MapaComponent implements AfterViewInit {
     let startZoom = this.map.getZoom();
     const targetZoom = 18; // Acercamos lo suficiente para ver las subparcelas
     const zoomStep = 0.2;
-    const intervalTime = 50; // Un poco más rápido
+    const intervalTime = 52; // Un poco más rápido
 
     const zoomInterval = setInterval(() => {
       // Solo hacer zoom si el zoom actual es menor que el objetivo
