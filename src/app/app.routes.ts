@@ -15,6 +15,8 @@ import { IdeamComponent } from './ideam/ideam.component';
 import { AgregarConglomeradoComponent } from './add-edit-conglomerados/add-edit-conglomerados.component';
 import {AddEditBrigadistasComponent} from './add-edit-brigadistas/add-edit-brigadistas.component';
 import { AddUserComponent } from "./add-user/add-user.component";
+import { AuthGuard } from './guard/auth.guard';
+
 
 
 
@@ -26,14 +28,14 @@ export const routes: Routes = [
   { path: 'especies', component: EspeciesComponent },
   { path: 'reportes', component: ReportesComponent },
   { path: 'navbar', component: NavbarComponent },
-  { path: 'investigacion', component: InvestigacionComponent },
-  { path: 'laboratorio', component: LaboratorioComponent },
-  { path: 'ideam', component: IdeamComponent },
-  { path: 'add', component: AgregarConglomeradoComponent },
-  { path: 'conglomerados/edit/:id', component: AgregarConglomeradoComponent },
-  { path: 'add2', component: AddEditBrigadistasComponent }, // Para agregar
-  { path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent }, // Para editar
-  { path: 'add-user', component: AddUserComponent }
+  { path: 'investigacion', component: InvestigacionComponent, canActivate: [AuthGuard] },
+  { path: 'laboratorio', component: LaboratorioComponent, canActivate: [AuthGuard] },
+  { path: 'ideam', component: IdeamComponent, canActivate: [AuthGuard] },
+  { path: 'add', component: AgregarConglomeradoComponent, canActivate: [AuthGuard] },
+  { path: 'conglomerados/edit/:id', component: AgregarConglomeradoComponent, canActivate: [AuthGuard] },
+  { path: 'add2', component: AddEditBrigadistasComponent, canActivate: [AuthGuard] }, // Para agregar
+  { path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent, canActivate: [AuthGuard] }, // Para editar
+  { path: 'add-user', component: AddUserComponent, canActivate: [AuthGuard] }
 ];
 
 

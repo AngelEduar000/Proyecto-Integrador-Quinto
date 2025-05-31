@@ -1,9 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
-import { Firestore } from '@angular/fire/firestore';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Firestore, collection, doc, getDoc, getDocs, setDoc } from '@angular/fire/firestore';
 import { from, Observable, of, switchMap } from 'rxjs';
 
 @Injectable({
@@ -20,12 +18,13 @@ export class UserService {
   }
 
   getUserById(idUser: string): Observable<any> {
-    if(this.isBrowser) { return of(null) }
-    const userDoc = doc(this.firestore, `usuarios/${idUser}`)
+    if(!this.isBrowser) { return of(null); }
+
+    const userDoc = doc(this.firestore, `usuarios/${idUser}`);
     return from(getDoc(userDoc)).pipe(
       switchMap((snap) => {
-        if(snap.exists) {
-          return of({idUser, ...snap.data});
+        if(snap.exists()) {
+          return of({ idUser, ...snap.data() });
         } else {
           throw new Error('Usuario no existe en la base de datos');
         }
@@ -33,31 +32,27 @@ export class UserService {
     );
   }
 
-  getAllUser() {
-    if(this.isBrowser) { return of(null) }
-    const userDoc = doc(this.firestore, `usuarios`)
-    return from(getDoc(userDoc)).pipe(
-      switchMap((snap) => {
-        if(snap.exists) {
-          return of({...snap.data});
-        } else {
-          throw new Error('Usuario no existe en la base de datos');
-        }
+  getAllUsers(): Observable<any[]> {
+    if (!this.isBrowser) { return of([]); }
+
+    const usersCollection = collection(this.firestore, 'usuarios');
+    return from(getDocs(usersCollection)).pipe(
+      switchMap((querySnapshot) => {
+        const users = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        return of(users);
       })
     );
   }
 
-  createUser(data: any): Observable<any> { 
-    if(!this.isBrowser) { return of(null) }
-
-    console.log('Entre a llamar el servicio')
+  createUser(data: any): Observable<any> {
+    if(!this.isBrowser) { return of(null); }
 
     return from(createUserWithEmailAndPassword(this.auth, data.email, 'PI1234*')).pipe(
       switchMap((userCreated) => {
         const idUser = userCreated.user.uid;
-        const userDoc = doc(this.firestore, `usuarios`, idUser);
-        return from(setDoc(userDoc, {id: idUser, ...data}));
+        const userDoc = doc(this.firestore, `usuarios/${idUser}`);
+        return from(setDoc(userDoc, { id: idUser, ...data }));
       })
-    )
+    );
   }
 }

@@ -1,13 +1,14 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Auth, authState, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, authState, signInWithEmailAndPassword, User } from '@angular/fire/auth';
 import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { from, of, switchMap } from 'rxjs';
+import { signOut } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
 })
-export class FirabaseAuthService {
+export class FirebaseAuthService {
 
   private auth = inject(Auth);
   private firestore = inject(Firestore);
@@ -19,11 +20,10 @@ export class FirabaseAuthService {
   }
 
   login(username: string, password: string) {
-    if (!this.isBrowser) return of(null); // Protege contra SSR
+    if (!this.isBrowser) return of(null);
 
     return from(signInWithEmailAndPassword(this.auth, username, password)).pipe(
       switchMap((cred) => {
-        console.log(cred);
         const uid = cred.user.uid;
         const userDoc = doc(this.firestore, `usuarios/${uid}`);
         return from(getDoc(userDoc)).pipe(
@@ -37,5 +37,13 @@ export class FirabaseAuthService {
         );
       })
     );
+  }
+
+logout() {
+  return from(signOut(this.auth));
+}
+
+  getCurrentUser() {
+    return this.auth.currentUser;
   }
 }

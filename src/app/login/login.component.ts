@@ -1,12 +1,9 @@
-import { Component, OnInit, OnDestroy, Inject, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, inject, PLATFORM_ID  } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { PLATFORM_ID } from '@angular/core';
-import { take } from 'rxjs';
-import { FirabaseAuthService } from '../servicios/firabase-auth.service';
-import { error } from 'node:console';
+import { take } from 'rxjs/operators';
+import { FirebaseAuthService } from '../servicios/firabase-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +11,6 @@ import { error } from 'node:console';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    HttpClientModule,
     RouterModule
   ],
   templateUrl: './login.component.html',
@@ -27,13 +23,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   isBrowser: boolean;
 
   private router = inject(Router);
-  private firabaseAuth = inject(FirabaseAuthService);
+  private firebaseAuth = inject(FirebaseAuthService);
   private fb = inject(FormBuilder);
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
-
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
@@ -45,6 +40,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     if (this.isBrowser) {
       document.body.classList.add('login-background');
+
+      // Evitar volver al login si ya inició sesión
+      this.firebaseAuth.authState$.pipe(take(1)).subscribe(user => {
+        if (user) {
+          this.router.navigate(['/']);
+        }
+      });
     }
   }
 
@@ -66,14 +68,14 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     const { username, password } = this.loginForm.value;
 
-    this.firabaseAuth.login(username, password).pipe(take(1)).subscribe(
+    this.firebaseAuth.login(username, password).pipe(take(1)).subscribe(
       data => {
-        console.log(data);
+        console.log('Login exitoso', data);
         this.router.navigate(['/']);
       },
-      error => {
-       this.errorMessage = error;
+      err => {
+        this.errorMessage = err.message || 'Error al iniciar sesión';
       }
-    )
+    );
   }
 }

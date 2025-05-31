@@ -15,23 +15,32 @@
       <li><a routerLink="/especies" routerLinkActive="active" (click)="closeMenu()">Especies</a></li>
       <li><a routerLink="/mapa" routerLinkActive="active" (click)="closeMenu()">Mapa</a></li>
       <li><a routerLink="/reportes" routerLinkActive="active" (click)="closeMenu()">Reportes</a></li>
-      <li><a routerLink="/investigacion" routerLinkActive="active" (click)="closeMenu()">Investigación</a></li>
-      <li><a routerLink="/laboratorio" routerLinkActive="active" (click)="closeMenu()">Laboratorio</a></li>
-      <li><a routerLink="/ideam" routerLinkActive="active" (click)="closeMenu()">IDEAM</a></li>
+      <li *ngIf="isLoggedIn">
+        <a routerLink="/investigacion" routerLinkActive="active" (click)="closeMenu()">Investigación</a>
+      </li>
 
-      <!-- Mostrar Login o Menú de Usuario según estado -->
-      @if (!isLoggedIn) {
+      <li *ngIf="isLoggedIn">
+        <a routerLink="/laboratorio" routerLinkActive="active" (click)="closeMenu()">Laboratorio</a>
+      </li>
+      <li *ngIf="isLoggedIn">
+        <a routerLink="/ideam" routerLinkActive="active" (click)="closeMenu()">IDEAM</a>
+      </li>
+
+
+      <ng-container *ngIf="!isLoggedIn; else loggedInBlock">
         <li class="login-item">
           <a routerLink="/login" routerLinkActive="active" (click)="closeMenu()">Login</a>
         </li>
-      } @else {
+      </ng-container>
+
+      <ng-template #loggedInBlock>
         <li class="user-menu">
-          <button class="user-btn">{{username}} ▼</button>
+          <button class="user-btn">{{ username }} ▼</button>
           <div class="user-dropdown">
             <button (click)="logout(); closeMenu()">Cerrar Sesión</button>
           </div>
         </li>
-      }
+      </ng-template>
     </ul>
   </div>
 </nav>

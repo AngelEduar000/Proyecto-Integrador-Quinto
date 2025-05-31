@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { DropdownComponent } from '../dropdown/dropdown.component';
 import { UserService } from '../servicios/user.service';
 import { Router } from '@angular/router';
-import { FirabaseAuthService } from '../servicios/firabase-auth.service';
 
 @Component({
   selector: 'app-add-user',
@@ -19,30 +18,19 @@ export class AddUserComponent {
   private userService: UserService = inject(UserService);
 
   roles = [
-    {
-      value: 'administrador',
-      label: 'Administrador'
-    },
-    {
-      value: 'ideam',
-      label: 'Ideam'
-    },
-    {
-      value: 'investigador',
-      label: 'Investigador'
-    },
-    {
-      value: 'cientifico',
-      label: 'Científico'
-    }
-  ]
+    { value: 'administrador', label: 'Administrador' },
+    { value: 'ideam', label: 'Ideam' },
+    { value: 'investigador', label: 'Investigador' },
+    { value: 'cientifico', label: 'Científico' },
+    { value: 'user', label: 'Usuario' } // Añadido para el valor por defecto
+  ];
 
   constructor(private fb: FormBuilder) {
     this.addUserForm = this.fb.group({
       name: ['', Validators.required],
       apellido: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      role: ['user', Validators.required]
+      role: ['user', Validators.required] // Valor por defecto que existe en roles
     });
   }
 
@@ -57,12 +45,15 @@ export class AddUserComponent {
         isFirstTime: true,
         createOn: new Date(),
         ...this.addUserForm.value,
-      }
+      };
 
       this.userService.createUser(user).subscribe(
         data => {
-          console.log(data);
+          console.log('Usuario creado', data);
           this.router.navigate(['/login']);
+        },
+        err => {
+          console.error('Error al crear usuario:', err);
         }
       );
     }
