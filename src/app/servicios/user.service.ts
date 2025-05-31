@@ -47,7 +47,7 @@ export class UserService {
     );
   }
 
-  createUser(data: any): Observable<any> {
+  createUser(data: any): Observable<any> { 
     if(!this.isBrowser) { return of(null) }
 
     console.log('Entre a llamar el servicio')

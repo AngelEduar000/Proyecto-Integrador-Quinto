@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { DropdownComponent } from '../dropdown/dropdown.component';
 import { UserService } from '../servicios/user.service';
+import { Router } from '@angular/router';
+import { FirabaseAuthService } from '../servicios/firabase-auth.service';
 
 @Component({
   selector: 'app-add-user',
@@ -12,6 +14,7 @@ import { UserService } from '../servicios/user.service';
   styleUrls: ['./add-user.component.css']
 })
 export class AddUserComponent {
+  private router = inject(Router);
   addUserForm: FormGroup;
   private userService: UserService = inject(UserService);
 
@@ -59,6 +62,7 @@ export class AddUserComponent {
       this.userService.createUser(user).subscribe(
         data => {
           console.log(data);
+          this.router.navigate(['/']);
         }
       );
     }

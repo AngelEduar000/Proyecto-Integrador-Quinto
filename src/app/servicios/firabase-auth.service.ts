@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, authState, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { from, of, switchMap } from 'rxjs';
 
@@ -12,6 +12,7 @@ export class FirabaseAuthService {
   private auth = inject(Auth);
   private firestore = inject(Firestore);
   private isBrowser = false;
+  readonly authState$ = authState(this.auth);
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId);
