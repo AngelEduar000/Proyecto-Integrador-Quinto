@@ -1,64 +1,87 @@
+/* --- 1. Variables CSS (Custom Properties) y Fuente Base --- */
 :host {
+  /* Paleta de colores y variables de diseño */
+  --font-family-main: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --color-text-light: #eaf0e9;
+  --color-text-dark: #1d2b1c;
+  --bg-dark-transparent: rgba(10, 25, 10, 0.7);
+  --bg-glass-effect: rgba(154, 170, 150, 0.892);
+  --highlight-glow: rgba(255, 255, 255, 0.5);
+  --border-color-soft: rgba(170, 200, 170, 0.25);
+  --table-header-bg: rgba(15, 14, 14, 0.4);
+  --table-row-bg: rgba(15, 14, 14, 0.6);
+  --table-row-hover-bg: rgba(179, 215, 160, 0.3);
+  --border-radius-main: 16px;
+  --shadow-main: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+  /* Estilos base del componente */
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  padding: 50px 3rem 3rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: url('/assets/imagenes/forestbg.jpg') no-repeat center center/cover;
-  color: white;
+  padding: 2rem; /* Usamos rem para escalabilidad */
+  font-family: var(--font-family-main);
+  background: url('/assets/imagenes/forestbg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: var(--color-text-light);
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Título */
+/* --- 2. Estilos Generales y Tipografía --- */
 .titulo-pagina {
   font-weight: 800;
-  font-size: 2.8rem;
-  margin-bottom: 40px;
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.75);
+  font-size: clamp(1.8rem, 5vw, 2.8rem); /* Tipografía fluida */
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
   letter-spacing: 0.05em;
   text-align: center;
 }
 
-/* Selector con fondo negro semitransparente */
+/* --- 3. Componentes de UI (Selector, Contenedores) --- */
 .selector-reporte {
-  margin-bottom: 35px;
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-  font-weight: 600;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 15px 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(167, 255, 167, 0.5);
-  color: white;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 400px;
+  background-color: var(--bg-dark-transparent);
+  backdrop-filter: blur(10px);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--border-radius-main);
+  box-shadow: var(--shadow-subtle);
+  border: 1px solid var(--border-color-soft);
+  transition: all 0.3s ease;
 }
 
 .selector-reporte label {
-  margin-bottom: 12px;
-  font-size: 1.15rem;
-  letter-spacing: 0.02em;
+  display: block;
+  margin-bottom: 0.8rem;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
-/* Select con fondo negro y texto blanco */
 .selector-reporte select {
-  padding: 12px 16px;
+  width: 100%;
+  padding: 0.8rem 1rem;
   border-radius: 10px;
-  border: none;
-  font-size: 1.1rem;
-  outline: none;
-  background-color: rgba(0, 0, 0, 0.7);
-  color: white;
-  box-shadow: inset 0 0 6px rgba(180, 190, 170, 0.3);
+  border: 1px solid var(--border-color-soft);
+  font-size: 1rem;
+  background-color: var(--bg-dark-transparent);
+  color: var(--color-text-light);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  appearance: none; /* Quitamos flecha por defecto */
+  background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23eaf0e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>');
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
 }
 
 .selector-reporte select:hover,
 .selector-reporte select:focus {
   background-color: rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 12px var(--highlight-glow);
 }
 
 .selector-reporte select option {
@@ -66,111 +89,147 @@
   color: white;
 }
 
+/* Contenedor principal de contenido (Tabla y Gráfico) */
 .contenido-reporte {
-  max-width: 900px;
   width: 100%;
   display: flex;
-  gap: 50px;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column; /* Mobile-First: apilado por defecto */
+  gap: 2rem;
 }
 
-/* Tabla con fondo verde suave apagado */
-.tabla-reporte {
-  flex: 1 1 420px;
+/* Estilo para los "paneles" de tabla y gráfico */
+.tabla-reporte,
+.grafico-reporte,
+.estado-inicial {
+  background: var(--bg-glass-effect);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-color-soft);
+  padding: 1.5rem;
+  border-radius: var(--border-radius-main);
+  box-shadow: var(--shadow-main);
+  color: var(--color-text-light);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tabla-reporte h2, .estado-inicial h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: clamp(1.3rem, 4vw, 1.7rem);
+  font-weight: 700;
+  text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+}
+
+/* --- 4. Tabla de Datos --- */
+.tabla-wrapper {
   max-height: 480px;
   overflow-y: auto;
-  background: rgba(215, 239, 209, 0.805); /* verde muy suave y oscuro */
-  padding: 25px 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(170, 200, 170, 0.3);
-  color: #e6f0db; /* verde muy claro, casi blanco */
-  font-size: 1rem;
-  font-weight: 500;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
 }
 
-.tabla-reporte h2 {
-  margin-bottom: 25px;
-  font-size: 1.9rem;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
-}
-
-/* Espacio vertical entre filas */
 .tabla-reporte table {
   width: 100%;
   border-collapse: separate;
-  border-spacing: 0 12px;
+  border-spacing: 0 0.75rem;
 }
 
 .tabla-reporte th,
 .tabla-reporte td {
-  padding: 12px 20px;
+  padding: 0.8rem 1.2rem;
   text-align: left;
+  vertical-align: middle;
 }
 
-/* Cabecera con línea y color verde apagado */
 .tabla-reporte thead th {
-  background-color: rgba(15, 14, 14, 0.230);
-  border-bottom: 2px solid rgba(0, 0, 0, 0.6);
-  color: #f9faf8;
+  background-color: var(--table-header-bg);
+  color: #fff;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
   position: sticky;
   top: 0;
   z-index: 2;
-  backdrop-filter: blur(8px);
 }
 
-/* Filas con fondo verde apagado y efecto hover más suave */
 .tabla-reporte tbody tr {
-  background: rgba(15, 14, 14, 0.4);
+  background: var(--table-row-bg);
   border-radius: 10px;
-  transition: background-color 0.3s ease;
-  cursor: default;
+  transition: all 0.25s ease-in-out;
+  overflow: hidden;
 }
 
 .tabla-reporte tbody tr:hover {
-  background: rgba(179, 215, 160, 0.5);
+  background: var(--table-row-hover-bg);
+  transform: scale(1.02);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
 }
 
-.tabla-reporte tbody td {
-  border: none;
-  color: #e6f0db;
-}
+.tabla-reporte tbody td:first-child { border-radius: 10px 0 0 10px; }
+.tabla-reporte tbody td:last-child { border-radius: 0 10px 10px 0; }
 
-.tabla-reporte tbody tr:last-child td {
-  border-bottom: none;
-}
-
-/* Contenedor del gráfico igual */
+/* --- 5. Contenedor del Gráfico y Estado Inicial --- */
 .grafico-reporte {
-  flex: 1 1 420px;
-  background: rgba(215, 239, 209, 0.805);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(170, 200, 170, 0.25);
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 480px;
+  min-height: 350px;
 }
 
-@media (max-width: 900px) {
-  .contenido-reporte {
-    flex-direction: column;
-    gap: 35px;
-  }
+.estado-inicial {
+  text-align: center;
+  padding: 3rem 1.5rem;
+}
 
+.estado-inicial p {
+  font-size: 1.1rem;
+  color: var(--color-text-light);
+  opacity: 0.9;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   ADAPTABILIDAD (RESPONSIVE DESIGN)
+   ========================================================================== */
+
+/* --- Pantallas de Tablet (768px y más) --- */
+@media (min-width: 768px) {
+  :host {
+    padding: 3rem;
+  }
+  .tabla-reporte,
+  .grafico-reporte,
+  .estado-inicial {
+    padding: 2rem;
+  }
+}
+
+/* --- Pantallas de Escritorio (1024px y más) --- */
+@media (min-width: 1024px) {
+  .contenido-reporte {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2.5rem;
+  }
   .tabla-reporte,
   .grafico-reporte {
-    flex: 1 1 100%;
-    max-height: none;
-    min-height: 350px;
+    flex: 1 1 50%;
+  }
+  .grafico-reporte {
+    min-height: 520px;
+  }
+}
+
+/* --- Pantallas muy grandes / Smart TV (1600px y más) --- */
+@media (min-width: 1600px) {
+  :host {
+    padding: 4rem 6rem;
+  }
+  .contenido-reporte,
+  .selector-reporte {
+    max-width: 1400px;
+  }
+  .titulo-pagina {
+    font-size: 3.5rem;
   }
 }

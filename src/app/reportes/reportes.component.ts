@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';  // Import necesario para *ngFor
-import { FormsModule } from '@angular/forms';     // Import necesario para ngModel
+import { CommonModule } from '@angular/common'; // Import necesario para *ngFor
+import { FormsModule } from '@angular/forms';    // Import necesario para ngModel
 import Chart from 'chart.js/auto';
 
 @Component({
@@ -28,14 +28,23 @@ export class ReportesComponent implements AfterViewInit {
   columnasTabla: string[] = [];
   datosTabla: any[] = [];
 
+  /**
+   * CORRECCIÓN 1: Se usa setTimeout para asegurar que el DOM esté completamente
+   * renderizado y el canvas tenga sus dimensiones finales antes de dibujar el gráfico.
+   * Esto soluciona el problema del gráfico que no aparece en la carga inicial.
+   */
   ngAfterViewInit() {
-    this.cargarReporte();
+    setTimeout(() => {
+      this.cargarReporte();
+    });
   }
 
   cargarReporte() {
+    // Si existe una instancia de Chart.js, se destruye para limpiar el canvas.
     if (this.chart) {
       this.chart.destroy();
     }
+
     switch (this.tipoReporteSeleccionado) {
       case 'arbolesPorConglomerado':
         this.tituloReporte = 'Cantidad de árboles por conglomerado';
@@ -86,6 +95,13 @@ export class ReportesComponent implements AfterViewInit {
         this.columnasTabla = ['total'];
         this.datosTabla = [{ total: 290 }];
         this.generarGraficoIndicador(this.datosTabla[0].total);
+
+        /**
+         * CORRECCIÓN 2: Se establece this.chart como undefined para que Angular
+         * sepa que no hay una instancia de Chart.js activa. Esto soluciona el
+         * error al cambiar del indicador a otro gráfico.
+         */
+        this.chart = undefined!;
         break;
 
       default:
@@ -101,7 +117,7 @@ export class ReportesComponent implements AfterViewInit {
       data: {
         labels: datos.map(d => d[labelX]),
         datasets: [{
-          label: labelY,
+          label: this.tituloReporte,
           data: datos.map(d => d[labelY]),
           backgroundColor: 'rgba(93, 187, 99, 0.7)',
           borderColor: 'rgba(74, 156, 68, 1)',
@@ -111,6 +127,7 @@ export class ReportesComponent implements AfterViewInit {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
           tooltip: { enabled: true }
@@ -142,6 +159,7 @@ export class ReportesComponent implements AfterViewInit {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: { position: 'right', labels: { color: 'white' } },
           tooltip: { enabled: true }
@@ -152,10 +170,13 @@ export class ReportesComponent implements AfterViewInit {
 
   private generarGraficoIndicador(total: number) {
     const ctx = this.chartCanvas.nativeElement.getContext('2d')!;
-    ctx.clearRect(0, 0, this.chartCanvas.nativeElement.width, this.chartCanvas.nativeElement.height);
-    ctx.font = 'bold 48px sans-serif';
-    ctx.fillStyle = 'white';
-    ctx.textAlign = 'center';
-    ctx.fillText(total.toString(), this.chartCanvas.nativeElement.width / 2, this.chartCanvas.nativeElement.height / 2);
+    if (ctx) {
+        ctx.clearRect(0, 0, this.chartCanvas.nativeElement.width, this.chartCanvas.nativeElement.height);
+        ctx.font = 'bold 48px sans-serif';
+        ctx.fillStyle = 'white';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(total.toString(), this.chartCanvas.nativeElement.width / 2, this.chartCanvas.nativeElement.height / 2);
+    }
   }
 }

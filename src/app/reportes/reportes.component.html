@@ -4,29 +4,36 @@
   <div class="selector-reporte">
     <label for="tipoReporte">Seleccione el tipo de reporte:</label>
     <select id="tipoReporte" [(ngModel)]="tipoReporteSeleccionado" (change)="cargarReporte()">
+      <option [ngValue]="null" disabled selected>-- Elija una opción --</option>
       <option *ngFor="let rep of tiposReporte" [value]="rep.value">{{ rep.label }}</option>
     </select>
   </div>
 
-  <div class="contenido-reporte" *ngIf="datosTabla.length > 0">
+  <div class="contenido-reporte" *ngIf="tipoReporteSeleccionado">
     <div class="tabla-reporte">
       <h2>{{ tituloReporte }}</h2>
-      <table>
-        <thead>
-          <tr>
-            <th *ngFor="let col of columnasTabla">{{ col }}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let fila of datosTabla">
-            <td *ngFor="let col of columnasTabla">{{ fila[col] }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="tabla-wrapper"> <table>
+          <thead>
+            <tr>
+              <th *ngFor="let col of columnasTabla">{{ col }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let fila of datosTabla">
+              <td *ngFor="let col of columnasTabla">{{ fila[col] }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="grafico-reporte">
       <canvas #chartCanvas></canvas>
     </div>
+  </div>
+
+  <div class="estado-inicial" *ngIf="!tipoReporteSeleccionado">
+    <h2>Bienvenido al Área de Reportes</h2>
+    <p>Por favor, seleccione un tipo de reporte del menú superior para comenzar.</p>
   </div>
 </div>
