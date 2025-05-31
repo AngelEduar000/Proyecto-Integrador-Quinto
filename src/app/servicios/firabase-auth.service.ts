@@ -2,7 +2,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Inject, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Auth, authState, signInWithEmailAndPassword, User } from '@angular/fire/auth';
 import { doc, Firestore, getDoc } from '@angular/fire/firestore';
-import { from, of, switchMap } from 'rxjs';
+import { from, map, of, switchMap } from 'rxjs';
 import { signOut } from '@angular/fire/auth';
 
 @Injectable({
@@ -13,8 +13,15 @@ export class FirebaseAuthService {
   private auth = inject(Auth);
   private firestore = inject(Firestore);
   private isBrowser = false;
-  readonly authState$ = authState(this.auth);
-
+  readonly authState$ = authState(this.auth).pipe(
+    switchMap(user => {
+      if (!user) return of(null);
+      const userDoc = doc(this.firestore, `usuarios/${user.uid}`);
+      return from(getDoc(userDoc)).pipe(
+        map(snap => (snap.exists() ? { uid: user.uid, ...snap.data() } : null))
+      );
+    })
+  );
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }

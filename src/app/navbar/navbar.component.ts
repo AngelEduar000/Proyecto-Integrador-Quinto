@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { inject, PLATFORM_ID, Inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FirebaseAuthService } from '../servicios/firabase-auth.service';
-import { onAuthStateChanged, User } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-navbar',
@@ -12,27 +10,27 @@ import { onAuthStateChanged, User } from '@angular/fire/auth';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
   isMenuOpen = false;
   isLoggedIn = false;
-  username: string = '';
+  username = '';
+  userRole = '';
 
   private authService = inject(FirebaseAuthService);
   private router = inject(Router);
-  private platformId = inject(PLATFORM_ID);
 
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      onAuthStateChanged(this.authService['auth'], (user: User | null) => {
-        if (user) {
-          this.isLoggedIn = true;
-          this.username = user.displayName || user.email || 'Usuario';
-        } else {
-          this.isLoggedIn = false;
-          this.username = '';
-        }
-      });
-    }
+  constructor() {
+    this.authService.authState$.subscribe(user => {
+      if (user) {
+        this.isLoggedIn = true;
+        this.username = user['name'] || user['email'] || 'Usuario';
+        this.userRole = user['role'] || '';
+      } else {
+        this.isLoggedIn = false;
+        this.username = '';
+        this.userRole = '';
+      }
+    });
   }
 
   toggleMenu(): void {

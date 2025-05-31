@@ -16,7 +16,7 @@ import { AgregarConglomeradoComponent } from './add-edit-conglomerados/add-edit-
 import {AddEditBrigadistasComponent} from './add-edit-brigadistas/add-edit-brigadistas.component';
 import { AddUserComponent } from "./add-user/add-user.component";
 import { AuthGuard } from './guard/auth.guard';
-
+import { AuthRoleGuard } from './guard/auth-role.guard';
 
 
 
@@ -28,14 +28,18 @@ export const routes: Routes = [
   { path: 'especies', component: EspeciesComponent },
   { path: 'reportes', component: ReportesComponent },
   { path: 'navbar', component: NavbarComponent },
-  { path: 'investigacion', component: InvestigacionComponent, canActivate: [AuthGuard] },
-  { path: 'laboratorio', component: LaboratorioComponent, canActivate: [AuthGuard] },
-  { path: 'ideam', component: IdeamComponent, canActivate: [AuthGuard] },
-  { path: 'add', component: AgregarConglomeradoComponent, canActivate: [AuthGuard] },
-  { path: 'conglomerados/edit/:id', component: AgregarConglomeradoComponent, canActivate: [AuthGuard] },
-  { path: 'add2', component: AddEditBrigadistasComponent, canActivate: [AuthGuard] }, // Para agregar
-  { path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent, canActivate: [AuthGuard] }, // Para editar
-  { path: 'add-user', component: AddUserComponent, canActivate: [AuthGuard] }
+
+  // Solo accesible por roles específicos
+  { path: 'investigacion', component: InvestigacionComponent, canActivate: [AuthRoleGuard], data: { roles: ['cientifico', 'investigador'] } },
+  { path: 'laboratorio', component: LaboratorioComponent, canActivate: [AuthRoleGuard], data: { roles: ['cientifico'] } },
+  { path: 'ideam', component: IdeamComponent, canActivate: [AuthRoleGuard], data: { roles: ['ideam'] } },
+
+  { path: 'add', component: AgregarConglomeradoComponent, canActivate: [AuthRoleGuard], data: { roles: ['ideam'] } },
+  { path: 'conglomerados/edit/:id', component: AgregarConglomeradoComponent, canActivate: [AuthRoleGuard], data: { roles: ['ideam'] } },
+  { path: 'add2', component: AddEditBrigadistasComponent, canActivate: [AuthRoleGuard], data: { roles: ['ideam'] } },
+  { path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent, canActivate: [AuthRoleGuard], data: { roles: ['ideam'] } },
+
+  { path: 'add-user', component: AddUserComponent, canActivate: [AuthRoleGuard], data: { roles: ['administrador'] } }
 ];
 
 

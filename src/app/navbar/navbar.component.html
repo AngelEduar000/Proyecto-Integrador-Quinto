@@ -15,17 +15,20 @@
       <li><a routerLink="/especies" routerLinkActive="active" (click)="closeMenu()">Especies</a></li>
       <li><a routerLink="/mapa" routerLinkActive="active" (click)="closeMenu()">Mapa</a></li>
       <li><a routerLink="/reportes" routerLinkActive="active" (click)="closeMenu()">Reportes</a></li>
-      <li *ngIf="isLoggedIn">
-        <a routerLink="/investigacion" routerLinkActive="active" (click)="closeMenu()">Investigación</a>
-      </li>
+<!-- Por rol -->
+<li *ngIf="userRole === 'cientifico'">
+  <a routerLink="/laboratorio" (click)="closeMenu()">Laboratorio</a>
+</li>
+<li *ngIf="userRole === 'cientifico' || userRole === 'investigador'">
+  <a routerLink="/investigacion" (click)="closeMenu()">Investigación</a>
+</li>
+<li *ngIf="userRole === 'ideam'">
+  <a routerLink="/ideam" (click)="closeMenu()">IDEAM</a>
+</li>
 
-      <li *ngIf="isLoggedIn">
-        <a routerLink="/laboratorio" routerLinkActive="active" (click)="closeMenu()">Laboratorio</a>
-      </li>
-      <li *ngIf="isLoggedIn">
-        <a routerLink="/ideam" routerLinkActive="active" (click)="closeMenu()">IDEAM</a>
-      </li>
-
+<li *ngIf="userRole === 'administrador'">
+  <a routerLink="/add-user" (click)="closeMenu()">Crear usuario</a>
+</li>
 
       <ng-container *ngIf="!isLoggedIn; else loggedInBlock">
         <li class="login-item">
