@@ -30,7 +30,7 @@ export class AddUserComponent {
       name: ['', Validators.required],
       apellido: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      role: ['user', Validators.required] // Valor por defecto que existe en roles
+      role: ['', Validators.required] // Valor por defecto que existe en roles
     });
   }
 
