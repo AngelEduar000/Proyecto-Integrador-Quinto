@@ -1,16 +1,17 @@
-import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Import necesario para *ngFor
-import { FormsModule } from '@angular/forms';    // Import necesario para ngModel
+import { Component, ViewChild, ElementRef, AfterViewInit, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-reportes',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, HttpClientModule],
   templateUrl: './reportes.component.html',
   styleUrls: ['./reportes.component.css']
 })
-export class ReportesComponent implements AfterViewInit {
+export class ReportesComponent implements AfterViewInit, OnInit {
 
   @ViewChild('chartCanvas') chartCanvas!: ElementRef<HTMLCanvasElement>;
   chart!: Chart;
@@ -28,88 +29,89 @@ export class ReportesComponent implements AfterViewInit {
   columnasTabla: string[] = [];
   datosTabla: any[] = [];
 
-  /**
-   * CORRECCIÓN 1: Se usa setTimeout para asegurar que el DOM esté completamente
-   * renderizado y el canvas tenga sus dimensiones finales antes de dibujar el gráfico.
-   * Esto soluciona el problema del gráfico que no aparece en la carga inicial.
-   */
+  constructor(private http: HttpClient) {}
+
+  ngOnInit() {
+    // Si quieres que cargue el reporte por defecto en Init
+    // this.cargarReporte();
+  }
+
   ngAfterViewInit() {
     setTimeout(() => {
       this.cargarReporte();
     });
   }
 
-  cargarReporte() {
-    // Si existe una instancia de Chart.js, se destruye para limpiar el canvas.
-    if (this.chart) {
-      this.chart.destroy();
-    }
-
-    switch (this.tipoReporteSeleccionado) {
-      case 'arbolesPorConglomerado':
-        this.tituloReporte = 'Cantidad de árboles por conglomerado';
-        this.columnasTabla = ['conglomerado', 'cantidad'];
-        this.datosTabla = [
-          { conglomerado: 'Conglomerado A', cantidad: 120 },
-          { conglomerado: 'Conglomerado B', cantidad: 95 },
-          { conglomerado: 'Conglomerado C', cantidad: 75 },
-        ];
-        this.generarGraficoBarra(this.datosTabla, 'conglomerado', 'cantidad');
-        break;
-
-      case 'conglomeradosPorRegion':
-        this.tituloReporte = 'Cantidad de conglomerados por región';
-        this.columnasTabla = ['region', 'cantidad'];
-        this.datosTabla = [
-          { region: 'Región Norte', cantidad: 5 },
-          { region: 'Región Centro', cantidad: 8 },
-          { region: 'Región Sur', cantidad: 3 },
-        ];
-        this.generarGraficoPie(this.datosTabla, 'region', 'cantidad');
-        break;
-
-      case 'especiesMasComunes':
-        this.tituloReporte = 'Especies más comunes en región';
-        this.columnasTabla = ['especie', 'cantidad'];
-        this.datosTabla = [
-          { especie: 'Especie X', cantidad: 45 },
-          { especie: 'Especie Y', cantidad: 30 },
-          { especie: 'Especie Z', cantidad: 20 },
-        ];
-        this.generarGraficoBarra(this.datosTabla, 'especie', 'cantidad');
-        break;
-
-      case 'conglomeradosMasEspecies':
-        this.tituloReporte = 'Conglomerados con mayor diversidad de especies';
-        this.columnasTabla = ['conglomerado', 'especies_distintas'];
-        this.datosTabla = [
-          { conglomerado: 'Conglomerado A', especies_distintas: 15 },
-          { conglomerado: 'Conglomerado B', especies_distintas: 12 },
-          { conglomerado: 'Conglomerado C', especies_distintas: 10 },
-        ];
-        this.generarGraficoBarra(this.datosTabla, 'conglomerado', 'especies_distintas');
-        break;
-
-      case 'totalArboles':
-        this.tituloReporte = 'Total de árboles registrados';
-        this.columnasTabla = ['total'];
-        this.datosTabla = [{ total: 290 }];
-        this.generarGraficoIndicador(this.datosTabla[0].total);
-
-        /**
-         * CORRECCIÓN 2: Se establece this.chart como undefined para que Angular
-         * sepa que no hay una instancia de Chart.js activa. Esto soluciona el
-         * error al cambiar del indicador a otro gráfico.
-         */
-        this.chart = undefined!;
-        break;
-
-      default:
-        this.tituloReporte = '';
-        this.columnasTabla = [];
-        this.datosTabla = [];
-    }
+cargarReporte() {
+  if (this.chart) {
+    this.chart.destroy();
   }
+
+  switch (this.tipoReporteSeleccionado) {
+    case 'arbolesPorConglomerado':
+      this.tituloReporte = 'Cantidad de árboles por conglomerado';
+      this.columnasTabla = ['conglomerado', 'cantidad'];
+      this.http.get<any[]>('https://proyecto-integrador-quinto-backend.vercel.app/api/reporte_conglomerado').subscribe(data => {
+        this.datosTabla = data.map(d => ({
+          conglomerado: d.identificador,
+          cantidad: +d.cantidad_arboles
+        }));
+        this.generarGraficoBarra(this.datosTabla, 'conglomerado', 'cantidad');
+      });
+      break;
+
+    case 'conglomeradosPorRegion':
+      this.tituloReporte = 'Cantidad de conglomerados por región';
+      this.columnasTabla = ['region', 'cantidad'];
+      this.http.get<any[]>('https://proyecto-integrador-quinto-backend.vercel.app/api/reporte_region_conglomerados').subscribe(data => {
+        this.datosTabla = data.map(d => ({
+          region: d.nombre_region,
+          cantidad: +d.cantidad_conglomerados
+        }));
+        this.generarGraficoPie(this.datosTabla, 'region', 'cantidad');
+      });
+      break;
+
+    case 'especiesMasComunes':
+      this.tituloReporte = 'Especies más comunes en región';
+      this.columnasTabla = ['especie', 'cantidad'];
+      this.http.get<any[]>('https://proyecto-integrador-quinto-backend.vercel.app/api/reporte_especies_mas_arboles').subscribe(data => {
+        this.datosTabla = data.map(d => ({
+          especie: d.nombre_comun,
+          cantidad: +d.cantidad_arboles
+        }));
+        this.generarGraficoBarra(this.datosTabla, 'especie', 'cantidad');
+      });
+      break;
+
+    case 'conglomeradosMasEspecies':
+      this.tituloReporte = 'Conglomerados con mayor diversidad de especies';
+      this.columnasTabla = ['conglomerado', 'especies_distintas'];
+      this.http.get<any[]>('https://proyecto-integrador-quinto-backend.vercel.app/api/reporte_conglomerados_mas_especies').subscribe(data => {
+        this.datosTabla = data.map(d => ({
+          conglomerado: d.identificador,
+          especies_distintas: +d.cantidad_especies
+        }));
+        this.generarGraficoBarra(this.datosTabla, 'conglomerado', 'especies_distintas');
+      });
+      break;
+
+    case 'totalArboles':
+      this.tituloReporte = 'Total de árboles registrados';
+      this.columnasTabla = ['total'];
+      this.http.get<{total_arboles:number}>('https://proyecto-integrador-quinto-backend.vercel.app/api/reporte_total_arboles').subscribe(data => {
+        this.datosTabla = [{ total: data.total_arboles }];
+        this.generarGraficoIndicador(data.total_arboles);
+        this.chart = undefined!;
+      });
+      break;
+
+    default:
+      this.tituloReporte = '';
+      this.columnasTabla = [];
+      this.datosTabla = [];
+  }
+}
 
   private generarGraficoBarra(datos: any[], labelX: string, labelY: string) {
     this.chart = new Chart(this.chartCanvas.nativeElement, {
@@ -147,11 +149,12 @@ export class ReportesComponent implements AfterViewInit {
         datasets: [{
           data: datos.map(d => d[labelY]),
           backgroundColor: [
-            'rgba(93, 187, 99, 0.7)',
-            'rgba(74, 156, 68, 0.7)',
-            'rgba(56, 118, 51, 0.7)',
-            'rgba(37, 79, 35, 0.7)',
-            'rgba(18, 41, 19, 0.7)'
+            'rgba(93, 187, 99, 0.7)',  // verde claro
+            'rgba(74, 156, 68, 0.7)',  // verde medio
+            'rgba(56, 118, 51, 0.7)',  // verde oscuro
+            'rgba(37, 79, 35, 0.7)',   // verde bosque
+            'rgba(18, 41, 19, 0.7)',   // verde muy oscuro
+            'rgba(134, 194, 133, 0.7)' // verde suave
           ],
           borderColor: 'rgba(255,255,255,0.8)',
           borderWidth: 1,
