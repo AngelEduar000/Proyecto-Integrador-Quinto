@@ -1,135 +1,105 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-interface Muestra {
-  codigo_referencia: string;
-  conglomerado_nombre: string;
-  subparcela_nombre: string;
-  distancia_x: number;
-  distancia_y: number;
-  tipo_muestra: string;
-  nombre_local?: string;
-  especie_id?: number;
-}
-
-interface Especie {
-  id: number;
-  nombre_cientifico: string;
-  usos?: string;
-  observaciones?: string;
-}
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { LaboratorioService } from '../servicios/laboratorio.service';
+import { DropdownComponent } from '../dropdown/dropdown.component';
+import { EspecieId } from '../interfaces/especie';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Muestra } from '../interfaces/muestra';
 
 @Component({
   selector: 'app-laboratorio',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, DropdownComponent],
   templateUrl: './laboratorio.component.html',
   styleUrls: ['./laboratorio.component.css']
 })
-export class LaboratorioComponent {
-  codigoBusqueda: string = '';
-  muestra: Muestra | null = null;
+export class LaboratorioComponent implements OnInit {
+  especieId: EspecieId[] = [];
+  public route = inject(ActivatedRoute);
+  public router = inject(Router);
+  public laboratorioService = inject(LaboratorioService);
+  private fb = inject(FormBuilder);
+  form!: FormGroup;
+  especie: { value: number, label: string }[] = [];
+  codigoBusqueda: string = ''; // variable del input
+  muestraFiltrada: Muestra | null = null; // resultado de búsqueda
+  muestras: Muestra[] = [];
 
-  especies: Especie[] = [
-    { id: 1, nombre_cientifico: 'Pinus sylvestris', usos: 'Construcción', observaciones: 'Conífera común' },
-    { id: 2, nombre_cientifico: 'Quercus robur', usos: 'Madera', observaciones: '' }
-  ];
+  ngOnInit(): void {
+    // Cargar muestras
+    this.laboratorioService.obtenerMuestras().subscribe({
+      next: (res) => {
+        this.muestras = res;
+      },
+      error: (err) => console.error('Error al obtener muestras:', err)
+    });
 
-  especieSeleccionadaId: number | null = null;
-  especieEdit: Especie = { id: 0, nombre_cientifico: '', usos: '', observaciones: '' };
+    // Cargar especies
+    this.laboratorioService.obtenerEspecie().subscribe({
+      next: (res) => {
+        this.especie = res.map(e => ({
+          label: e.nombre_comun,
+          value: e.id_especie
+        }));
+      },
+      error: (err) => console.error('Error al obtener especies:', err)
+    });
 
-  creandoNuevaEspecie: boolean = false;
-  nuevaEspecie: Especie = { id: 0, nombre_cientifico: '', usos: '', observaciones: '' };
+    // Inicializar formulario vacío (evita errores si no hay muestra filtrada)
+    this.form = this.fb.group({
+      id_especie: [null, Validators.required]
+    });
+  }
 
-  muestrasSimuladas: Muestra[] = [
-    {
-      codigo_referencia: 'C1-S1-20230501-001',
-      conglomerado_nombre: 'Conglomerado A',
-      subparcela_nombre: 'Subparcela 1',
-      distancia_x: 5.2,
-      distancia_y: -3.1,
-      tipo_muestra: 'hoja',
-      nombre_local: 'Pino',
-      especie_id: 1
-    }
-  ];
+  buscarMuestra(): void {
+    const cod = this.codigoBusqueda.trim().toLowerCase();
+    this.muestraFiltrada = this.muestras.find(m =>
+      m.identificador_muestra.toLowerCase() === cod
+    ) || null;
 
-  buscarMuestra() {
-    if (!this.codigoBusqueda.trim()) {
-      alert('Por favor ingrese un código de referencia para buscar.');
-      return;
-    }
-
-    const encontrada = this.muestrasSimuladas.find(
-      m => m.codigo_referencia.toLowerCase() === this.codigoBusqueda.trim().toLowerCase()
-    );
-
-    if (!encontrada) {
-      alert('No se encontró ninguna muestra con ese código.');
-      this.muestra = null;
-      this.especieSeleccionadaId = null;
-      this.creandoNuevaEspecie = false;
-      return;
-    }
-
-    this.muestra = encontrada;
-    this.especieSeleccionadaId = encontrada.especie_id || null;
-    this.creandoNuevaEspecie = false;
-
-    if (this.especieSeleccionadaId) {
-      this.cargarDatosEspecie();
+    if (this.muestraFiltrada) {
+      // Cargar especie actual en el formulario
+      this.form.patchValue({
+        id_especie: this.muestraFiltrada.id_especie
+      });
     } else {
-      this.especieEdit = { id: 0, nombre_cientifico: '', usos: '', observaciones: '' };
+      // Si no encuentra muestra, resetear el formulario
+      this.form.reset();
     }
   }
 
-  cargarDatosEspecie() {
-    if (!this.especieSeleccionadaId) return;
-
-    const esp = this.especies.find(e => e.id === this.especieSeleccionadaId);
-    if (esp) {
-      this.especieEdit = { ...esp };
-    }
+  obtenerNombreComun(id_especie: number): string {
+    const especie = this.especie.find(e => e.value === id_especie);
+    return especie ? especie.label : 'Desconocida';
   }
 
-  guardarEspecie() {
-    if (!this.especieEdit.nombre_cientifico.trim()) {
-      alert('El nombre científico es obligatorio.');
+  guardarCambios(): void {
+    if (this.form.invalid || !this.muestraFiltrada) {
+      alert('Por favor, selecciona una muestra válida y una especie.');
       return;
     }
 
-    const index = this.especies.findIndex(e => e.id === this.especieEdit.id);
-    if (index >= 0) {
-      this.especies[index] = { ...this.especieEdit };
-      alert('Especie actualizada correctamente.');
-    }
+    const nuevaEspecieId = this.form.get('id_especie')?.value;
+
+    this.laboratorioService.actualizarMuestra(this.muestraFiltrada.id_muestra, {
+      id_especie: nuevaEspecieId
+    }).subscribe({
+      next: (res) => {
+        alert(`Especie actualizada correctamente para la muestra: ${res.identificador_muestra}`);
+        // Actualizar localmente la especie de la muestra filtrada
+        if (this.muestraFiltrada) {
+          this.muestraFiltrada.id_especie = nuevaEspecieId;
+        }
+      },
+      error: (err) => {
+        console.error('Error al actualizar muestra:', err);
+        alert('Error al actualizar la especie, intenta de nuevo.');
+      }
+    });
   }
 
-  mostrarFormularioNuevaEspecie() {
-    this.creandoNuevaEspecie = true;
-    this.nuevaEspecie = { id: 0, nombre_cientifico: '', usos: '', observaciones: '' };
-  }
-
-  guardarNuevaEspecie() {
-    if (!this.nuevaEspecie.nombre_cientifico.trim()) {
-      alert('El nombre científico es obligatorio.');
-      return;
-    }
-
-    const nuevoId = this.especies.length > 0 ? Math.max(...this.especies.map(e => e.id)) + 1 : 1;
-    this.nuevaEspecie.id = nuevoId;
-
-    this.especies.push({ ...this.nuevaEspecie });
-    alert('Nueva especie creada correctamente.');
-
-    this.creandoNuevaEspecie = false;
-
-    this.especieSeleccionadaId = nuevoId;
-    this.cargarDatosEspecie();
-  }
-
-  cancelarCrearEspecie() {
-    this.creandoNuevaEspecie = false;
+  onEspecieSeleccionada(nuevaEspecieId: number): void {
+    this.form.get('id_especie')?.setValue(nuevaEspecieId);
   }
 }
