@@ -15,6 +15,7 @@ import { Muestra } from '../interfaces/muestra';
   styleUrls: ['./laboratorio.component.css']
 })
 export class LaboratorioComponent implements OnInit {
+
   especieId: EspecieId[] = [];
   public route = inject(ActivatedRoute);
   public router = inject(Router);
@@ -103,13 +104,7 @@ export class LaboratorioComponent implements OnInit {
     this.form.get('id_especie')?.setValue(nuevaEspecieId);
   }
 
-  abrirModalAgregarEspecie(): void {
-  // Puedes abrir un modal o por ahora usar un prompt simple
-  const nombre = prompt('Ingrese el nombre de la nueva especie:');
-  if (nombre) {
-    // Aquí podrías llamar a un servicio que guarde la especie en el backend
-    console.log('Nueva especie a registrar:', nombre);
-    // Luego actualizas la lista `especie` si es necesario
-  }
+abrirModalAgregarEspecie() {
+  this.router.navigate(['/add-especie']);  // Reemplaza con tu ruta real
 }
 }

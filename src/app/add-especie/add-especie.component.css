@@ -21,9 +21,9 @@ h2 {
 }
 
 form {
-  max-width: 400px;
+  max-width: 3000; /* Más ancho que antes */
   margin: 0 auto;
-  padding: 2rem 1.5rem;
+  padding: 2rem 3rem; /* Más espacio lateral */
   background: rgba(255, 255, 255, 0.15);
   border-radius: 16px;
   box-shadow:

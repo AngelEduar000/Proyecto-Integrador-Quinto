@@ -1,0 +1,15 @@
+<div style="background: rgba(0,0,0,0.6); padding: 1rem; border-radius: 10px; color: white; max-width: 400px; margin: 2rem auto;">
+  <h3>Gestor de Cookies</h3>
+
+  <label>Nombre de la cookie:</label>
+  <input type="text" [(ngModel)]="cookieName" placeholder="Ejemplo: token" />
+
+  <label>Valor de la cookie:</label>
+  <input type="text" [(ngModel)]="cookieValue" placeholder="Ejemplo: abc123" />
+
+  <button (click)="setCookie()" [disabled]="!cookieName || !cookieValue">Guardar Cookie</button>
+  <button (click)="getCookie()" [disabled]="!cookieName">Leer Cookie</button>
+  <button (click)="deleteCookie()" [disabled]="!cookieName">Eliminar Cookie</button>
+
+  <p style="margin-top: 1rem;">{{ cookieInfo }}</p>
+</div>
