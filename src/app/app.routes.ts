@@ -18,7 +18,7 @@ import { AddUserComponent } from "./add-user/add-user.component";
 import { AuthGuard } from './guard/auth.guard';
 import { AuthRoleGuard } from './guard/auth-role.guard';
 import { AddEspecieComponent } from "./add-especie/add-especie.component";
-// import { CookieManagerComponent } from "./cookie-manager/cookie-manager.component";
+import { CookieManagerComponent } from "./cookie-manager/cookie-manager.component";
 
 
 
@@ -30,7 +30,7 @@ export const routes: Routes = [
   { path: 'especies', component: EspeciesComponent },
   { path: 'reportes', component: ReportesComponent },
   { path: 'navbar', component: NavbarComponent },
-  // { path: 'cookies', component: CookieManagerComponent },
+  { path: 'cookies', component: CookieManagerComponent },
 
   // Solo accesible por roles específicos
   { path: 'investigacion', component: InvestigacionComponent, canActivate: [AuthRoleGuard], data: { roles: ['cientifico', 'investigador'] } },

@@ -1,38 +1,50 @@
-import { Component } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-import { FormsModule } from '@angular/forms';
-
-@Component({
-  selector: 'app-cookie-manager',
-  templateUrl: './cookie-manager.component.html',
-  styleUrls: ['./cookie-manager.component.css'],
-  imports:[FormsModule]
-})
 export class CookieManagerComponent {
-  cookieName: string = '';
-  cookieValue: string = '';
-  cookieInfo: string = '';
+  nombre: string = '';
+  valor: string = '';
+  dias: number = 1;
+  resultado: string = '';
 
-  constructor(private cookieService: CookieService) {}
+  constructor() {}
 
-  setCookie() {
-    if(this.cookieName && this.cookieValue) {
-      this.cookieService.set(this.cookieName, this.cookieValue, 7); // 7 días de duración
-      this.cookieInfo = `Cookie "${this.cookieName}" guardada con valor "${this.cookieValue}".`;
-    }
+  setCookie(nombre: string, valor: string, dias: number): void {
+    const fechaExp = new Date();
+    fechaExp.setTime(fechaExp.getTime() + dias * 24 * 60 * 60 * 1000);
+    const expira = 'expires=' + fechaExp.toUTCString();
+    document.cookie = `${nombre}=${valor};${expira};path=/`;
+    this.resultado = `Cookie "${nombre}" guardada`;
   }
 
-  getCookie() {
-    if(this.cookieName) {
-      const value = this.cookieService.get(this.cookieName);
-      this.cookieInfo = value ? `Cookie "${this.cookieName}" tiene valor: "${value}".` : `Cookie "${this.cookieName}" no encontrada.`;
+  getCookie(nombre: string): string | null {
+    const nombreEQ = nombre + '=';
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      let c = cookies[i].trim();
+      if (c.indexOf(nombreEQ) === 0) {
+        return c.substring(nombreEQ.length);
+      }
     }
+    return null;
   }
 
-  deleteCookie() {
-    if(this.cookieName) {
-      this.cookieService.delete(this.cookieName);
-      this.cookieInfo = `Cookie "${this.cookieName}" eliminada.`;
-    }
+  deleteCookie(nombre: string): void {
+    this.setCookie(nombre, '', -1);
+    this.resultado = `Cookie "${nombre}" eliminada`;
+  }
+
+  checkCookie(nombre: string): boolean {
+    return this.getCookie(nombre) !== null;
+  }
+
+  mostrarCookie(nombre: string): void {
+    const valor = this.getCookie(nombre);
+    this.resultado = valor
+      ? `Valor de "${nombre}": ${valor}`
+      : `La cookie "${nombre}" no existe`;
+  }
+
+  check(nombre: string): void {
+    this.resultado = this.checkCookie(nombre)
+      ? `La cookie "${nombre}" existe`
+      : `La cookie "${nombre}" no existe`;
   }
 }

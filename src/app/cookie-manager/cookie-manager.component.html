@@ -1,15 +1,23 @@
-<div style="background: rgba(0,0,0,0.6); padding: 1rem; border-radius: 10px; color: white; max-width: 400px; margin: 2rem auto;">
-  <h3>Gestor de Cookies</h3>
+<div class="cookie-manager">
+  <h2>Gestor de Cookies</h2>
 
-  <label>Nombre de la cookie:</label>
-  <input type="text" [(ngModel)]="cookieName" placeholder="Ejemplo: token" />
+  <label for="nombre">Nombre de la cookie:</label>
+  <input id="nombre" [(ngModel)]="nombre" placeholder="Ej: token" />
 
-  <label>Valor de la cookie:</label>
-  <input type="text" [(ngModel)]="cookieValue" placeholder="Ejemplo: abc123" />
+  <label for="valor">Valor:</label>
+  <input id="valor" [(ngModel)]="valor" placeholder="Ej: abc123" />
 
-  <button (click)="setCookie()" [disabled]="!cookieName || !cookieValue">Guardar Cookie</button>
-  <button (click)="getCookie()" [disabled]="!cookieName">Leer Cookie</button>
-  <button (click)="deleteCookie()" [disabled]="!cookieName">Eliminar Cookie</button>
+  <label for="dias">Días de expiración:</label>
+  <input id="dias" type="number" [(ngModel)]="dias" placeholder="Ej: 7" />
 
-  <p style="margin-top: 1rem;">{{ cookieInfo }}</p>
+  <div class="botones">
+    <button (click)="setCookie(nombre, valor, dias)">Guardar cookie</button>
+    <button (click)="mostrarCookie(nombre)">Mostrar cookie</button>
+    <button (click)="deleteCookie(nombre)">Eliminar cookie</button>
+    <button (click)="check(nombre)">¿Existe?</button>
+  </div>
+
+  <div *ngIf="resultado">
+    <p><strong>Resultado:</strong> {{ resultado }}</p>
+  </div>
 </div>
