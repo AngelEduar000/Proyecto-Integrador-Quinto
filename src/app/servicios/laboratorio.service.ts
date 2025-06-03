@@ -22,7 +22,7 @@ export class LaboratorioService {
     return this.http.get<EspecieId[]>(this.apiUrlEspecie);
   }
 
-  actualizarMuestra(id: number, data: Partial<Muestra>): Observable<any> {
-  return this.http.put(`${this.apiUrlMuestra}/${id}`, data);
+actualizarMuestra(id: number, data: Partial<Muestra>): Observable<any> {
+  return this.http.put(`${this.apiUrlMuestra}/${id}/especie`, data);
 }
 }

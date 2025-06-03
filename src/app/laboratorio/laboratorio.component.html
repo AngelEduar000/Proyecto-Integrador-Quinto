@@ -1,3 +1,15 @@
+<h1 class="titulo-pagina">Análisis de Muestras - Laboratorio</h1>
+
+<div class="busqueda">
+  <input
+    type="text"
+    [(ngModel)]="codigoBusqueda"
+    placeholder="Ingrese código de referencia"
+  />
+  <button (click)="buscarMuestra()">Buscar</button>
+</div>
+
+<!-- Si se encontró una muestra -->
 <div *ngIf="muestraFiltrada" class="card">
   <p><strong>Conglomerado:</strong> {{ muestraFiltrada.conglomerado }}</p>
   <p><strong>Subparcela:</strong> {{ muestraFiltrada.numero_subparcela }}</p>
@@ -27,8 +39,11 @@
     width="200"
   />
 
-
-  
-    <!-- Botón Guardar -->
+  <!-- Botón Guardar Cambios -->
   <button (click)="guardarCambios()" [disabled]="form?.invalid">Guardar Cambios</button>
+</div>
+
+<!-- Si no se encuentra ninguna -->
+<div *ngIf="codigoBusqueda && !muestraFiltrada">
+  <p>No se encontró ninguna muestra con ese identificador.</p>
 </div>
