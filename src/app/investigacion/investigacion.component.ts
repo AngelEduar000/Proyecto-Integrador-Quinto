@@ -1,85 +1,111 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
-interface Conglomerado {
-  id: string;
-  nombre: string;
-}
-
-interface Subparcela {
-  id: string;
-  nombre: string;
-  id_conglomerado: string;
-}
-
-interface Especie {
-  id: string;
-  nombre: string;
-}
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { investigacionService } from '../servicios/investigacion.service';
+import { ConglomeradoConSubparcelas } from '../interfaces/conglomerado_subparcela';
+import { EspecieId } from '../interfaces/especie';
+import { DropdownComponent } from '../dropdown/dropdown.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-investigacion',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, DropdownComponent],
   templateUrl: './investigacion.component.html',
   styleUrls: ['./investigacion.component.css']
 })
-export class InvestigacionComponent {
-  conglomerados: Conglomerado[] = [
-    { id: 'c1', nombre: 'Conglomerado A' },
-    { id: 'c2', nombre: 'Conglomerado B' }
-  ];
+export class InvestigacionComponent implements OnInit {
 
-  subparcelas: Subparcela[] = [
-    { id: 's1', nombre: 'Subparcela 1', id_conglomerado: 'c1' },
-    { id: 's2', nombre: 'Subparcela 2', id_conglomerado: 'c1' },
-    { id: 's3', nombre: 'Subparcela 3', id_conglomerado: 'c2' }
-  ];
+  especieId: EspecieId[] = [];
 
-  especies: Especie[] = [
-    { id: 'e1', nombre: 'Especie X' },
-    { id: 'e2', nombre: 'Especie Y' },
-    { id: 'e3', nombre: 'Especie Z' }
-  ];
+  public route = inject(ActivatedRoute);
+  public router = inject(Router);
+  public investigacionService = inject(investigacionService);
+  private fb = inject(FormBuilder);
 
-  subparcelasFiltradas: Subparcela[] = [];
+  conglomeradosConSubparcelas: ConglomeradoConSubparcelas[] = [];
 
-  // Declaración correcta para evitar error TS2339
-  muestrasGuardadas: any[] = [];
+  conglomerado: { value: number, label: string }[] = [];
+  subparcelasFiltradas: { value: number, label: string }[] = [];
+  especie: { value: number, label: string }[] = [];
 
-  nuevaMuestra = {
-    id_conglomerado: '',
-    id_subparcela: '',
-    distancia_x: null as number | null,
-    distancia_y: null as number | null,
-    especie: '',  // Opcional
-    altura_mt: null as number | null,
-    diametro_cm: null as number | null,
-    observaciones: '',
-    tipo_muestra: '',
-    fecha_recoleccion: this.fechaHoy(),
-    nombre_local: '',
-    imagen: null as File | null
-  };
+  form: FormGroup = this.fb.group({
+    id_conglomerado: [null, Validators.required],
+    id_subparcela: [null, Validators.required],
+    id_especie: [''],
+    altura_mt: [null, Validators.required],
+    diametro_cm: [null, Validators.required],
+    coordenadas: ['', [
+      Validators.required,
+      Validators.pattern(/^[-+]?([1-8]?\d(\.\d+)?|90(\.0+)?),\s*[-+]?(180(\.0+)?|((1[0-7]\d)|([1-9]?\d))(\.\d+)?)$/)
+    ]],
+    identificador: [''],
+    tipo: [''],
+    fecha_recoleccion: [''],
+    observaciones: [''],
+    imagen: [null]
+  });
 
-  cargarSubparcelas() {
-    if (this.nuevaMuestra.id_conglomerado) {
-      this.subparcelasFiltradas = this.subparcelas.filter(
-        sp => sp.id_conglomerado === this.nuevaMuestra.id_conglomerado
-      );
-      this.nuevaMuestra.id_subparcela = '';
-    } else {
-      this.subparcelasFiltradas = [];
-      this.nuevaMuestra.id_subparcela = '';
+  ngOnInit(): void {
+  // Cargas normales
+  this.investigacionService.obtenerConglomerados().subscribe({
+    next: (data) => {
+      this.conglomeradosConSubparcelas = data;
+      this.conglomerado = data.map(m => ({
+        value: m.id_conglomerado,
+        label: m.identificador
+      }));
     }
+  });
+
+  this.investigacionService.obtenerEspecie().subscribe({
+    next: (data) => {
+      this.especieId = data;
+      this.especie = data.map(m => ({
+        value: m.id_especie || null,
+        label: m.nombre_comun
+      }));
+    }
+  });
+
+  // ✅ Observa cambios en 'identificador' y ajusta validadores
+  this.form.get('identificador')?.valueChanges.subscribe((valor) => {
+    const requiereValidadores = valor && valor.trim() !== '';
+
+    const tipo = this.form.get('tipo');
+    const fecha = this.form.get('fecha_recoleccion');
+
+    if (requiereValidadores) {
+      tipo?.setValidators([Validators.required]);
+      fecha?.setValidators([Validators.required]);
+    } else {
+      tipo?.clearValidators();
+      fecha?.clearValidators();
+    }
+
+    tipo?.updateValueAndValidity();
+    fecha?.updateValueAndValidity();
+  });
+}
+
+  onConglomeradoSeleccionado(id: number) {
+    this.form.get('id_conglomerado')?.setValue(id);
+
+    const seleccionado = this.conglomeradosConSubparcelas.find(c => c.id_conglomerado === id);
+    this.subparcelasFiltradas = (seleccionado?.subparcelas || []).map(s => ({
+      value: s.id_subparcela,
+      label: s.numero_subparcela.toString()
+    }));
+
+    this.form.get('id_subparcela')?.reset();
   }
 
-  onImagenSeleccionada(event: any) {
-    const file = event.target.files && event.target.files[0];
-    if (file) {
-      this.nuevaMuestra.imagen = file;
-    }
+  onSubparcelaSeleccionada(id: number) {
+    this.form.get('id_subparcela')?.setValue(id);
+  }
+
+  onEspecieSeleccionada(id: number) {
+    this.form.get('id_especie')?.setValue(id);
   }
 
   fechaHoy(): string {
@@ -90,57 +116,56 @@ export class InvestigacionComponent {
     return `${yyyy}-${mm}-${dd}`;
   }
 
-  guardarMuestra() {
-    if (!this.nuevaMuestra.id_conglomerado) {
-      alert('Debe seleccionar un conglomerado.');
-      return;
-    }
-    if (!this.nuevaMuestra.id_subparcela) {
-      alert('Debe seleccionar una subparcela.');
-      return;
-    }
-    if (this.nuevaMuestra.distancia_x === null || this.nuevaMuestra.distancia_y === null) {
-      alert('Debe ingresar las distancias desde el centro de la subparcela.');
-      return;
-    }
-    if (this.nuevaMuestra.altura_mt === null || this.nuevaMuestra.altura_mt < 0) {
-      alert('Debe ingresar una altura válida.');
-      return;
-    }
-    if (this.nuevaMuestra.diametro_cm === null || this.nuevaMuestra.diametro_cm < 0) {
-      alert('Debe ingresar un diámetro válido.');
-      return;
-    }
-    if (!this.nuevaMuestra.tipo_muestra) {
-      alert('Debe seleccionar un tipo de muestra.');
-      return;
-    }
-    if (!this.nuevaMuestra.fecha_recoleccion) {
-      alert('Debe ingresar la fecha de recolección.');
-      return;
-    }
+guardarMuestra() {
+  if (this.form.invalid) {
+    this.form.markAllAsTouched();
+    alert('Por favor, complete todos los campos obligatorios.');
+    return;
+  }
 
-    // Guarda la muestra en el array local
-    this.muestrasGuardadas.push({ ...this.nuevaMuestra });
+  const formData = new FormData();
+  formData.append('id_conglomerado', String(this.form.get('id_conglomerado')?.value || ''));
+  formData.append('id_subparcela', String(this.form.get('id_subparcela')?.value || ''));
+  const idEspecieValue = this.form.get('id_especie')?.value;
+  if (idEspecieValue !== null && idEspecieValue !== undefined && idEspecieValue !== '') {
+    formData.append('id_especie', String(idEspecieValue));
+  }
+  formData.append('altura_mt', String(this.form.get('altura_mt')?.value || ''));
+  formData.append('diametro_cm', String(this.form.get('diametro_cm')?.value || ''));
+  formData.append('coordenadas', this.form.get('coordenadas')?.value || '');
+  formData.append('identificador', String(this.form.get('identificador')?.value || ''));
+  formData.append('tipo', this.form.get('tipo')?.value || '');
+  formData.append('fecha_recoleccion', this.form.get('fecha_recoleccion')?.value || '');
+  formData.append('observaciones', this.form.get('observaciones')?.value || '');
 
-    alert('Muestra registrada correctamente.');
+  const imagen = this.form.get('imagen')?.value;
+  if (imagen) {
+    formData.append('imagen', imagen);
+  }
 
-    // Limpiar el formulario y resetear valores
-    this.nuevaMuestra = {
-      id_conglomerado: '',
-      id_subparcela: '',
-      distancia_x: null,
-      distancia_y: null,
-      especie: '',
-      altura_mt: null,
-      diametro_cm: null,
-      observaciones: '',
-      tipo_muestra: '',
-      fecha_recoleccion: this.fechaHoy(),
-      nombre_local: '',
-      imagen: null
-    };
+  // Debug: listar contenido del formData
+  for (const pair of formData.entries()) {
+    console.log(pair[0]+ ': ' + pair[1]);
+  }
 
-    this.subparcelasFiltradas = [];
+  this.investigacionService.guardarMuestra(formData).subscribe({
+    next: () => {
+      alert('Muestra guardada con éxito.');
+      this.form.reset();
+      this.subparcelasFiltradas = [];
+    },
+    error: (err) => {
+      console.error(err);
+      alert('Error al guardar la muestra.');
+    }
+  });
+}
+
+
+  onArchivoSeleccionado(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.form.get('imagen')?.setValue(input.files[0]);
+    }
   }
 }

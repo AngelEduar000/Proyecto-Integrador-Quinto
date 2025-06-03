@@ -70,7 +70,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.firebaseAuth.login(username, password).pipe(take(1)).subscribe(
       data => {
-        console.log('Login exitoso', data);
         this.router.navigate(['/']);
       },
       err => {

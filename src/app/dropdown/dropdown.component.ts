@@ -57,7 +57,7 @@ export class DropdownComponent implements OnChanges {
 
   chooseOption(option: any) {
     this.selectOption = option;
-    this.select.emit(option[this.valueOption]);
+    this.select.emit(option ? option[this.valueOption] : null);
     this.isOpen = false;
     this.searchTerm = '';
     this.filteredOptions = this.options || [];
