@@ -87,20 +87,23 @@ img {
 }
 
 .btn {
+  width: 28%;
   display: inline-block;
   padding: 15px 26px;
-  font-size: 1.8rem; /* Tamaño de fuente aumentado */
-  background-color: #bfdab9;
-  color: white;
+  font-size: 1.5rem; /* Tamaño de fuente aumentado */
+  border: 1px solid hsla(0, 0%, 87%, 0.2);
+  background-color: transparent;
+  backdrop-filter: blur(5px); /* Añade un efecto de desenfoque al fondo */
   text-decoration: none;
   border-radius: 5px;
   transition: background-color 0.3s ease;
   text-align: center;
+  color: white;
 }
 
 .btn:hover {
-  background-color: #859e7f; /* Verde más oscuro al pasar el mouse */
-  color: #2E5339;
+  background-color: rgba(222, 222, 222, 0.282); /* Verde más oscuro al pasar el mouse */
+  color: white;
 }
 
 /* --- Sección de Información --- */
@@ -300,7 +303,7 @@ img {
 
   .btn {
     padding: 10px 16px; /* Padding ajustado para tablet */
-    font-size: 1.2rem; /* Tamaño de fuente ajustado para tablet */
+    font-size: 1rem; /* Tamaño de fuente ajustado para tablet */
   }
 
   .info h2 {
@@ -332,7 +335,7 @@ img {
 
   .btn {
     padding: 12px 24px; /* Padding ajustado para escritorio */
-    font-size: 1.5rem; /* Tamaño de fuente ajustado para escritorio */
+    font-size: 1.2rem; /* Tamaño de fuente ajustado para escritorio */
   }
 
   .intro-img {
