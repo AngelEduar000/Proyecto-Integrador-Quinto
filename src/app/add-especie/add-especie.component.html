@@ -1,0 +1,31 @@
+<h2>Agregar Nueva Especie</h2>
+
+<form (ngSubmit)="agregarEspecie()" #especieForm="ngForm" enctype="multipart/form-data">
+
+  <div>
+    <label>Nombre común</label>
+    <input type="text" name="nombre_comun" [(ngModel)]="nuevaEspecie.nombre_comun" required />
+  </div>
+
+  <div>
+    <label>Nombre científico</label>
+    <input type="text" name="nombre_cientifico" [(ngModel)]="nuevaEspecie.nombre_cientifico" required />
+  </div>
+
+  <div>
+    <label>Familia</label>
+    <input type="text" name="familia" [(ngModel)]="nuevaEspecie.familia" required />
+  </div>
+
+  <div>
+    <label>Uso</label>
+    <input type="text" name="uso" [(ngModel)]="nuevaEspecie.uso" required />
+  </div>
+
+  <div>
+    <label>Imagen de la especie</label>
+    <input type="file" (change)="onFileChange($event)" accept="image/*" required />
+  </div>
+
+  <button type="submit" [disabled]="!especieForm.form.valid">Guardar Especie</button>
+</form>

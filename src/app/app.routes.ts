@@ -17,6 +17,7 @@ import {AddEditBrigadistasComponent} from './add-edit-brigadistas/add-edit-briga
 import { AddUserComponent } from "./add-user/add-user.component";
 import { AuthGuard } from './guard/auth.guard';
 import { AuthRoleGuard } from './guard/auth-role.guard';
+import { AddEspecieComponent } from "./add-especie/add-especie.component";
 
 
 
@@ -32,6 +33,7 @@ export const routes: Routes = [
   // Solo accesible por roles específicos
   { path: 'investigacion', component: InvestigacionComponent, canActivate: [AuthRoleGuard], data: { roles: ['cientifico', 'investigador'] } },
   { path: 'laboratorio', component: LaboratorioComponent, canActivate: [AuthRoleGuard], data: { roles: ['cientifico'] } },
+  { path: 'add-especie', component: AddEspecieComponent, canActivate: [AuthRoleGuard], data: { roles: ['cientifico'] } },
   { path: 'ideam', component: IdeamComponent, canActivate: [AuthRoleGuard], data: { roles: ['ideam'] } },
 
   { path: 'add', component: AgregarConglomeradoComponent, canActivate: [AuthRoleGuard], data: { roles: ['ideam'] } },

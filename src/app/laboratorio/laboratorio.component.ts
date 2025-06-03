@@ -102,4 +102,14 @@ export class LaboratorioComponent implements OnInit {
   onEspecieSeleccionada(nuevaEspecieId: number): void {
     this.form.get('id_especie')?.setValue(nuevaEspecieId);
   }
+
+  abrirModalAgregarEspecie(): void {
+  // Puedes abrir un modal o por ahora usar un prompt simple
+  const nombre = prompt('Ingrese el nombre de la nueva especie:');
+  if (nombre) {
+    // Aquí podrías llamar a un servicio que guarde la especie en el backend
+    console.log('Nueva especie a registrar:', nombre);
+    // Luego actualizas la lista `especie` si es necesario
+  }
+}
 }
