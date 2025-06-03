@@ -1,23 +1,29 @@
-<div class="cookie-manager">
-  <h2>Gestor de Cookies</h2>
+<button (click)="abrir()" class="abrir-btn">Abrir Gestor de Cookies</button>
 
-  <label for="nombre">Nombre de la cookie:</label>
-  <input id="nombre" [(ngModel)]="nombre" placeholder="Ej: token" />
+<div *ngIf="mostrarModal" class="cookie-manager-backdrop" (click)="cerrar()">
+  <div class="cookie-manager" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="cerrar()">×</button>
 
-  <label for="valor">Valor:</label>
-  <input id="valor" [(ngModel)]="valor" placeholder="Ej: abc123" />
+    <h2>Gestor de Cookies</h2>
 
-  <label for="dias">Días de expiración:</label>
-  <input id="dias" type="number" [(ngModel)]="dias" placeholder="Ej: 7" />
+    <label for="nombre">Nombre de la cookie:</label>
+    <input id="nombre" [(ngModel)]="nombre" placeholder="Ej: token" />
 
-  <div class="botones">
-    <button (click)="setCookie(nombre, valor, dias)">Guardar cookie</button>
-    <button (click)="mostrarCookie(nombre)">Mostrar cookie</button>
-    <button (click)="deleteCookie(nombre)">Eliminar cookie</button>
-    <button (click)="check(nombre)">¿Existe?</button>
-  </div>
+    <label for="valor">Valor:</label>
+    <input id="valor" [(ngModel)]="valor" placeholder="Ej: abc123" />
 
-  <div *ngIf="resultado">
-    <p><strong>Resultado:</strong> {{ resultado }}</p>
+    <label for="dias">Días de expiración:</label>
+    <input id="dias" type="number" [(ngModel)]="dias" placeholder="Ej: 7" />
+
+    <div class="botones">
+      <button (click)="setCookie(nombre, valor, dias)">Guardar cookie</button>
+      <button (click)="mostrarCookie(nombre)">Mostrar cookie</button>
+      <button (click)="deleteCookie(nombre)">Eliminar cookie</button>
+      <button (click)="check(nombre)">¿Existe?</button>
+    </div>
+
+    <div *ngIf="resultado" class="resultado">
+      <p><strong>Resultado:</strong> {{ resultado }}</p>
+    </div>
   </div>
 </div>
