@@ -7,6 +7,7 @@ import { Brigadista } from '../interfaces/brigadista';
 import { Conglomerado } from '../interfaces/conglomerado';
 import { Conglomerado2 } from '../interfaces/conglomerado2';
 import { RouterModule } from '@angular/router';
+import { BrigadaService } from '../servicios/brigada.service'; // IMPORTAR
 
 @Component({
   selector: 'app-ideam',
@@ -22,6 +23,8 @@ export class IdeamComponent implements OnInit {
   brigadistas: Brigadista[] = [];
   investigadores: Brigadista[] = [];
   coinvestigadores: Brigadista[] = [];
+  brigadistasConNombre: { id_brigadista: number, nombre_brigadista: string }[] = [];
+conglomeradosConNombre: { id_conglomerado: number, identificador_conglomerado: string }[] = [];
 
   conglomerados: Conglomerado[] = [];  // plural y tipo correcto
   conglomerados2: Conglomerado2[] = [];  // plural y tipo correcto
@@ -29,21 +32,26 @@ export class IdeamComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private brigadistaService: BrigadistasService,
-    private conglomeradoService: ConglomeradosService
+    private conglomeradoService: ConglomeradosService,
+    private brigadaService: BrigadaService // INYECTAR
   ) {}
 
-  ngOnInit(): void {
-    this.brigadaForm = this.fb.group({
-      nombreBrigada: ['', Validators.required],
-      fechaVisita: ['', Validators.required],
-      jefeBrigada: ['', Validators.required],
-      investigador: ['', Validators.required],
-      CoInvestigador: ['', Validators.required]
-    });
 
-    this.cargarBrigadistas();
-    this.cargarConglomerados();
-  }
+ngOnInit(): void {
+  this.brigadaForm = this.fb.group({
+    nombreBrigada: ['', Validators.required],
+    fechaVisita: ['', Validators.required],
+    jefeBrigada: ['', Validators.required],
+    investigador: ['', Validators.required],
+    CoInvestigador: ['', Validators.required],
+    idConglomerado: ['', Validators.required]
+  });
+
+  this.cargarBrigadistas();
+  this.cargarConglomerados();
+  this.cargarBrigadistasConNombre(); // NUEVO
+  this.cargarConglomeradosConNombre(); // NUEVO
+}
 
   cargarBrigadistas(): void {
     this.brigadistaService.obtenerBrigadistas().subscribe({
@@ -60,6 +68,17 @@ export class IdeamComponent implements OnInit {
     });
   }
 
+  cargarBrigadistasConNombre(): void {
+  this.brigadaService.obtenerBrigadistasConNombre().subscribe({
+    next: (data) => {
+      this.brigadistasConNombre = data;
+    },
+    error: (err) => {
+      console.error('Error cargando brigadistas con nombre:', err);
+    }
+  });
+}
+
 cargarConglomerados(): void {
   this.conglomeradoService.obtenerConglomerados().subscribe({
     next: (data) => {
@@ -73,15 +92,43 @@ cargarConglomerados(): void {
   });
 }
 
+cargarConglomeradosConNombre(): void {
+  this.brigadaService.obtenerConglomeradosConIdentificador().subscribe({
+    next: (data) => {
+      this.conglomeradosConNombre = data;
+    },
+    error: (err) => {
+      console.error('Error cargando conglomerados con nombre:', err);
+    }
+  });
+}
+
 
   onSubmit(): void {
     if (this.brigadaForm.valid) {
-      const nuevaBrigada = this.brigadaForm.value;
+      const form = this.brigadaForm.value;
 
-      // Aquí iría la lógica para enviar la brigada a backend o procesar
-      console.log('Brigada registrada:', nuevaBrigada);
-      alert('Brigada registrada correctamente');
-      this.brigadaForm.reset();
+      const nuevaBrigada = {
+        nombre: form.nombreBrigada,
+        fecha_visita: form.fechaVisita,
+        id_jefe_brigada: form.jefeBrigada,
+        id_investigador: form.investigador,
+        id_coinvestigador: form.CoInvestigador,
+        id_conglomerado: form.idConglomerado
+      };
+
+      this.brigadaService.crearBrigada(nuevaBrigada).subscribe({
+        next: (res) => {
+          console.log('Respuesta del backend:', res);
+          alert('Brigada registrada correctamente');
+          this.brigadaForm.reset();
+        },
+        error: (err) => {
+          console.error('Error al registrar brigada:', err);
+          alert('Error al registrar brigada. Revisa los datos.');
+        }
+      });
+
     } else {
       this.brigadaForm.markAllAsTouched();
       alert('Formulario inválido. Por favor, corrija los errores.');
