@@ -45,10 +45,12 @@
 
   <!-- Botón Guardar Cambios -->
   <button (click)="guardarCambios()" [disabled]="form?.invalid">Guardar Cambios</button>
+
+  <!-- Botón Agregar Análisis de Laboratorio -->
+<button type="button" (click)="abrirModalAnalisisLaboratorio()">Agregar análisis de laboratorio</button>
 </div>
 
-<!-- Botón Agregar Análisis de Laboratorio -->
-<button type="button" (click)="abrirModalAnalisisLaboratorio()">Agregar análisis de laboratorio</button>
+
 
 <!-- Si no se encuentra ninguna -->
 <div *ngIf="codigoBusqueda && !muestraFiltrada">
