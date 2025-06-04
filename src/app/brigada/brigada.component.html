@@ -1,0 +1,31 @@
+<div class="glass-card">
+  <h2 class="glass-title">Listado de Brigadistas</h2>
+
+  <div *ngIf="loading" class="loading-message">Cargando brigadas...</div>
+  <div *ngIf="error" class="error-message">Ocurrió un error al cargar las brigadas.</div>
+
+  <table *ngIf="!loading && !error" class="glass-table" border="1">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre Brigada</th>
+        <th>Jefe de Brigada</th>
+        <th>Investigador</th>
+        <th>Coinvestigador</th>
+        <th>Conglomerado</th>
+        <th>Fecha Visita</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let brigada of brigadas">
+        <td>{{ brigada.id_brigada }}</td>
+        <td>{{ brigada.nombre_brigada }}</td>
+        <td>{{ brigada.nombre_jefe_brigada }}</td>
+        <td>{{ brigada.nombre_investigador }}</td>
+        <td>{{ brigada.nombre_coinvestigador }}</td>
+        <td>{{ brigada.identificador_conglomerado }}</td>
+        <td>{{ brigada.fecha_visita | date:'yyyy-MM-dd' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

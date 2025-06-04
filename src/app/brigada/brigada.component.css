@@ -1,0 +1,82 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 80px 2rem 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('/assets/imagenes/forestbg.jpg') no-repeat center center / cover;
+  color: #ffffff; /* ← texto blanco global */
+  box-sizing: border-box;
+}
+
+/* Card contenedor centrado más oscuro */
+.glass-card {
+  max-width: 900px;
+  margin: 10rem auto;
+  padding: 2rem;
+  background: rgba(150, 149, 149, 0.5); /* ← más oscuro */
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6); /* sombra más intensa */
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  color: #ffffff; /* ← texto blanco dentro del card */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Título estilizado */
+.glass-title {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Tabla dentro del card */
+.glass-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+}
+
+.glass-table thead tr {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.glass-table th,
+.glass-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+/* Mensajes con efecto glass */
+.loading-message,
+.error-message {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  width: 100%;
+}
+
+/* Color distinto para error */
+.error-message {
+  background: rgba(255, 0, 0, 0.2);
+  color: #ff6b6b;
+  box-shadow: 0 4px 20px rgba(255, 0, 0, 0.2);
+}

@@ -26,6 +26,10 @@
   <a routerLink="/ideam" (click)="closeMenu()">IDEAM</a>
 </li>
 
+<li *ngIf="userRole === 'administrador' || userRole === 'investigador' || userRole === 'administrador' || userRole === 'ideam'">
+  <a routerLink="/mostrar-brigada" (click)="closeMenu()">Brigadas</a>
+</li>
+
 <li *ngIf="userRole === 'administrador'">
   <a routerLink="/add-user" (click)="closeMenu()">Crear usuario</a>
 </li>

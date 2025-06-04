@@ -1,6 +1,6 @@
 import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
+import { BrowserModule } from '@angular/platform-browser';
 
 
 import { InicioComponent } from './inicio/inicio.component';
@@ -20,6 +20,7 @@ import { AuthRoleGuard } from './guard/auth-role.guard';
 import { AddEspecieComponent } from "./add-especie/add-especie.component";
 import { CookieManagerComponent } from "./cookie-manager/cookie-manager.component";
 import { AnalisisLaboratorioComponent } from "./analisis-laboratorio/analisis-laboratorio.component";
+import { BrigadasComponent } from "./brigada/brigada.component";
 
 
 
@@ -31,6 +32,7 @@ export const routes: Routes = [
   { path: 'reportes', component: ReportesComponent },
   { path: 'navbar', component: NavbarComponent },
   { path: 'cookies', component: CookieManagerComponent },
+  { path: 'mostrar-brigada', component: BrigadasComponent, canActivate: [AuthRoleGuard], data: { roles: ['cientifico', 'investigador', 'ideam', 'administrador'] } },
 
   // Solo accesible por roles específicos
   { path: 'investigacion', component: InvestigacionComponent, canActivate: [AuthRoleGuard], data: { roles: ['cientifico', 'investigador'] } },
@@ -44,13 +46,14 @@ export const routes: Routes = [
   { path: 'add2', component: AddEditBrigadistasComponent, canActivate: [AuthRoleGuard], data: { roles: ['ideam'] } },
   { path: 'brigadistas/edit/:id', component: AddEditBrigadistasComponent, canActivate: [AuthRoleGuard], data: { roles: ['ideam'] } },
 
-  { path: 'add-user', component: AddUserComponent, canActivate: [AuthRoleGuard], data: { roles: ['administrador'] } }
+  { path: 'add-user', component: AddUserComponent, canActivate: [AuthRoleGuard], data: { roles: ['administrador'] } },
+
 ];
 
 
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes), BrowserModule ],
     exports: [RouterModule]
     })
 export class AppRoutingModule { }
