@@ -1,0 +1,104 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 80px 2rem 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('/assets/imagenes/forestbg.jpg') no-repeat center center / cover;
+  color: #ffffff;
+  box-sizing: border-box;
+}
+
+form {
+  max-width: 500px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 2.5rem 2rem 3rem;
+  border-radius: 25px;
+  background: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    0 8px 32px rgba(31, 38, 135, 0.25),
+    0 0 10px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  transition: box-shadow 0.3s ease;
+}
+
+form:hover {
+  box-shadow:
+    0 12px 40px rgba(31, 38, 135, 0.35),
+    0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: #ffffffcc;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  border: none;
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 500;
+  outline: none;
+  box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.1);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+  resize: vertical;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #ccffccaa;
+  font-style: italic;
+}
+
+input:focus,
+textarea:focus {
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 1rem 0;
+  background: linear-gradient(135deg, #32cd32, #228b22);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(34, 139, 34, 0.6);
+  transition: background 0.4s ease, box-shadow 0.4s ease;
+  user-select: none;
+}
+
+button:hover,
+button:focus {
+  background: linear-gradient(135deg, #228b22, #32cd32);
+  box-shadow: 0 8px 16px rgba(34, 139, 34, 0.8);
+  outline: none;
+}
+
+p {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-weight: 700;
+  color: #00ffcc;
+  text-shadow: 0 0 5px #00ffccbb;
+  user-select: none;
+}

@@ -1,0 +1,27 @@
+<form [formGroup]="analisisForm" (ngSubmit)="guardarAnalisis()">
+  <label>Muestra: {{ analisisForm.value.identificador }}</label>
+
+  <div>
+    <label>Clasificación taxonómica</label>
+    <input formControlName="clasificacion_taxonomica" />
+  </div>
+
+  <div>
+    <label>Resultados</label>
+    <textarea formControlName="resultados"></textarea>
+  </div>
+
+  <div>
+    <label>Método de análisis</label>
+    <input formControlName="metodo_de_analisis" />
+  </div>
+
+  <div>
+    <label>Fecha de modificación</label>
+    <input type="date" formControlName="fecha_modificacion" />
+  </div>
+
+  <button type="submit">Guardar</button>
+</form>
+
+<p *ngIf="mensaje">{{ mensaje }}</p>

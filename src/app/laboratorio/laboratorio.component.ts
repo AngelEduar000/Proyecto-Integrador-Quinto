@@ -107,4 +107,13 @@ export class LaboratorioComponent implements OnInit {
 abrirModalAgregarEspecie() {
   this.router.navigate(['/add-especie']);  // Reemplaza con tu ruta real
 }
+
+abrirModalAnalisisLaboratorio() {
+  this.router.navigate(['/analisis_laboratorio'], {
+    queryParams: {
+      id_muestra: this.muestraFiltrada.id_muestra,
+      identificador: this.muestraFiltrada.identificador_muestra
+    }
+  });
+}
 }

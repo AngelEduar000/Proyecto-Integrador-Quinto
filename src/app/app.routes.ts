@@ -19,7 +19,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { AuthRoleGuard } from './guard/auth-role.guard';
 import { AddEspecieComponent } from "./add-especie/add-especie.component";
 import { CookieManagerComponent } from "./cookie-manager/cookie-manager.component";
-
+import { AnalisisLaboratorioComponent } from "./analisis-laboratorio/analisis-laboratorio.component";
 
 
 
@@ -36,6 +36,7 @@ export const routes: Routes = [
   { path: 'investigacion', component: InvestigacionComponent, canActivate: [AuthRoleGuard], data: { roles: ['cientifico', 'investigador'] } },
   { path: 'laboratorio', component: LaboratorioComponent, canActivate: [AuthRoleGuard], data: { roles: ['cientifico'] } },
   { path: 'add-especie', component: AddEspecieComponent, canActivate: [AuthRoleGuard], data: { roles: ['cientifico'] } },
+    { path: 'analisis_laboratorio', component: AnalisisLaboratorioComponent, canActivate: [AuthRoleGuard], data: { roles: ['cientifico'] } },
   { path: 'ideam', component: IdeamComponent, canActivate: [AuthRoleGuard], data: { roles: ['ideam'] } },
 
   { path: 'add', component: AgregarConglomeradoComponent, canActivate: [AuthRoleGuard], data: { roles: ['ideam'] } },

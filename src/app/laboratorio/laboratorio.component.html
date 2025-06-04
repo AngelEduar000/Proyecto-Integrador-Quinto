@@ -47,6 +47,9 @@
   <button (click)="guardarCambios()" [disabled]="form?.invalid">Guardar Cambios</button>
 </div>
 
+<!-- Botón Agregar Análisis de Laboratorio -->
+<button type="button" (click)="abrirModalAnalisisLaboratorio()">Agregar análisis de laboratorio</button>
+
 <!-- Si no se encuentra ninguna -->
 <div *ngIf="codigoBusqueda && !muestraFiltrada">
   <p>No se encontró ninguna muestra con ese identificador.</p>
