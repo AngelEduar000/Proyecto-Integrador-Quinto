@@ -244,6 +244,53 @@ img {
   }
 }
 
+
+
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.95);
+  color: white;
+  padding: 15px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1000;
+}
+
+.cookie-banner p {
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+
+.cookie-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.cookie-actions button {
+  padding: 5px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cookie-actions button:first-child {
+  background-color: #f1d600;
+  color: black;
+}
+
+.cookie-actions button:last-child {
+  background-color: #ccc;
+  color: black;
+}
+
+
+
+
 /* ==========================================================================
    Consultas de Medios para la Respuesta (Ajustes para Móviles y Tabletas)
    ========================================================================== */

@@ -52,6 +52,16 @@
       </div>
     </section>
 
-    <app-cookie-manager></app-cookie-manager>
+    <div *ngIf="mostrarBannerCookies" class="cookie-banner">
+      <p>
+        Este sitio web utiliza cookies para mejorar tu experiencia.
+        <a href="https://www.cookiesandyou.com/" target="_blank">Leer más</a>
+      </p>
+      <div class="cookie-actions">
+        <button (click)="aceptarCookies()">Aceptar</button>
+        <button (click)="rechazarCookies()">Rechazar</button>
+      </div>
+    </div>
+
 
   </main>
